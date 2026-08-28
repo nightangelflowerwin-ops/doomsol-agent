@@ -1,0 +1,6 @@
+const S=document.querySelector("#status"),D=document.querySelector("#details");
+async function bridge(p,o){let e;for(const b of["http://127.0.0.1:8765","http://localhost:8765"]){try{let r=await fetch(b+p,o);if(!r.ok)throw Error("HTTP "+r.status);return await r.json()}catch(x){e=x}}throw e}
+async function refresh(){try{let s=await bridge("/status");S.textContent=s.attached?"🟢 ATTACHED":"🟡 BRIDGE RUNNING — NOT ATTACHED";D.textContent=s.tabId?"Tab ID: "+s.tabId:"Select the existing DoomSol tab, then attach."}catch(e){S.textContent="🔴 LOCAL BRIDGE NOT REACHABLE";D.textContent="Start run_bridge.bat. "+e.message}}
+document.querySelector("#attach").onclick=async()=>{let [t]=await chrome.tabs.query({active:true,currentWindow:true});if(!t?.url?.includes("doomsol.com")){S.textContent="🔴 ACTIVE TAB IS NOT DOOMSOL";D.textContent="Switch to the DoomSol tab first.";return}let r=await chrome.runtime.sendMessage({type:"attach",tabId:t.id});S.textContent=r.ok?"🟢 ATTACHED":"🔴 ATTACH FAILED";D.textContent=r.ok?"Attached to: "+(t.title||t.url):r.error};
+document.querySelector("#detach").onclick=async()=>{let r=await chrome.runtime.sendMessage({type:"detach"});S.textContent=r.ok?"🟡 DETACHED":"🔴 DETACH FAILED";D.textContent=r.ok?"Browser untouched.":r.error};
+document.querySelector("#refresh").onclick=refresh;refresh();

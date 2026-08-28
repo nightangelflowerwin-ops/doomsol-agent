@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Replay and training artifacts
+replays/**
+!replays/.gitkeep
+models/
+checkpoints/
+*.pt
+*.pth
+*.npz
+*.onnx
+*.jsonl
+
+# Media and generated output
+frames/
+captures/
+output/
+outputs/
+*.mp4
+*.webm
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

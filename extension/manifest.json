@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "DoomSol Local Agent Bridge",
+  "version": "0.2.0",
+  "description": "Explicit local-only bridge for the selected DoomSol tab.",
+  "permissions": [
+    "debugger",
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*",
+    "http://localhost:8765/*",
+    "https://doomsol.com/*",
+    "https://www.doomsol.com/*"
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "action": {
+    "default_title": "DoomSol Agent",
+    "default_popup": "popup.html"
+  }
+}
