@@ -2,6 +2,13 @@
 
 This file is the public record of ongoing work. Each meaningful coding, data, training, or evaluation session should add one short entry with evidence and the next question.
 
+## 2026-08-27 - Public verification workflow
+
+- Changed: added a GitHub Actions workflow and a documented end-of-session routine.
+- Evidence: each pushed change will run the focused perception tests and confirm the public project records are present.
+- Limitation: the repository still needs to be published under Stephen Shore's GitHub account before remote activity becomes visible.
+- Next: create or select the GitHub repository, add it as `origin`, and push `main`.
+
 ## 2026-08-22 - Teacher and recovery evaluation artifacts
 
 - Retained deterministic teacher, recovery-gate, lifecycle, and five-minute admission reports for repeatable evaluation.
@@ -32,4 +39,3 @@ This file is the public record of ongoing work. Each meaningful coding, data, tr
 - Limitation:
 - Next:
 ```
-
