@@ -5,9 +5,9 @@ This file is the public record of ongoing work. Each meaningful coding, data, tr
 ## 2026-08-27 - Public verification workflow
 
 - Changed: added a GitHub Actions workflow and a documented end-of-session routine.
-- Evidence: each pushed change will run the focused perception tests and confirm the public project records are present.
-- Limitation: the repository still needs to be published under Stephen Shore's GitHub account before remote activity becomes visible.
-- Next: create or select the GitHub repository, add it as `origin`, and push `main`.
+- Evidence: published the project and configured each pushed change to install its image dependency, run the focused perception tests, and confirm the public project records are present.
+- Limitation: the current tests cover the perception layer, not end-to-end gameplay.
+- Next: add an independent replay fixture and an episode-level evaluation check.
 
 ## 2026-08-22 - Teacher and recovery evaluation artifacts
 
