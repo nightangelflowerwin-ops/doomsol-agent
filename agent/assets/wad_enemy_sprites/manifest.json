@@ -1,0 +1,3509 @@
+{
+  "schema_version": 1,
+  "source_wad": "..\\dwasm-sim\\wasm\\fs\\freedoom1.wad",
+  "enemy_families": [
+    "BOS2",
+    "BOSS",
+    "CYBR",
+    "HEAD",
+    "POSS",
+    "SARG",
+    "SKUL",
+    "SPID",
+    "SPOS",
+    "TROO"
+  ],
+  "sprite_count": 349,
+  "sprites": [
+    {
+      "name": "BOSSBACK",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossback.png",
+      "width": 320,
+      "height": 200,
+      "left_offset": 0,
+      "top_offset": 0
+    },
+    {
+      "name": "BOSSA1",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa1.png",
+      "width": 49,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA2",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa2.png",
+      "width": 48,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA3",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa3.png",
+      "width": 49,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA4",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa4.png",
+      "width": 47,
+      "height": 69,
+      "left_offset": 23,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA5",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa5.png",
+      "width": 49,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA6",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa6.png",
+      "width": 47,
+      "height": 69,
+      "left_offset": 23,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA7",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa7.png",
+      "width": 52,
+      "height": 69,
+      "left_offset": 26,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSA8",
+      "family": "BOSS",
+      "frame": "A",
+      "file": "boss\\bossa8.png",
+      "width": 48,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSB1",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb1.png",
+      "width": 53,
+      "height": 72,
+      "left_offset": 26,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB2",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb2.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB3",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb3.png",
+      "width": 43,
+      "height": 72,
+      "left_offset": 21,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB4",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb4.png",
+      "width": 41,
+      "height": 72,
+      "left_offset": 20,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB5",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb5.png",
+      "width": 51,
+      "height": 72,
+      "left_offset": 25,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB6",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb6.png",
+      "width": 40,
+      "height": 72,
+      "left_offset": 20,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB7",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb7.png",
+      "width": 46,
+      "height": 72,
+      "left_offset": 23,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSB8",
+      "family": "BOSS",
+      "frame": "B",
+      "file": "boss\\bossb8.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSC1",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc1.png",
+      "width": 50,
+      "height": 69,
+      "left_offset": 25,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC2",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc2.png",
+      "width": 48,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC3",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc3.png",
+      "width": 54,
+      "height": 69,
+      "left_offset": 27,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC4",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc4.png",
+      "width": 47,
+      "height": 69,
+      "left_offset": 23,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC5",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc5.png",
+      "width": 48,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC6",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc6.png",
+      "width": 47,
+      "height": 69,
+      "left_offset": 23,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC7",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc7.png",
+      "width": 48,
+      "height": 69,
+      "left_offset": 24,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSC8",
+      "family": "BOSS",
+      "frame": "C",
+      "file": "boss\\bossc8.png",
+      "width": 51,
+      "height": 69,
+      "left_offset": 25,
+      "top_offset": 69
+    },
+    {
+      "name": "BOSSD1",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd1.png",
+      "width": 54,
+      "height": 72,
+      "left_offset": 27,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD2",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd2.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD3",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd3.png",
+      "width": 46,
+      "height": 72,
+      "left_offset": 23,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD4",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd4.png",
+      "width": 41,
+      "height": 72,
+      "left_offset": 20,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD5",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd5.png",
+      "width": 51,
+      "height": 72,
+      "left_offset": 25,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD6",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd6.png",
+      "width": 40,
+      "height": 72,
+      "left_offset": 20,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD7",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd7.png",
+      "width": 43,
+      "height": 72,
+      "left_offset": 21,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSD8",
+      "family": "BOSS",
+      "frame": "D",
+      "file": "boss\\bossd8.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSE1",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse1.png",
+      "width": 54,
+      "height": 74,
+      "left_offset": 27,
+      "top_offset": 74
+    },
+    {
+      "name": "BOSSE2",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse2.png",
+      "width": 54,
+      "height": 73,
+      "left_offset": 27,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSE3",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse3.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSE4",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse4.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSE5",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse5.png",
+      "width": 47,
+      "height": 73,
+      "left_offset": 23,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSE6",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse6.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSE7",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse7.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSE8",
+      "family": "BOSS",
+      "frame": "E",
+      "file": "boss\\bosse8.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF1",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf1.png",
+      "width": 63,
+      "height": 73,
+      "left_offset": 31,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF2",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf2.png",
+      "width": 54,
+      "height": 73,
+      "left_offset": 27,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF3",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf3.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF4",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf4.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF5",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf5.png",
+      "width": 47,
+      "height": 73,
+      "left_offset": 23,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF6",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf6.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSF7",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf7.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSF8",
+      "family": "BOSS",
+      "frame": "F",
+      "file": "boss\\bossf8.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG1",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg1.png",
+      "width": 64,
+      "height": 74,
+      "left_offset": 32,
+      "top_offset": 74
+    },
+    {
+      "name": "BOSSG2",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg2.png",
+      "width": 54,
+      "height": 73,
+      "left_offset": 27,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG3",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg3.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG4",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg4.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG5",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg5.png",
+      "width": 47,
+      "height": 73,
+      "left_offset": 23,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG6",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg6.png",
+      "width": 38,
+      "height": 72,
+      "left_offset": 19,
+      "top_offset": 72
+    },
+    {
+      "name": "BOSSG7",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg7.png",
+      "width": 59,
+      "height": 73,
+      "left_offset": 29,
+      "top_offset": 73
+    },
+    {
+      "name": "BOSSG8",
+      "family": "BOSS",
+      "frame": "G",
+      "file": "boss\\bossg8.png",
+      "width": 67,
+      "height": 73,
+      "left_offset": 33,
+      "top_offset": 73
+    },
+    {
+      "name": "POSSA1",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa1.png",
+      "width": 41,
+      "height": 57,
+      "left_offset": 22,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSA2",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa2.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSA3",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa3.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSA4",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa4.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 26,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSA5",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa5.png",
+      "width": 38,
+      "height": 56,
+      "left_offset": 18,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSA6",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa6.png",
+      "width": 45,
+      "height": 56,
+      "left_offset": 14,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSA7",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa7.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 18,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSA8",
+      "family": "POSS",
+      "frame": "A",
+      "file": "poss\\possa8.png",
+      "width": 36,
+      "height": 56,
+      "left_offset": 14,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSB1",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb1.png",
+      "width": 41,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSB2",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb2.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSB3",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb3.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 24,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSB4",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb4.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 26,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSB5",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb5.png",
+      "width": 38,
+      "height": 56,
+      "left_offset": 18,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSB6",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb6.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 11,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSB7",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb7.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 20,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSB8",
+      "family": "POSS",
+      "frame": "B",
+      "file": "poss\\possb8.png",
+      "width": 36,
+      "height": 56,
+      "left_offset": 15,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSC1",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc1.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSC2",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc2.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSC3",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc3.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 29,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSC4",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc4.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 26,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSC5",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc5.png",
+      "width": 39,
+      "height": 56,
+      "left_offset": 16,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSC6",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc6.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 17,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSC7",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc7.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 20,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSC8",
+      "family": "POSS",
+      "frame": "C",
+      "file": "poss\\possc8.png",
+      "width": 36,
+      "height": 57,
+      "left_offset": 17,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSD1",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd1.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSD2",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd2.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 21,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSD3",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd3.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 26,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSD4",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd4.png",
+      "width": 42,
+      "height": 57,
+      "left_offset": 31,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSD5",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd5.png",
+      "width": 39,
+      "height": 51,
+      "left_offset": 18,
+      "top_offset": 47
+    },
+    {
+      "name": "POSSD6",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd6.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 14,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSD7",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd7.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 19,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSD8",
+      "family": "POSS",
+      "frame": "D",
+      "file": "poss\\possd8.png",
+      "width": 36,
+      "height": 57,
+      "left_offset": 15,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSE1",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse1.png",
+      "width": 26,
+      "height": 56,
+      "left_offset": 17,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSE2",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse2.png",
+      "width": 45,
+      "height": 55,
+      "left_offset": 34,
+      "top_offset": 51
+    },
+    {
+      "name": "POSSE3",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse3.png",
+      "width": 50,
+      "height": 54,
+      "left_offset": 38,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSE4",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse4.png",
+      "width": 37,
+      "height": 53,
+      "left_offset": 29,
+      "top_offset": 49
+    },
+    {
+      "name": "POSSE5",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse5.png",
+      "width": 24,
+      "height": 52,
+      "left_offset": 11,
+      "top_offset": 48
+    },
+    {
+      "name": "POSSE6",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse6.png",
+      "width": 32,
+      "height": 53,
+      "left_offset": 9,
+      "top_offset": 49
+    },
+    {
+      "name": "POSSE7",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse7.png",
+      "width": 50,
+      "height": 54,
+      "left_offset": 12,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSE8",
+      "family": "POSS",
+      "frame": "E",
+      "file": "poss\\posse8.png",
+      "width": 48,
+      "height": 57,
+      "left_offset": 14,
+      "top_offset": 53
+    },
+    {
+      "name": "POSSF1",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf1.png",
+      "width": 27,
+      "height": 56,
+      "left_offset": 18,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSF2",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf2.png",
+      "width": 46,
+      "height": 56,
+      "left_offset": 37,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSF3",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf3.png",
+      "width": 53,
+      "height": 55,
+      "left_offset": 44,
+      "top_offset": 51
+    },
+    {
+      "name": "POSSF4",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf4.png",
+      "width": 46,
+      "height": 54,
+      "left_offset": 34,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSF5",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf5.png",
+      "width": 26,
+      "height": 53,
+      "left_offset": 10,
+      "top_offset": 49
+    },
+    {
+      "name": "POSSF6",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf6.png",
+      "width": 37,
+      "height": 53,
+      "left_offset": 10,
+      "top_offset": 49
+    },
+    {
+      "name": "POSSF7",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf7.png",
+      "width": 56,
+      "height": 54,
+      "left_offset": 12,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSF8",
+      "family": "POSS",
+      "frame": "F",
+      "file": "poss\\possf8.png",
+      "width": 56,
+      "height": 56,
+      "left_offset": 14,
+      "top_offset": 52
+    },
+    {
+      "name": "POSSG1",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg1.png",
+      "width": 39,
+      "height": 55,
+      "left_offset": 19,
+      "top_offset": 51
+    },
+    {
+      "name": "POSSG2",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg2.png",
+      "width": 36,
+      "height": 55,
+      "left_offset": 18,
+      "top_offset": 51
+    },
+    {
+      "name": "POSSG3",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg3.png",
+      "width": 40,
+      "height": 54,
+      "left_offset": 20,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSG4",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg4.png",
+      "width": 41,
+      "height": 52,
+      "left_offset": 20,
+      "top_offset": 48
+    },
+    {
+      "name": "POSSG5",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg5.png",
+      "width": 34,
+      "height": 53,
+      "left_offset": 17,
+      "top_offset": 49
+    },
+    {
+      "name": "POSSG6",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg6.png",
+      "width": 41,
+      "height": 52,
+      "left_offset": 20,
+      "top_offset": 48
+    },
+    {
+      "name": "POSSG7",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg7.png",
+      "width": 39,
+      "height": 54,
+      "left_offset": 19,
+      "top_offset": 50
+    },
+    {
+      "name": "POSSG8",
+      "family": "POSS",
+      "frame": "G",
+      "file": "poss\\possg8.png",
+      "width": 39,
+      "height": 57,
+      "left_offset": 19,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGA1",
+      "family": "SARG",
+      "frame": "A",
+      "file": "sarg\\sarga1.png",
+      "width": 38,
+      "height": 59,
+      "left_offset": 17,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGA2A8",
+      "family": "SARG",
+      "frame": "A",
+      "file": "sarg\\sarga2a8.png",
+      "width": 54,
+      "height": 57,
+      "left_offset": 25,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGA3A7",
+      "family": "SARG",
+      "frame": "A",
+      "file": "sarg\\sarga3a7.png",
+      "width": 58,
+      "height": 58,
+      "left_offset": 29,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGA4A6",
+      "family": "SARG",
+      "frame": "A",
+      "file": "sarg\\sarga4a6.png",
+      "width": 47,
+      "height": 57,
+      "left_offset": 25,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGA5",
+      "family": "SARG",
+      "frame": "A",
+      "file": "sarg\\sarga5.png",
+      "width": 38,
+      "height": 60,
+      "left_offset": 18,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGB1",
+      "family": "SARG",
+      "frame": "B",
+      "file": "sarg\\sargb1.png",
+      "width": 34,
+      "height": 59,
+      "left_offset": 17,
+      "top_offset": 56
+    },
+    {
+      "name": "SARGB2B8",
+      "family": "SARG",
+      "frame": "B",
+      "file": "sarg\\sargb2b8.png",
+      "width": 49,
+      "height": 58,
+      "left_offset": 25,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGB3B7",
+      "family": "SARG",
+      "frame": "B",
+      "file": "sarg\\sargb3b7.png",
+      "width": 54,
+      "height": 58,
+      "left_offset": 26,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGB4B6",
+      "family": "SARG",
+      "frame": "B",
+      "file": "sarg\\sargb4b6.png",
+      "width": 46,
+      "height": 57,
+      "left_offset": 24,
+      "top_offset": 52
+    },
+    {
+      "name": "SARGB5",
+      "family": "SARG",
+      "frame": "B",
+      "file": "sarg\\sargb5.png",
+      "width": 34,
+      "height": 57,
+      "left_offset": 15,
+      "top_offset": 51
+    },
+    {
+      "name": "SARGC1",
+      "family": "SARG",
+      "frame": "C",
+      "file": "sarg\\sargc1.png",
+      "width": 38,
+      "height": 59,
+      "left_offset": 18,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGC2C8",
+      "family": "SARG",
+      "frame": "C",
+      "file": "sarg\\sargc2c8.png",
+      "width": 43,
+      "height": 58,
+      "left_offset": 22,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGC3C7",
+      "family": "SARG",
+      "frame": "C",
+      "file": "sarg\\sargc3c7.png",
+      "width": 54,
+      "height": 57,
+      "left_offset": 20,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGC4C6",
+      "family": "SARG",
+      "frame": "C",
+      "file": "sarg\\sargc4c6.png",
+      "width": 48,
+      "height": 57,
+      "left_offset": 22,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGC5",
+      "family": "SARG",
+      "frame": "C",
+      "file": "sarg\\sargc5.png",
+      "width": 38,
+      "height": 60,
+      "left_offset": 17,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGD1",
+      "family": "SARG",
+      "frame": "D",
+      "file": "sarg\\sargd1.png",
+      "width": 38,
+      "height": 59,
+      "left_offset": 17,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGD2D8",
+      "family": "SARG",
+      "frame": "D",
+      "file": "sarg\\sargd2d8.png",
+      "width": 47,
+      "height": 58,
+      "left_offset": 24,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGD3D7",
+      "family": "SARG",
+      "frame": "D",
+      "file": "sarg\\sargd3d7.png",
+      "width": 54,
+      "height": 57,
+      "left_offset": 25,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGD4D6",
+      "family": "SARG",
+      "frame": "D",
+      "file": "sarg\\sargd4d6.png",
+      "width": 51,
+      "height": 57,
+      "left_offset": 24,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGD5",
+      "family": "SARG",
+      "frame": "D",
+      "file": "sarg\\sargd5.png",
+      "width": 34,
+      "height": 57,
+      "left_offset": 19,
+      "top_offset": 52
+    },
+    {
+      "name": "SARGE1",
+      "family": "SARG",
+      "frame": "E",
+      "file": "sarg\\sarge1.png",
+      "width": 38,
+      "height": 60,
+      "left_offset": 20,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGE2E8",
+      "family": "SARG",
+      "frame": "E",
+      "file": "sarg\\sarge2e8.png",
+      "width": 53,
+      "height": 58,
+      "left_offset": 23,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGE3E7",
+      "family": "SARG",
+      "frame": "E",
+      "file": "sarg\\sarge3e7.png",
+      "width": 56,
+      "height": 58,
+      "left_offset": 23,
+      "top_offset": 54
+    },
+    {
+      "name": "SARGE4E6",
+      "family": "SARG",
+      "frame": "E",
+      "file": "sarg\\sarge4e6.png",
+      "width": 49,
+      "height": 57,
+      "left_offset": 20,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGE5",
+      "family": "SARG",
+      "frame": "E",
+      "file": "sarg\\sarge5.png",
+      "width": 34,
+      "height": 57,
+      "left_offset": 16,
+      "top_offset": 52
+    },
+    {
+      "name": "SARGF1",
+      "family": "SARG",
+      "frame": "F",
+      "file": "sarg\\sargf1.png",
+      "width": 38,
+      "height": 60,
+      "left_offset": 18,
+      "top_offset": 55
+    },
+    {
+      "name": "SARGF2F8",
+      "family": "SARG",
+      "frame": "F",
+      "file": "sarg\\sargf2f8.png",
+      "width": 52,
+      "height": 57,
+      "left_offset": 25,
+      "top_offset": 51
+    },
+    {
+      "name": "SARGF3F7",
+      "family": "SARG",
+      "frame": "F",
+      "file": "sarg\\sargf3f7.png",
+      "width": 62,
+      "height": 58,
+      "left_offset": 28,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGF4F6",
+      "family": "SARG",
+      "frame": "F",
+      "file": "sarg\\sargf4f6.png",
+      "width": 51,
+      "height": 57,
+      "left_offset": 26,
+      "top_offset": 52
+    },
+    {
+      "name": "SARGF5",
+      "family": "SARG",
+      "frame": "F",
+      "file": "sarg\\sargf5.png",
+      "width": 34,
+      "height": 56,
+      "left_offset": 15,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGG1",
+      "family": "SARG",
+      "frame": "G",
+      "file": "sarg\\sargg1.png",
+      "width": 34,
+      "height": 60,
+      "left_offset": 15,
+      "top_offset": 57
+    },
+    {
+      "name": "SARGG2G8",
+      "family": "SARG",
+      "frame": "G",
+      "file": "sarg\\sargg2g8.png",
+      "width": 46,
+      "height": 58,
+      "left_offset": 14,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGG3G7",
+      "family": "SARG",
+      "frame": "G",
+      "file": "sarg\\sargg3g7.png",
+      "width": 49,
+      "height": 58,
+      "left_offset": 20,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGG4G6",
+      "family": "SARG",
+      "frame": "G",
+      "file": "sarg\\sargg4g6.png",
+      "width": 43,
+      "height": 57,
+      "left_offset": 19,
+      "top_offset": 53
+    },
+    {
+      "name": "SARGG5",
+      "family": "SARG",
+      "frame": "G",
+      "file": "sarg\\sargg5.png",
+      "width": 32,
+      "height": 56,
+      "left_offset": 12,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSA1",
+      "family": "SPOS",
+      "frame": "A",
+      "file": "spos\\sposa1.png",
+      "width": 35,
+      "height": 55,
+      "left_offset": 17,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSA2A8",
+      "family": "SPOS",
+      "frame": "A",
+      "file": "spos\\sposa2a8.png",
+      "width": 31,
+      "height": 55,
+      "left_offset": 15,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSA3A7",
+      "family": "SPOS",
+      "frame": "A",
+      "file": "spos\\sposa3a7.png",
+      "width": 34,
+      "height": 53,
+      "left_offset": 17,
+      "top_offset": 48
+    },
+    {
+      "name": "SPOSA4A6",
+      "family": "SPOS",
+      "frame": "A",
+      "file": "spos\\sposa4a6.png",
+      "width": 45,
+      "height": 50,
+      "left_offset": 22,
+      "top_offset": 45
+    },
+    {
+      "name": "SPOSA5",
+      "family": "SPOS",
+      "frame": "A",
+      "file": "spos\\sposa5.png",
+      "width": 35,
+      "height": 51,
+      "left_offset": 17,
+      "top_offset": 46
+    },
+    {
+      "name": "SPOSB1",
+      "family": "SPOS",
+      "frame": "B",
+      "file": "spos\\sposb1.png",
+      "width": 35,
+      "height": 55,
+      "left_offset": 17,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSB2B8",
+      "family": "SPOS",
+      "frame": "B",
+      "file": "spos\\sposb2b8.png",
+      "width": 27,
+      "height": 55,
+      "left_offset": 13,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSB3B7",
+      "family": "SPOS",
+      "frame": "B",
+      "file": "spos\\sposb3b7.png",
+      "width": 32,
+      "height": 57,
+      "left_offset": 16,
+      "top_offset": 52
+    },
+    {
+      "name": "SPOSB4B6",
+      "family": "SPOS",
+      "frame": "B",
+      "file": "spos\\sposb4b6.png",
+      "width": 40,
+      "height": 54,
+      "left_offset": 20,
+      "top_offset": 49
+    },
+    {
+      "name": "SPOSB5",
+      "family": "SPOS",
+      "frame": "B",
+      "file": "spos\\sposb5.png",
+      "width": 34,
+      "height": 54,
+      "left_offset": 17,
+      "top_offset": 49
+    },
+    {
+      "name": "SPOSC1",
+      "family": "SPOS",
+      "frame": "C",
+      "file": "spos\\sposc1.png",
+      "width": 32,
+      "height": 56,
+      "left_offset": 16,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSC2C8",
+      "family": "SPOS",
+      "frame": "C",
+      "file": "spos\\sposc2c8.png",
+      "width": 29,
+      "height": 55,
+      "left_offset": 14,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSC3C7",
+      "family": "SPOS",
+      "frame": "C",
+      "file": "spos\\sposc3c7.png",
+      "width": 38,
+      "height": 56,
+      "left_offset": 19,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSC4C6",
+      "family": "SPOS",
+      "frame": "C",
+      "file": "spos\\sposc4c6.png",
+      "width": 38,
+      "height": 54,
+      "left_offset": 19,
+      "top_offset": 49
+    },
+    {
+      "name": "SPOSC5",
+      "family": "SPOS",
+      "frame": "C",
+      "file": "spos\\sposc5.png",
+      "width": 34,
+      "height": 55,
+      "left_offset": 17,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSD1",
+      "family": "SPOS",
+      "frame": "D",
+      "file": "spos\\sposd1.png",
+      "width": 34,
+      "height": 56,
+      "left_offset": 17,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSD2D8",
+      "family": "SPOS",
+      "frame": "D",
+      "file": "spos\\sposd2d8.png",
+      "width": 27,
+      "height": 56,
+      "left_offset": 13,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSD3D7",
+      "family": "SPOS",
+      "frame": "D",
+      "file": "spos\\sposd3d7.png",
+      "width": 30,
+      "height": 56,
+      "left_offset": 15,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSD4D6",
+      "family": "SPOS",
+      "frame": "D",
+      "file": "spos\\sposd4d6.png",
+      "width": 37,
+      "height": 55,
+      "left_offset": 18,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSD5",
+      "family": "SPOS",
+      "frame": "D",
+      "file": "spos\\sposd5.png",
+      "width": 35,
+      "height": 54,
+      "left_offset": 17,
+      "top_offset": 49
+    },
+    {
+      "name": "SPOSE1",
+      "family": "SPOS",
+      "frame": "E",
+      "file": "spos\\spose1.png",
+      "width": 24,
+      "height": 56,
+      "left_offset": 9,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSE2E8",
+      "family": "SPOS",
+      "frame": "E",
+      "file": "spos\\spose2e8.png",
+      "width": 37,
+      "height": 54,
+      "left_offset": 24,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSE3E7",
+      "family": "SPOS",
+      "frame": "E",
+      "file": "spos\\spose3e7.png",
+      "width": 44,
+      "height": 53,
+      "left_offset": 28,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSE4E6",
+      "family": "SPOS",
+      "frame": "E",
+      "file": "spos\\spose4e6.png",
+      "width": 34,
+      "height": 52,
+      "left_offset": 20,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSE5",
+      "family": "SPOS",
+      "frame": "E",
+      "file": "spos\\spose5.png",
+      "width": 25,
+      "height": 52,
+      "left_offset": 13,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSF1",
+      "family": "SPOS",
+      "frame": "F",
+      "file": "spos\\sposf1.png",
+      "width": 26,
+      "height": 56,
+      "left_offset": 11,
+      "top_offset": 51
+    },
+    {
+      "name": "SPOSF2F8",
+      "family": "SPOS",
+      "frame": "F",
+      "file": "spos\\sposf2f8.png",
+      "width": 43,
+      "height": 56,
+      "left_offset": 29,
+      "top_offset": 52
+    },
+    {
+      "name": "SPOSF3F7",
+      "family": "SPOS",
+      "frame": "F",
+      "file": "spos\\sposf3f7.png",
+      "width": 51,
+      "height": 53,
+      "left_offset": 33,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSF4F6",
+      "family": "SPOS",
+      "frame": "F",
+      "file": "spos\\sposf4f6.png",
+      "width": 41,
+      "height": 52,
+      "left_offset": 22,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSF5",
+      "family": "SPOS",
+      "frame": "F",
+      "file": "spos\\sposf5.png",
+      "width": 25,
+      "height": 52,
+      "left_offset": 12,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSG1",
+      "family": "SPOS",
+      "frame": "G",
+      "file": "spos\\sposg1.png",
+      "width": 32,
+      "height": 55,
+      "left_offset": 16,
+      "top_offset": 50
+    },
+    {
+      "name": "SPOSG2G8",
+      "family": "SPOS",
+      "frame": "G",
+      "file": "spos\\sposg2g8.png",
+      "width": 33,
+      "height": 54,
+      "left_offset": 16,
+      "top_offset": 49
+    },
+    {
+      "name": "SPOSG3G7",
+      "family": "SPOS",
+      "frame": "G",
+      "file": "spos\\sposg3g7.png",
+      "width": 43,
+      "height": 53,
+      "left_offset": 21,
+      "top_offset": 48
+    },
+    {
+      "name": "SPOSG4G6",
+      "family": "SPOS",
+      "frame": "G",
+      "file": "spos\\sposg4g6.png",
+      "width": 34,
+      "height": 52,
+      "left_offset": 17,
+      "top_offset": 47
+    },
+    {
+      "name": "SPOSG5",
+      "family": "SPOS",
+      "frame": "G",
+      "file": "spos\\sposg5.png",
+      "width": 34,
+      "height": 54,
+      "left_offset": 17,
+      "top_offset": 49
+    },
+    {
+      "name": "TROOA1",
+      "family": "TROO",
+      "frame": "A",
+      "file": "troo\\trooa1.png",
+      "width": 48,
+      "height": 60,
+      "left_offset": 23,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOA2A8",
+      "family": "TROO",
+      "frame": "A",
+      "file": "troo\\trooa2a8.png",
+      "width": 44,
+      "height": 61,
+      "left_offset": 17,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOA3A7",
+      "family": "TROO",
+      "frame": "A",
+      "file": "troo\\trooa3a7.png",
+      "width": 46,
+      "height": 60,
+      "left_offset": 16,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOA4A6",
+      "family": "TROO",
+      "frame": "A",
+      "file": "troo\\trooa4a6.png",
+      "width": 46,
+      "height": 62,
+      "left_offset": 21,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOA5",
+      "family": "TROO",
+      "frame": "A",
+      "file": "troo\\trooa5.png",
+      "width": 45,
+      "height": 59,
+      "left_offset": 25,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOB1",
+      "family": "TROO",
+      "frame": "B",
+      "file": "troo\\troob1.png",
+      "width": 50,
+      "height": 62,
+      "left_offset": 24,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOB2B8",
+      "family": "TROO",
+      "frame": "B",
+      "file": "troo\\troob2b8.png",
+      "width": 44,
+      "height": 61,
+      "left_offset": 23,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOB3B7",
+      "family": "TROO",
+      "frame": "B",
+      "file": "troo\\troob3b7.png",
+      "width": 42,
+      "height": 63,
+      "left_offset": 23,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOB4B6",
+      "family": "TROO",
+      "frame": "B",
+      "file": "troo\\troob4b6.png",
+      "width": 40,
+      "height": 64,
+      "left_offset": 18,
+      "top_offset": 60
+    },
+    {
+      "name": "TROOB5",
+      "family": "TROO",
+      "frame": "B",
+      "file": "troo\\troob5.png",
+      "width": 50,
+      "height": 62,
+      "left_offset": 25,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOC1",
+      "family": "TROO",
+      "frame": "C",
+      "file": "troo\\trooc1.png",
+      "width": 48,
+      "height": 60,
+      "left_offset": 25,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOC2C8",
+      "family": "TROO",
+      "frame": "C",
+      "file": "troo\\trooc2c8.png",
+      "width": 39,
+      "height": 61,
+      "left_offset": 17,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOC3C7",
+      "family": "TROO",
+      "frame": "C",
+      "file": "troo\\trooc3c7.png",
+      "width": 44,
+      "height": 61,
+      "left_offset": 16,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOC4C6",
+      "family": "TROO",
+      "frame": "C",
+      "file": "troo\\trooc4c6.png",
+      "width": 39,
+      "height": 62,
+      "left_offset": 15,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOC5",
+      "family": "TROO",
+      "frame": "C",
+      "file": "troo\\trooc5.png",
+      "width": 45,
+      "height": 60,
+      "left_offset": 22,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOD1",
+      "family": "TROO",
+      "frame": "D",
+      "file": "troo\\trood1.png",
+      "width": 50,
+      "height": 62,
+      "left_offset": 25,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOD2D8",
+      "family": "TROO",
+      "frame": "D",
+      "file": "troo\\trood2d8.png",
+      "width": 40,
+      "height": 62,
+      "left_offset": 20,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOD3D7",
+      "family": "TROO",
+      "frame": "D",
+      "file": "troo\\trood3d7.png",
+      "width": 39,
+      "height": 63,
+      "left_offset": 21,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOD4D6",
+      "family": "TROO",
+      "frame": "D",
+      "file": "troo\\trood4d6.png",
+      "width": 41,
+      "height": 64,
+      "left_offset": 19,
+      "top_offset": 60
+    },
+    {
+      "name": "TROOD5",
+      "family": "TROO",
+      "frame": "D",
+      "file": "troo\\trood5.png",
+      "width": 50,
+      "height": 62,
+      "left_offset": 25,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOE1",
+      "family": "TROO",
+      "frame": "E",
+      "file": "troo\\trooe1.png",
+      "width": 29,
+      "height": 62,
+      "left_offset": 14,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOE2E8",
+      "family": "TROO",
+      "frame": "E",
+      "file": "troo\\trooe2e8.png",
+      "width": 42,
+      "height": 63,
+      "left_offset": 22,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOE3E7",
+      "family": "TROO",
+      "frame": "E",
+      "file": "troo\\trooe3e7.png",
+      "width": 39,
+      "height": 63,
+      "left_offset": 21,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOE4E6",
+      "family": "TROO",
+      "frame": "E",
+      "file": "troo\\trooe4e6.png",
+      "width": 41,
+      "height": 62,
+      "left_offset": 25,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOE5",
+      "family": "TROO",
+      "frame": "E",
+      "file": "troo\\trooe5.png",
+      "width": 36,
+      "height": 62,
+      "left_offset": 19,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOF1",
+      "family": "TROO",
+      "frame": "F",
+      "file": "troo\\troof1.png",
+      "width": 54,
+      "height": 61,
+      "left_offset": 27,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOF2F8",
+      "family": "TROO",
+      "frame": "F",
+      "file": "troo\\troof2f8.png",
+      "width": 52,
+      "height": 63,
+      "left_offset": 32,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOF3F7",
+      "family": "TROO",
+      "frame": "F",
+      "file": "troo\\troof3f7.png",
+      "width": 60,
+      "height": 62,
+      "left_offset": 42,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOF4F6",
+      "family": "TROO",
+      "frame": "F",
+      "file": "troo\\troof4f6.png",
+      "width": 51,
+      "height": 62,
+      "left_offset": 29,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOF5",
+      "family": "TROO",
+      "frame": "F",
+      "file": "troo\\troof5.png",
+      "width": 41,
+      "height": 62,
+      "left_offset": 21,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOG1",
+      "family": "TROO",
+      "frame": "G",
+      "file": "troo\\troog1.png",
+      "width": 71,
+      "height": 64,
+      "left_offset": 37,
+      "top_offset": 60
+    },
+    {
+      "name": "TROOG2G8",
+      "family": "TROO",
+      "frame": "G",
+      "file": "troo\\troog2g8.png",
+      "width": 55,
+      "height": 63,
+      "left_offset": 35,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOG3G7",
+      "family": "TROO",
+      "frame": "G",
+      "file": "troo\\troog3g7.png",
+      "width": 55,
+      "height": 63,
+      "left_offset": 37,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOG4G6",
+      "family": "TROO",
+      "frame": "G",
+      "file": "troo\\troog4g6.png",
+      "width": 50,
+      "height": 62,
+      "left_offset": 28,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOG5",
+      "family": "TROO",
+      "frame": "G",
+      "file": "troo\\troog5.png",
+      "width": 64,
+      "height": 64,
+      "left_offset": 32,
+      "top_offset": 60
+    },
+    {
+      "name": "TROOH1",
+      "family": "TROO",
+      "frame": "H",
+      "file": "troo\\trooh1.png",
+      "width": 49,
+      "height": 63,
+      "left_offset": 26,
+      "top_offset": 59
+    },
+    {
+      "name": "TROOH2H8",
+      "family": "TROO",
+      "frame": "H",
+      "file": "troo\\trooh2h8.png",
+      "width": 50,
+      "height": 61,
+      "left_offset": 18,
+      "top_offset": 57
+    },
+    {
+      "name": "TROOH3H7",
+      "family": "TROO",
+      "frame": "H",
+      "file": "troo\\trooh3h7.png",
+      "width": 55,
+      "height": 60,
+      "left_offset": 22,
+      "top_offset": 56
+    },
+    {
+      "name": "TROOH4H6",
+      "family": "TROO",
+      "frame": "H",
+      "file": "troo\\trooh4h6.png",
+      "width": 53,
+      "height": 62,
+      "left_offset": 26,
+      "top_offset": 58
+    },
+    {
+      "name": "TROOH5",
+      "family": "TROO",
+      "frame": "H",
+      "file": "troo\\trooh5.png",
+      "width": 41,
+      "height": 60,
+      "left_offset": 19,
+      "top_offset": 56
+    },
+    {
+      "name": "CYBRA1",
+      "family": "CYBR",
+      "frame": "A",
+      "file": "cybr\\cybra1.png",
+      "width": 89,
+      "height": 102,
+      "left_offset": 47,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRA2A8",
+      "family": "CYBR",
+      "frame": "A",
+      "file": "cybr\\cybra2a8.png",
+      "width": 104,
+      "height": 105,
+      "left_offset": 46,
+      "top_offset": 101
+    },
+    {
+      "name": "CYBRA3A7",
+      "family": "CYBR",
+      "frame": "A",
+      "file": "cybr\\cybra3a7.png",
+      "width": 93,
+      "height": 105,
+      "left_offset": 34,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRA4A6",
+      "family": "CYBR",
+      "frame": "A",
+      "file": "cybr\\cybra4a6.png",
+      "width": 67,
+      "height": 106,
+      "left_offset": 22,
+      "top_offset": 101
+    },
+    {
+      "name": "CYBRA5",
+      "family": "CYBR",
+      "frame": "A",
+      "file": "cybr\\cybra5.png",
+      "width": 80,
+      "height": 107,
+      "left_offset": 32,
+      "top_offset": 105
+    },
+    {
+      "name": "CYBRB1",
+      "family": "CYBR",
+      "frame": "B",
+      "file": "cybr\\cybrb1.png",
+      "width": 100,
+      "height": 104,
+      "left_offset": 50,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRB2B8",
+      "family": "CYBR",
+      "frame": "B",
+      "file": "cybr\\cybrb2b8.png",
+      "width": 78,
+      "height": 100,
+      "left_offset": 46,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRB3B7",
+      "family": "CYBR",
+      "frame": "B",
+      "file": "cybr\\cybrb3b7.png",
+      "width": 108,
+      "height": 107,
+      "left_offset": 54,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRB4B6",
+      "family": "CYBR",
+      "frame": "B",
+      "file": "cybr\\cybrb4b6.png",
+      "width": 98,
+      "height": 103,
+      "left_offset": 49,
+      "top_offset": 99
+    },
+    {
+      "name": "CYBRB5",
+      "family": "CYBR",
+      "frame": "B",
+      "file": "cybr\\cybrb5.png",
+      "width": 90,
+      "height": 104,
+      "left_offset": 52,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRC1",
+      "family": "CYBR",
+      "frame": "C",
+      "file": "cybr\\cybrc1.png",
+      "width": 90,
+      "height": 102,
+      "left_offset": 42,
+      "top_offset": 98
+    },
+    {
+      "name": "CYBRC2C8",
+      "family": "CYBR",
+      "frame": "C",
+      "file": "cybr\\cybrc2c8.png",
+      "width": 74,
+      "height": 107,
+      "left_offset": 30,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRC3C7",
+      "family": "CYBR",
+      "frame": "C",
+      "file": "cybr\\cybrc3c7.png",
+      "width": 75,
+      "height": 102,
+      "left_offset": 33,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRC4C6",
+      "family": "CYBR",
+      "frame": "C",
+      "file": "cybr\\cybrc4c6.png",
+      "width": 96,
+      "height": 106,
+      "left_offset": 40,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRC5",
+      "family": "CYBR",
+      "frame": "C",
+      "file": "cybr\\cybrc5.png",
+      "width": 79,
+      "height": 107,
+      "left_offset": 47,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRD1",
+      "family": "CYBR",
+      "frame": "D",
+      "file": "cybr\\cybrd1.png",
+      "width": 96,
+      "height": 104,
+      "left_offset": 48,
+      "top_offset": 96
+    },
+    {
+      "name": "CYBRD2D8",
+      "family": "CYBR",
+      "frame": "D",
+      "file": "cybr\\cybrd2d8.png",
+      "width": 86,
+      "height": 105,
+      "left_offset": 36,
+      "top_offset": 102
+    },
+    {
+      "name": "CYBRD3D7",
+      "family": "CYBR",
+      "frame": "D",
+      "file": "cybr\\cybrd3d7.png",
+      "width": 98,
+      "height": 105,
+      "left_offset": 45,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRD4D6",
+      "family": "CYBR",
+      "frame": "D",
+      "file": "cybr\\cybrd4d6.png",
+      "width": 78,
+      "height": 103,
+      "left_offset": 31,
+      "top_offset": 99
+    },
+    {
+      "name": "CYBRD5",
+      "family": "CYBR",
+      "frame": "D",
+      "file": "cybr\\cybrd5.png",
+      "width": 75,
+      "height": 104,
+      "left_offset": 37,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRE1",
+      "family": "CYBR",
+      "frame": "E",
+      "file": "cybr\\cybre1.png",
+      "width": 95,
+      "height": 107,
+      "left_offset": 46,
+      "top_offset": 98
+    },
+    {
+      "name": "CYBRE2E8",
+      "family": "CYBR",
+      "frame": "E",
+      "file": "cybr\\cybre2e8.png",
+      "width": 78,
+      "height": 107,
+      "left_offset": 37,
+      "top_offset": 101
+    },
+    {
+      "name": "CYBRE3E7",
+      "family": "CYBR",
+      "frame": "E",
+      "file": "cybr\\cybre3e7.png",
+      "width": 85,
+      "height": 107,
+      "left_offset": 45,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRE4E6",
+      "family": "CYBR",
+      "frame": "E",
+      "file": "cybr\\cybre4e6.png",
+      "width": 83,
+      "height": 106,
+      "left_offset": 41,
+      "top_offset": 101
+    },
+    {
+      "name": "CYBRE5",
+      "family": "CYBR",
+      "frame": "E",
+      "file": "cybr\\cybre5.png",
+      "width": 96,
+      "height": 107,
+      "left_offset": 48,
+      "top_offset": 103
+    },
+    {
+      "name": "CYBRF1",
+      "family": "CYBR",
+      "frame": "F",
+      "file": "cybr\\cybrf1.png",
+      "width": 94,
+      "height": 103,
+      "left_offset": 46,
+      "top_offset": 96
+    },
+    {
+      "name": "CYBRF2F8",
+      "family": "CYBR",
+      "frame": "F",
+      "file": "cybr\\cybrf2f8.png",
+      "width": 79,
+      "height": 103,
+      "left_offset": 35,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRF3F7",
+      "family": "CYBR",
+      "frame": "F",
+      "file": "cybr\\cybrf3f7.png",
+      "width": 86,
+      "height": 104,
+      "left_offset": 43,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRF4F6",
+      "family": "CYBR",
+      "frame": "F",
+      "file": "cybr\\cybrf4f6.png",
+      "width": 88,
+      "height": 103,
+      "left_offset": 40,
+      "top_offset": 99
+    },
+    {
+      "name": "CYBRF5",
+      "family": "CYBR",
+      "frame": "F",
+      "file": "cybr\\cybrf5.png",
+      "width": 89,
+      "height": 104,
+      "left_offset": 45,
+      "top_offset": 101
+    },
+    {
+      "name": "CYBRG1",
+      "family": "CYBR",
+      "frame": "G",
+      "file": "cybr\\cybrg1.png",
+      "width": 94,
+      "height": 103,
+      "left_offset": 46,
+      "top_offset": 96
+    },
+    {
+      "name": "CYBRG2G8",
+      "family": "CYBR",
+      "frame": "G",
+      "file": "cybr\\cybrg2g8.png",
+      "width": 79,
+      "height": 103,
+      "left_offset": 34,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRG3G7",
+      "family": "CYBR",
+      "frame": "G",
+      "file": "cybr\\cybrg3g7.png",
+      "width": 86,
+      "height": 104,
+      "left_offset": 41,
+      "top_offset": 100
+    },
+    {
+      "name": "CYBRG4G6",
+      "family": "CYBR",
+      "frame": "G",
+      "file": "cybr\\cybrg4g6.png",
+      "width": 88,
+      "height": 103,
+      "left_offset": 39,
+      "top_offset": 99
+    },
+    {
+      "name": "CYBRG5",
+      "family": "CYBR",
+      "frame": "G",
+      "file": "cybr\\cybrg5.png",
+      "width": 89,
+      "height": 104,
+      "left_offset": 46,
+      "top_offset": 101
+    },
+    {
+      "name": "HEADA1",
+      "family": "HEAD",
+      "frame": "A",
+      "file": "head\\heada1.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADA2A8",
+      "family": "HEAD",
+      "frame": "A",
+      "file": "head\\heada2a8.png",
+      "width": 64,
+      "height": 66,
+      "left_offset": 32,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADA3A7",
+      "family": "HEAD",
+      "frame": "A",
+      "file": "head\\heada3a7.png",
+      "width": 67,
+      "height": 66,
+      "left_offset": 33,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADA4A6",
+      "family": "HEAD",
+      "frame": "A",
+      "file": "head\\heada4a6.png",
+      "width": 62,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADA5",
+      "family": "HEAD",
+      "frame": "A",
+      "file": "head\\heada5.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADB1",
+      "family": "HEAD",
+      "frame": "B",
+      "file": "head\\headb1.png",
+      "width": 61,
+      "height": 66,
+      "left_offset": 30,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADB2B8",
+      "family": "HEAD",
+      "frame": "B",
+      "file": "head\\headb2b8.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADB3B7",
+      "family": "HEAD",
+      "frame": "B",
+      "file": "head\\headb3b7.png",
+      "width": 68,
+      "height": 66,
+      "left_offset": 34,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADB4B6",
+      "family": "HEAD",
+      "frame": "B",
+      "file": "head\\headb4b6.png",
+      "width": 61,
+      "height": 66,
+      "left_offset": 30,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADB5",
+      "family": "HEAD",
+      "frame": "B",
+      "file": "head\\headb5.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADC1",
+      "family": "HEAD",
+      "frame": "C",
+      "file": "head\\headc1.png",
+      "width": 64,
+      "height": 67,
+      "left_offset": 32,
+      "top_offset": 62
+    },
+    {
+      "name": "HEADC2C8",
+      "family": "HEAD",
+      "frame": "C",
+      "file": "head\\headc2c8.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADC3C7",
+      "family": "HEAD",
+      "frame": "C",
+      "file": "head\\headc3c7.png",
+      "width": 66,
+      "height": 66,
+      "left_offset": 33,
+      "top_offset": 61
+    },
+    {
+      "name": "HEADC4C6",
+      "family": "HEAD",
+      "frame": "C",
+      "file": "head\\headc4c6.png",
+      "width": 63,
+      "height": 65,
+      "left_offset": 31,
+      "top_offset": 60
+    },
+    {
+      "name": "HEADC5",
+      "family": "HEAD",
+      "frame": "C",
+      "file": "head\\headc5.png",
+      "width": 63,
+      "height": 66,
+      "left_offset": 31,
+      "top_offset": 61
+    },
+    {
+      "name": "SKULA1",
+      "family": "SKUL",
+      "frame": "A",
+      "file": "skul\\skula1.png",
+      "width": 30,
+      "height": 39,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULA8A2",
+      "family": "SKUL",
+      "frame": "A",
+      "file": "skul\\skula8a2.png",
+      "width": 30,
+      "height": 38,
+      "left_offset": 14,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULA7A3",
+      "family": "SKUL",
+      "frame": "A",
+      "file": "skul\\skula7a3.png",
+      "width": 31,
+      "height": 38,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULA6A4",
+      "family": "SKUL",
+      "frame": "A",
+      "file": "skul\\skula6a4.png",
+      "width": 31,
+      "height": 38,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULA5",
+      "family": "SKUL",
+      "frame": "A",
+      "file": "skul\\skula5.png",
+      "width": 30,
+      "height": 39,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULB1",
+      "family": "SKUL",
+      "frame": "B",
+      "file": "skul\\skulb1.png",
+      "width": 30,
+      "height": 37,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULB8B2",
+      "family": "SKUL",
+      "frame": "B",
+      "file": "skul\\skulb8b2.png",
+      "width": 30,
+      "height": 36,
+      "left_offset": 14,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULB7B3",
+      "family": "SKUL",
+      "frame": "B",
+      "file": "skul\\skulb7b3.png",
+      "width": 31,
+      "height": 36,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULB6B4",
+      "family": "SKUL",
+      "frame": "B",
+      "file": "skul\\skulb6b4.png",
+      "width": 31,
+      "height": 36,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULB5",
+      "family": "SKUL",
+      "frame": "B",
+      "file": "skul\\skulb5.png",
+      "width": 30,
+      "height": 37,
+      "left_offset": 15,
+      "top_offset": 35
+    },
+    {
+      "name": "SKULC1",
+      "family": "SKUL",
+      "frame": "C",
+      "file": "skul\\skulc1.png",
+      "width": 34,
+      "height": 37,
+      "left_offset": 16,
+      "top_offset": 33
+    },
+    {
+      "name": "SKULC8C2",
+      "family": "SKUL",
+      "frame": "C",
+      "file": "skul\\skulc8c2.png",
+      "width": 34,
+      "height": 37,
+      "left_offset": 17,
+      "top_offset": 33
+    },
+    {
+      "name": "SKULC7C3",
+      "family": "SKUL",
+      "frame": "C",
+      "file": "skul\\skulc7c3.png",
+      "width": 32,
+      "height": 39,
+      "left_offset": 15,
+      "top_offset": 34
+    },
+    {
+      "name": "SKULC6C4",
+      "family": "SKUL",
+      "frame": "C",
+      "file": "skul\\skulc6c4.png",
+      "width": 38,
+      "height": 36,
+      "left_offset": 19,
+      "top_offset": 32
+    },
+    {
+      "name": "SKULC5",
+      "family": "SKUL",
+      "frame": "C",
+      "file": "skul\\skulc5.png",
+      "width": 34,
+      "height": 36,
+      "left_offset": 17,
+      "top_offset": 32
+    },
+    {
+      "name": "SKULD1",
+      "family": "SKUL",
+      "frame": "D",
+      "file": "skul\\skuld1.png",
+      "width": 34,
+      "height": 36,
+      "left_offset": 16,
+      "top_offset": 32
+    },
+    {
+      "name": "SKULD8D2",
+      "family": "SKUL",
+      "frame": "D",
+      "file": "skul\\skuld8d2.png",
+      "width": 35,
+      "height": 36,
+      "left_offset": 16,
+      "top_offset": 33
+    },
+    {
+      "name": "SKULD7D3",
+      "family": "SKUL",
+      "frame": "D",
+      "file": "skul\\skuld7d3.png",
+      "width": 34,
+      "height": 40,
+      "left_offset": 17,
+      "top_offset": 34
+    },
+    {
+      "name": "SKULD6D4",
+      "family": "SKUL",
+      "frame": "D",
+      "file": "skul\\skuld6d4.png",
+      "width": 35,
+      "height": 36,
+      "left_offset": 18,
+      "top_offset": 33
+    },
+    {
+      "name": "SKULD5",
+      "family": "SKUL",
+      "frame": "D",
+      "file": "skul\\skuld5.png",
+      "width": 34,
+      "height": 36,
+      "left_offset": 17,
+      "top_offset": 32
+    },
+    {
+      "name": "SPIDA1",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA2",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA3",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA4",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA5",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA6",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA7",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDA8",
+      "family": "SPID",
+      "frame": "A",
+      "file": "spid\\spida8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB1",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB2",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB3",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB4",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB5",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB6",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB7",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDB8",
+      "family": "SPID",
+      "frame": "B",
+      "file": "spid\\spidb8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC1",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC2",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC3",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC4",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC5",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC6",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC7",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDC8",
+      "family": "SPID",
+      "frame": "C",
+      "file": "spid\\spidc8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD1",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD2",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD3",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD4",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD5",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD6",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD7",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDD8",
+      "family": "SPID",
+      "frame": "D",
+      "file": "spid\\spidd8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE1",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE2",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE3",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE4",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE5",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE6",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE7",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDE8",
+      "family": "SPID",
+      "frame": "E",
+      "file": "spid\\spide8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF1",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF2",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF3",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF4",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF5",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF6",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF7",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDF8",
+      "family": "SPID",
+      "frame": "F",
+      "file": "spid\\spidf8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG1",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg1.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG2",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg2.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG3",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg3.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG4",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg4.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG5",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg5.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG6",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg6.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG7",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg7.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    },
+    {
+      "name": "SPIDG8",
+      "family": "SPID",
+      "frame": "G",
+      "file": "spid\\spidg8.png",
+      "width": 256,
+      "height": 100,
+      "left_offset": 128,
+      "top_offset": 100
+    }
+  ]
+}

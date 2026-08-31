@@ -25,6 +25,13 @@ checkpoints/
 *.onnx
 *.jsonl
 
+# Reviewed compact threat-detector release artifact
+!models/
+models/*
+!models/doom_threat_detector_v1/
+!models/doom_threat_detector_v1/threat_detector.pt
+!models/doom_threat_detector_v1/training_report.json
+
 # Media and generated output
 frames/
 captures/
