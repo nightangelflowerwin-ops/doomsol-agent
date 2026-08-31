@@ -1,0 +1,9 @@
+/build-agent/
+/build-native/
+/build-teacher/
+/build-teacher2/
+/build-teacher3/
+/wasm/fs/*.wad
+!/wasm/fs/defaults/
+__pycache__/
+*.pyc

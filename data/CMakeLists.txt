@@ -1,6 +1,6 @@
 # PrBoom-Plus WAD creation tool
 
-if(NOT CMAKE_CROSSCOMPILING)
+if(NOT CMAKE_CROSSCOMPILING AND NOT PRBOOM_WAD_SCRIPT_MODE)
     add_executable(rdatawad 
         rd_main.c
         rd_util.c
@@ -364,6 +364,22 @@ set(WAD_CMDLINE
     -marker FF_START -flats ${FLATS} -marker FF_END
     -marker SS_START -sprites ${SPRITEP} -marker SS_END
 )
+
+if(PRBOOM_WAD_SCRIPT_MODE)
+    if(NOT RDATAWAD_EXECUTABLE OR NOT WAD_DATA_PATH)
+        message(FATAL_ERROR "RDATAWAD_EXECUTABLE and WAD_DATA_PATH are required")
+    endif()
+    execute_process(
+        COMMAND "${RDATAWAD_EXECUTABLE}" -I "${CMAKE_CURRENT_LIST_DIR}"
+                ${WAD_CMDLINE} -o "${WAD_DATA_PATH}"
+        RESULT_VARIABLE WAD_RESULT
+        COMMAND_ECHO STDOUT
+    )
+    if(NOT WAD_RESULT EQUAL 0)
+        message(FATAL_ERROR "rdatawad failed with exit code ${WAD_RESULT}")
+    endif()
+    return()
+endif()
 
 add_custom_command(
     OUTPUT "${WAD_DATA_PATH}"

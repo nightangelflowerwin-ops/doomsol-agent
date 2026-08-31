@@ -79,6 +79,9 @@
 #include "d_deh.h"              // Ty 3/27/98 deh declarations
 #include "p_inter.h"
 #include "g_game.h"
+#ifdef __EMSCRIPTEN__
+#include "WASM/agent_api.h"
+#endif
 #include "lprintf.h"
 #include "i_main.h"
 #include "i_system.h"
@@ -836,6 +839,9 @@ void G_BuildTiccmd(ticcmd_t* cmd)
     cmd->buttons = special_event;
     special_event = 0;
   }
+#ifdef __EMSCRIPTEN__
+  agent_override_ticcmd(cmd);
+#endif
 }
 
 //
@@ -2896,7 +2902,13 @@ void G_ReloadDefaults(void)
   // killough 3/31/98, 4/5/98: demo sync insurance
   demo_insurance = default_demo_insurance == 1;
 
+#ifdef __EMSCRIPTEN__
+  /* Browser callbacks are unsafe this early in engine initialization. The
+     teacher API applies the requested episode seed after startup. */
+  rngseed = 1701;
+#else
   rngseed += I_GetRandomTimeSeed() + gametic; // CPhipps
+#endif
 }
 
 void G_DoNewGame (void)

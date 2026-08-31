@@ -240,7 +240,7 @@ else()
         set(SHARED_EMSCRIPTEN_FLAGS
             "-sUSE_SDL=2 \
             -sUSE_SDL_MIXER=2 \
-            -sSDL2_MIXER_FORMATS='[\"wav\", \"mid\"]'"
+            -sSDL2_MIXER_FORMATS=wav,mid"
         )
         set(CMAKE_C_FLAGS
             "${CMAKE_C_FLAGS} \
@@ -263,8 +263,9 @@ else()
             -sINITIAL_MEMORY=64MB \
             -sTOTAL_STACK=2MB \
             -sALLOW_MEMORY_GROWTH \
+            -sEXPORTED_RUNTIME_METHODS=ccall \
             -lidbfs.js \
-            --shell-file ../../wasm/shell.html"
+            --shell-file ${CMAKE_SOURCE_DIR}/wasm/shell.html"
         )
 
         # Embed everything into one HTML file if required
@@ -272,12 +273,12 @@ else()
             set(CMAKE_EXE_LINKER_FLAGS
                 "${CMAKE_EXE_LINKER_FLAGS} \
                 -sSINGLE_FILE=1 \
-                --embed-file=../../wasm/fs/@/"
+                --embed-file=${CMAKE_SOURCE_DIR}/wasm/fs/@/"
             )
         else()
             set(CMAKE_EXE_LINKER_FLAGS
                 "${CMAKE_EXE_LINKER_FLAGS} \
-                --preload-file=../../wasm/fs/@/"
+                --preload-file=${CMAKE_SOURCE_DIR}/wasm/fs/@/"
             )
         endif()
 

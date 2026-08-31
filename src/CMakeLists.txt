@@ -277,6 +277,8 @@ if(EMSCRIPTEN)
         ${PRBOOM_PLUS_SOURCES}
         WASM/wasm_io.c
         WASM/wasm_io.h
+        WASM/agent_api.c
+        WASM/agent_api.h
     )
 endif()
 
@@ -390,6 +392,18 @@ function(AddGameExecutable TARGET SOURCES)
     endif()
     if(NOT EMSCRIPTEN)
         add_dependencies(${TARGET} prboomwad)
+    else()
+        add_custom_command(TARGET ${TARGET} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_SOURCE_DIR}/wasm/agent_api.js
+                $<TARGET_FILE_DIR:${TARGET}>/agent_api.js
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_SOURCE_DIR}/wasm/teacher_runner.js
+                $<TARGET_FILE_DIR:${TARGET}>/teacher_runner.js
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${CMAKE_SOURCE_DIR}/wasm/normal_loop_collector.js
+                $<TARGET_FILE_DIR:${TARGET}>/normal_loop_collector.js
+        )
     endif()
 
     if(MSVC)

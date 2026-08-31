@@ -77,6 +77,7 @@
     <textarea class="emscripten" id="output" readonly></textarea>
     <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     
+    <script src="./normal_loop_collector.js"></script>
     <script>
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
@@ -181,7 +182,9 @@
           // Add code to handle exits, e.g. reload the page depending on status
           console.info('Program exited with code', status);
         },
-        arguments: window.location.search.length > 1 ? window.location.search.substr(1).split('&') : []
+        arguments: window.location.hash === '#agent-teacher'
+          ? ['-warp', '1', '1', '-skill', '3']
+          : (window.location.search.length > 1 ? window.location.search.substr(1).split('&') : [])
       };
       Module.setStatus('Downloading...');
       window.onerror = () => {
@@ -190,6 +193,13 @@
         Module.setStatus = (text) => {
           if (text) console.error('[post-exception status] ' + text);
         };
+      };
+      window.__prepareDwasmTeacher = (seed) => {
+        const params = new URLSearchParams(window.location.search);
+        window.installDwasmNormalLoopCollector(canvasElement, {
+          seed,
+          chunkSize: Number(params.get('chunkSize')) || 50
+        });
       };
     </script>
     {{{ SCRIPT }}}

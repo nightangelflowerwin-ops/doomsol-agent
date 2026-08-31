@@ -105,6 +105,7 @@
 #include "m_io.h"
 
 #ifdef __EMSCRIPTEN__
+#include "WASM/agent_api.h"
 #include "WASM/wasm_io.h"
 #include <emscripten.h>
 #endif // __EMSCRIPTEN__
@@ -620,6 +621,11 @@ static void D_LoopLoopIter(void)
         }
       }
 
+#ifdef __EMSCRIPTEN__
+      /* Sampling belongs after the authoritative tic and its rendered frame. */
+      agent_teacher_after_render();
+#endif
+
       // CPhipps - auto screenshot
       if (auto_shot_fname && !--auto_shot_count) {
   auto_shot_count = auto_shot_time;
@@ -639,6 +645,22 @@ static void D_LoopLoopIter(void)
       }
 }
 
+void D_AgentLoopIter(void)
+{
+  ticcmd_t *cmd = &netcmds[consoleplayer][maketic % BACKUPTICS];
+  memset(cmd, 0, sizeof(*cmd));
+  agent_override_ticcmd(cmd);
+  players[consoleplayer].cmd = *cmd;
+  if (advancedemo)
+    D_DoAdvanceDemo();
+  M_Ticker();
+  G_Ticker();
+  P_Checksum(gametic);
+  gametic++;
+  maketic++;
+  D_Display(FRACUNIT);
+}
+
 static void D_DoomLoop(void)
 {
   if (quickstart_window_ms > 0)
@@ -646,6 +668,29 @@ static void D_DoomLoop(void)
 
 #ifdef __EMSCRIPTEN__
   wasm_hide_console();
+  if (EM_ASM_INT({ return window.location.hash === '#agent-teacher' ? 1 : 0; })) {
+    int teacher_seed = EM_ASM_INT({
+      var value = Number(new URLSearchParams(window.location.search).get('seed'));
+      return Number.isInteger(value) && value > 0 ? value : 1701;
+    });
+    int teacher_seconds = EM_ASM_INT({
+      var value = Number(new URLSearchParams(window.location.search).get('seconds'));
+      return Number.isInteger(value) && value > 0 && value <= 21600 ? value : 10;
+    });
+    int teacher_capture_every = EM_ASM_INT({
+      var value = Number(new URLSearchParams(window.location.search).get('captureEvery'));
+      return Number.isInteger(value) && value > 0 && value <= 35 ? value : 5;
+    });
+    singletics = true;
+    EM_ASM({
+      if (window.__prepareDwasmTeacher)
+        window.__prepareDwasmTeacher($0, $1, $2);
+    }, teacher_seed, teacher_seconds, teacher_capture_every);
+    agent_teacher_begin((unsigned int)teacher_seed,
+                        teacher_seconds * TICRATE,
+                        teacher_capture_every);
+  }
+  /* The engine remains the sole clock owner; the collector starts teacher time. */
   emscripten_set_main_loop(D_LoopLoopIter, 0, 0);
 #else
   for (;;)
