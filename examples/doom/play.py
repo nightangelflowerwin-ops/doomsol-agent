@@ -32,6 +32,10 @@ def main() -> None:
     parser.add_argument("--training-wall-seconds", type=float, default=0.0)
     parser.add_argument("--random-policy", action="store_true")
     parser.add_argument("--greedy", action="store_true")
+    parser.add_argument("--visible", action="store_true",
+                        help="Show the live ViZDoom window while the agent plays.")
+    parser.add_argument("--log-every", type=float, default=10.0,
+                        help="Print the live action and score at this interval in seconds.")
     args = parser.parse_args()
     payload = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
     all_action_names = tuple(payload["actions"])
@@ -46,7 +50,10 @@ def main() -> None:
     torch.manual_seed(seed + 1000)
     model.to(device).eval()
     option_ids = torch.tensor(doom_option_ids, device=device)
-    game = make_game(seed + 1000, payload["scenario"], args.capture_resolution)
+    game = make_game(
+        seed + 1000, payload["scenario"], args.capture_resolution,
+        window_visible=args.visible,
+    )
     writer = None
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -55,6 +62,8 @@ def main() -> None:
     decisions = []
     video_frames = video_tics = total_steps = 0
     first_item = None
+    session_started = time.perf_counter()
+    next_log = session_started
     limit = round(args.game_seconds * TICS_PER_SECOND / TICS_PER_ACTION)
     try:
         for episode in range(1, args.episodes + 1):
@@ -92,6 +101,18 @@ def main() -> None:
                 )
                 episode_reward += float(reward)
                 latencies.append(latency)
+                now = time.perf_counter()
+                if args.log_every > 0 and now >= next_log:
+                    probabilities = tensors["probabilities"][0].cpu().tolist()
+                    print(json.dumps({
+                        "session_seconds": round(now - session_started, 1),
+                        "episode": episode,
+                        "action": action_names[action],
+                        "confidence": round(float(probabilities[action]), 4),
+                        "episode_reward": round(episode_reward, 2),
+                        "kills": int(game.get_game_variable(vzd.GameVariable.KILLCOUNT)),
+                    }), flush=True)
+                    next_log = now + args.log_every
                 if args.trace:
                     buffer = io.BytesIO()
                     Image.fromarray(frame).save(buffer, format="JPEG", quality=88)

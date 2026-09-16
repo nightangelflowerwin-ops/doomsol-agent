@@ -37,7 +37,8 @@ DEFEND_ACTIONS = DOOM_ACTIONS
 
 def make_game(seed: int = 7, scenario: str = "deadly_corridor",
               screen_resolution: str = "160x120",
-              include_use: bool = False) -> vzd.DoomGame:
+              include_use: bool = False,
+              window_visible: bool = False) -> vzd.DoomGame:
     """Create a headless game, optionally exposing Doom's door/switch USE button."""
     game = vzd.DoomGame()
     game.load_config(str(Path(vzd.scenarios_path) / f"{scenario}.cfg"))
@@ -52,7 +53,7 @@ def make_game(seed: int = 7, scenario: str = "deadly_corridor",
         game.add_available_game_variable(vzd.GameVariable.HITCOUNT)
     if scenario == "deadly_corridor":
         game.add_available_game_variable(vzd.GameVariable.ARMOR)
-    game.set_window_visible(False)
+    game.set_window_visible(window_visible)
     game.set_screen_format(vzd.ScreenFormat.RGB24)
     game.set_screen_resolution({
         "160x120": vzd.ScreenResolution.RES_160X120,
