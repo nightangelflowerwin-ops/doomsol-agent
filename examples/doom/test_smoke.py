@@ -3,7 +3,7 @@
 import numpy as np
 import torch
 
-from environment import DOOM_ACTIONS
+from environment import DOOM_ACTIONS, DOOM_ACTIONS_WITH_USE, action_vector_for_game, make_game
 from jevlike.vision import (
     CHESS_OPTION_IDS,
     TOTAL_OPTIONS,
@@ -39,3 +39,18 @@ def test_one_table_selects_the_five_chess_keys() -> None:
     assert model.options.num_embeddings == 12
     assert logits.shape == (1, 5)
     assert value.shape == (1,)
+
+
+def test_use_action_is_available_without_changing_legacy_controller() -> None:
+    game = make_game(seed=11, include_use=True)
+    try:
+        assert len(DOOM_ACTIONS) == 7
+        assert DOOM_ACTIONS_WITH_USE[-1] == "use"
+        use = action_vector_for_game(
+            DOOM_ACTIONS_WITH_USE.index("use"), DOOM_ACTIONS_WITH_USE, game
+        )
+        assert sum(use) == 1
+        assert use[-1] is True
+        game.make_action(use, 1)
+    finally:
+        game.close()

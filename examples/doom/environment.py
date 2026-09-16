@@ -20,6 +20,7 @@ DOOM_ACTIONS = (
     "strafe right",
     "attack",
 )
+DOOM_ACTIONS_WITH_USE = (*DOOM_ACTIONS, "use")
 ACTION_BUTTONS = {
     "turn left": vzd.Button.TURN_LEFT,
     "turn right": vzd.Button.TURN_RIGHT,
@@ -28,20 +29,24 @@ ACTION_BUTTONS = {
     "strafe left": vzd.Button.MOVE_LEFT,
     "strafe right": vzd.Button.MOVE_RIGHT,
     "attack": vzd.Button.ATTACK,
+    "use": vzd.Button.USE,
 }
 # Compatibility name used by the experiment scripts and released checkpoints.
 DEFEND_ACTIONS = DOOM_ACTIONS
 
 
 def make_game(seed: int = 7, scenario: str = "deadly_corridor",
-              screen_resolution: str = "160x120") -> vzd.DoomGame:
-    """Create a headless game with the same seven buttons in both supported levels."""
+              screen_resolution: str = "160x120",
+              include_use: bool = False) -> vzd.DoomGame:
+    """Create a headless game, optionally exposing Doom's door/switch USE button."""
     game = vzd.DoomGame()
     game.load_config(str(Path(vzd.scenarios_path) / f"{scenario}.cfg"))
     if scenario == "defend_the_center":
         for button in (vzd.Button.MOVE_FORWARD, vzd.Button.MOVE_BACKWARD,
                        vzd.Button.MOVE_LEFT, vzd.Button.MOVE_RIGHT):
             game.add_available_button(button)
+    if include_use:
+        game.add_available_button(vzd.Button.USE)
     if scenario in ("defend_the_center", "deadly_corridor"):
         game.add_available_game_variable(vzd.GameVariable.KILLCOUNT)
         game.add_available_game_variable(vzd.GameVariable.HITCOUNT)
@@ -56,8 +61,11 @@ def make_game(seed: int = 7, scenario: str = "deadly_corridor",
     game.set_labels_buffer_enabled(True)
     game.set_seed(seed)
     game.init()
-    if len(game.get_available_buttons()) != len(DOOM_ACTIONS):
-        raise RuntimeError(f"expected seven buttons, got {game.get_available_buttons()}")
+    expected_actions = DOOM_ACTIONS_WITH_USE if include_use else DOOM_ACTIONS
+    if len(game.get_available_buttons()) != len(expected_actions):
+        raise RuntimeError(
+            f"expected {len(expected_actions)} buttons, got {game.get_available_buttons()}"
+        )
     return game
 
 

@@ -9,5 +9,6 @@ build/
 dist/
 .DS_Store
 *.mp3
+_vizdoom.ini
 node_modules/
 examples/film/replay.html
