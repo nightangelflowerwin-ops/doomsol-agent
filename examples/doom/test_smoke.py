@@ -5,7 +5,10 @@ import torch
 from types import SimpleNamespace
 
 from diagnostics import enemy_observation
-from environment import DOOM_ACTIONS, DOOM_ACTIONS_WITH_USE, action_vector_for_game, make_game
+from environment import (
+    DOOM_ACTIONS, DOOM_ACTIONS_WITH_USE, action_vector_for_game,
+    action_vector_for_names, make_game,
+)
 from train_imitation import expert_action
 from jevlike.vision import (
     CHESS_OPTION_IDS,
@@ -105,3 +108,13 @@ def test_aligned_enemy_teacher_interleaves_fire_and_evasion() -> None:
         game.episode_time = phase * 4
         actions.append(DOOM_ACTIONS[expert_action(state, game=game)])
     assert actions == ["attack", "strafe left", "strafe right"]
+
+
+def test_authoritative_teacher_can_combine_fire_and_movement() -> None:
+    game = make_game(seed=12, include_use=True, teacher_truth=True)
+    try:
+        vector = action_vector_for_names({"attack", "strafe right", "move forward"}, game)
+        assert sum(vector) == 3
+        game.make_action(vector, 1)
+    finally:
+        game.close()

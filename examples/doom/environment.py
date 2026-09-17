@@ -38,7 +38,8 @@ DEFEND_ACTIONS = DOOM_ACTIONS
 def make_game(seed: int = 7, scenario: str = "deadly_corridor",
               screen_resolution: str = "160x120",
               include_use: bool = False,
-              window_visible: bool = False) -> vzd.DoomGame:
+              window_visible: bool = False,
+              teacher_truth: bool = False) -> vzd.DoomGame:
     """Create a headless game, optionally exposing Doom's door/switch USE button."""
     game = vzd.DoomGame()
     game.load_config(str(Path(vzd.scenarios_path) / f"{scenario}.cfg"))
@@ -60,6 +61,8 @@ def make_game(seed: int = 7, scenario: str = "deadly_corridor",
         "640x480": vzd.ScreenResolution.RES_640X480,
     }[screen_resolution])
     game.set_labels_buffer_enabled(True)
+    game.set_objects_info_enabled(teacher_truth)
+    game.set_sectors_info_enabled(teacher_truth)
     game.set_seed(seed)
     game.init()
     expected_actions = DOOM_ACTIONS_WITH_USE if include_use else DOOM_ACTIONS
@@ -74,6 +77,12 @@ def action_vector_for_game(index: int, names: tuple[str, ...],
                            game: vzd.DoomGame) -> list[bool]:
     selected = ACTION_BUTTONS[names[index]]
     return [button == selected for button in game.get_available_buttons()]
+
+
+def action_vector_for_names(names: set[str], game: vzd.DoomGame) -> list[bool]:
+    """Build a simultaneous-button action for an authoritative teacher."""
+    selected = {ACTION_BUTTONS[name] for name in names}
+    return [button in selected for button in game.get_available_buttons()]
 
 
 def draw_curve(values: list[float], path: Path) -> None:
