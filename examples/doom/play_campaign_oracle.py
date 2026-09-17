@@ -14,6 +14,7 @@ import numpy as np
 import vizdoom as vzd
 
 from jevlike.provenance import provenance
+from jevlike.watermark import stamp_frame
 from environment import TICS_PER_ACTION, TICS_PER_SECOND, action_vector_for_names
 from play_tactical_oracle import TacticalOracle, angle_delta, bearing
 from wad_navigation import DOOR_SPECIALS, Portal, WadMap
@@ -330,8 +331,9 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                 total_video_tics += TICS_PER_ACTION
                 target_frames = round(total_video_tics * 30 / TICS_PER_SECOND)
                 if writer:
+                    marked_frame = stamp_frame(frame)
                     while total_video_frames < target_frames:
-                        writer.append_data(frame)
+                        writer.append_data(marked_frame)
                         total_video_frames += 1
                 steps += 1
                 if pace:

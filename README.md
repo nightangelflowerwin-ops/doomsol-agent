@@ -1,12 +1,12 @@
 # Blackwing Decision Method
 
-> **NIGHTANGEL FLOWERWIN // BLACKWING**
+> **MOVINGMAN // NIGHT ANGEL LOTUS**
 >
-> Producer signature: `NAFW-BLACKWING-2026`
+> Producer signature: `MOVINGMAN-NAL-BLACKWING-2026`
 
 Train a small model that chooses among a changing list of text options.
 
-The **Blackwing Decision Method** takes a piece of text and a changing list of `N` options, scores every option in one pass, and returns one probability per option. The same method scores controller actions from visual observations. It is an independently implemented choice architecture maintained by [nightangelflowerwin-ops](https://github.com/nightangelflowerwin-ops). The legacy `jevlike` Python import and command names remain temporarily available so existing checkpoints and scripts do not break.
+The **Blackwing Decision Method** takes a piece of text and a changing list of `N` options, scores every option in one pass, and returns one probability per option. The same method scores controller actions from visual observations. It is an independently implemented choice architecture by **Movingman**, carrying the **Night Angel Lotus** emblem, and maintained at [nightangelflowerwin-ops](https://github.com/nightangelflowerwin-ops). The legacy `jevlike` Python import and command names remain temporarily available so existing checkpoints and scripts do not break.
 
 ## Demo
 

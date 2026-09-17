@@ -18,6 +18,7 @@ import numpy as np
 import vizdoom as vzd
 
 from jevlike.provenance import provenance
+from jevlike.watermark import stamp_frame
 from diagnostics import ENEMY_NAMES
 from environment import TICS_PER_ACTION, TICS_PER_SECOND, action_vector_for_names, make_game
 
@@ -197,8 +198,9 @@ def main() -> None:
             video_tics += TICS_PER_ACTION
             target_frames = round(video_tics * 30 / TICS_PER_SECOND)
             if writer:
+                marked_frame = stamp_frame(frame)
                 while video_frames < target_frames:
-                    writer.append_data(frame)
+                    writer.append_data(marked_frame)
                     video_frames += 1
             total_steps += 1
             elapsed = time.perf_counter() - now

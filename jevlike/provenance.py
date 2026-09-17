@@ -1,9 +1,10 @@
-"""Stable authorship metadata for Nightangel Flowerwin projects."""
+"""Stable authorship metadata for Movingman's Night Angel Lotus projects."""
 
 METHOD_NAME = "Blackwing Decision Method"
-PRODUCER = "nightangelflowerwin-ops"
-PRODUCER_TAG = "NIGHTANGEL FLOWERWIN // BLACKWING"
-SIGNATURE = "NAFW-BLACKWING-2026"
+PRODUCER = "MOVINGMAN"
+PRODUCER_TAG = "MOVINGMAN // NIGHT ANGEL LOTUS"
+EMBLEM = "Night Angel Lotus"
+SIGNATURE = "MOVINGMAN-NAL-BLACKWING-2026"
 
 
 def provenance() -> dict[str, str]:
@@ -12,5 +13,6 @@ def provenance() -> dict[str, str]:
         "method": METHOD_NAME,
         "producer": PRODUCER,
         "producer_tag": PRODUCER_TAG,
+        "emblem": EMBLEM,
         "signature": SIGNATURE,
     }

@@ -1,7 +1,8 @@
 {
-  "producer": "nightangelflowerwin-ops",
-  "producer_tag": "NIGHTANGEL FLOWERWIN // BLACKWING",
+  "producer": "MOVINGMAN",
+  "producer_tag": "MOVINGMAN // NIGHT ANGEL LOTUS",
+  "emblem": "Night Angel Lotus",
   "method": "Blackwing Decision Method",
-  "signature": "NAFW-BLACKWING-2026",
+  "signature": "MOVINGMAN-NAL-BLACKWING-2026",
   "repository": "https://github.com/nightangelflowerwin-ops/doomsol-agent"
 }
