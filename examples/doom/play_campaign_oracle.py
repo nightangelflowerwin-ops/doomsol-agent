@@ -86,7 +86,7 @@ def make_campaign_game(wad: Path, map_name: str, seed: int, visible: bool,
 
 
 class CampaignNavigator:
-    def __init__(self, map_truth: WadMap) -> None:
+    def __init__(self, map_truth: WadMap, semantic_memory: dict | None = None) -> None:
         self.map = map_truth
         self.objective: tuple[float, float, str] | None = None
         self.route: deque[Portal] = deque()
@@ -103,6 +103,12 @@ class CampaignNavigator:
         self.backtrack_target: tuple[float, float, str] | None = None
         self.ignored_pickups: set[tuple[int, int, str]] = set()
         self.loot_sweep_steps = 0
+        self.semantic_memory = semantic_memory or {}
+        self.blocked_points = [
+            (float(item["x"]), float(item["y"]))
+            for item in self.semantic_memory.get("stall_hotspots", [])
+            if int(item.get("observations", 0)) >= 2
+        ]
 
     def request_scan(self, reason: str) -> None:
         """Schedule one full survey before committing to the next route."""
@@ -233,7 +239,8 @@ class CampaignNavigator:
 
         if objective_changed or not self.route:
             self.route = deque(self.map.route(
-                (player.position_x, player.position_y), current_objective[:2]
+                (player.position_x, player.position_y), current_objective[:2],
+                blocked_points=self.blocked_points,
             ))
         while self.route and math.hypot(
             self.route[0].x - player.position_x,
@@ -316,12 +323,14 @@ class CampaignNavigator:
             "waypoints_remaining": len(self.route), "aim_error_degrees": round(error, 2),
             "stuck_recovery": stuck, "breadcrumbs": len(self.breadcrumbs),
             "backtracking": self.backtrack_target is not None,
+            "semantic_stall_hotspots": len(self.blocked_points),
         }
 
 
 def run_map(wad: Path, map_name: str, seed: int, visible: bool,
             timeout_seconds: float, retries: int, writer, trace_file,
-            pace: bool = True, skill: int = 1) -> dict:
+            pace: bool = True, skill: int = 1,
+            semantic_memory: dict | None = None) -> dict:
     truth = WadMap(wad, map_name)
     attempts = []
     total_video_tics = total_video_frames = 0
@@ -329,7 +338,7 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
         game = make_campaign_game(wad, map_name, seed + attempt, visible,
                                   timeout_seconds, skill)
         combat = TacticalOracle()
-        navigation = CampaignNavigator(truth)
+        navigation = CampaignNavigator(truth, semantic_memory)
         counts: Counter[str] = Counter()
         started = time.perf_counter()
         last_log = started
@@ -419,6 +428,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--trace", type=Path)
     parser.add_argument("--summary", type=Path)
+    parser.add_argument("--semantic-memory", type=Path)
     args = parser.parse_args()
     if args.episode and args.maps:
         parser.error("choose either --episode or --maps, not both")
@@ -426,6 +436,8 @@ def main() -> None:
         name.upper() for name in (args.maps or ["E1M1"])
     ]
     wad = args.wad.resolve()
+    semantic_memory = (json.loads(args.semantic_memory.read_text(encoding="utf-8"))
+                       if args.semantic_memory else None)
     writer = imageio.get_writer(args.output, fps=30, codec="libx264", quality=8) if args.output else None
     trace_file = args.trace.open("w", encoding="utf-8") if args.trace else None
     results = []
@@ -434,7 +446,7 @@ def main() -> None:
             result = run_map(wad, map_name.upper(), args.seed + index * 100,
                              args.visible, args.seconds_per_map, args.retries,
                              writer, trace_file, pace=not args.no_pace,
-                             skill=args.skill)
+                             skill=args.skill, semantic_memory=semantic_memory)
             results.append(result)
             if not result["completed"]:
                 break

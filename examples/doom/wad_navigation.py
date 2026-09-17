@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import collections
+import math
 import struct
 from dataclasses import dataclass
 from pathlib import Path
@@ -102,7 +103,8 @@ class WadMap:
                 return sector
         return None
 
-    def route(self, start: tuple[float, float], goal: tuple[float, float]) -> list[Portal]:
+    def route(self, start: tuple[float, float], goal: tuple[float, float],
+              blocked_points: list[tuple[float, float]] | None = None) -> list[Portal]:
         source = self.sector_at(*start)
         target = self.sector_at(*goal)
         if source is None or target is None:
@@ -116,10 +118,17 @@ class WadMap:
             if current == target:
                 break
             for portal in self.graph[current]:
+                if blocked_points and any(
+                    math.hypot(portal.x - x, portal.y - y) < 64
+                    for x, y in blocked_points
+                ):
+                    continue
                 if portal.target_sector not in previous:
                     previous[portal.target_sector] = (current, portal)
                     queue.append(portal.target_sector)
         if target not in previous:
+            if blocked_points:
+                return self.route(start, goal)
             return []
         portals = []
         current = target
