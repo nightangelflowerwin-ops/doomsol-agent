@@ -1,0 +1,27 @@
+{
+  "method": "Blackwing Decision Method",
+  "producer_tag": "MOVINGMAN 🪷",
+  "training_seconds_each": 300,
+  "scenario": "deadly_corridor",
+  "evaluation_game_seconds": 60,
+  "compact": {
+    "training_examples": 15082,
+    "updates": 117,
+    "final_batch_accuracy": 0.265625,
+    "evaluation_mean_kills": 0.07894736842105263,
+    "evaluation_mean_reward": 137.17804999100534
+  },
+  "full_connectome": {
+    "neurons": 166700,
+    "descending_neurons": 1314,
+    "training_examples": 5842,
+    "updates": 45,
+    "final_batch_accuracy": 0.15625,
+    "evaluation_mean_kills": 0.038461538461538464,
+    "evaluation_mean_reward": -64.30460651104266
+  },
+  "promotion": {
+    "approved": false,
+    "reason": "Both readouts remain below the existing playable baseline."
+  }
+}
