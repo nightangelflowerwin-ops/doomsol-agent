@@ -1,8 +1,8 @@
 # Blackwing Decision Method
 
-> **MOVINGMAN // NIGHT ANGEL LOTUS**
+> **MOVINGMAN 🪷**
 >
-> Producer signature: `MOVINGMAN-NAL-BLACKWING-2026`
+> Producer signature: `MOVINGMAN-LOTUS-BLACKWING-2026`
 
 Train a small model that chooses among a changing list of text options.
 

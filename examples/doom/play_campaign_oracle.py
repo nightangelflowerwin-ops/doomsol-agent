@@ -23,7 +23,7 @@ from wad_navigation import DOOR_SPECIALS, Portal, WadMap
 BUTTONS = (
     vzd.Button.TURN_LEFT, vzd.Button.TURN_RIGHT, vzd.Button.MOVE_FORWARD,
     vzd.Button.MOVE_BACKWARD, vzd.Button.MOVE_LEFT, vzd.Button.MOVE_RIGHT,
-    vzd.Button.ATTACK, vzd.Button.USE,
+    vzd.Button.ATTACK, vzd.Button.USE, vzd.Button.JUMP,
 )
 KEY_NAMES = {"BlueCard", "YellowCard", "RedCard", "BlueSkull", "YellowSkull", "RedSkull"}
 HEALTH_NAMES = {"Medikit", "Stimpack", "HealthBonus", "Berserk"}
@@ -32,6 +32,8 @@ WEAPON_NAMES = {"Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher",
                 "PlasmaRifle", "BFG9000", "Chainsaw"}
 AMMO_NAMES = {"Clip", "ClipBox", "Shell", "ShellBox", "RocketAmmo",
               "RocketBox", "Cell", "CellPack", "Backpack"}
+POWERUP_NAMES = {"Soulsphere", "Megasphere", "BlurSphere", "InvulnerabilitySphere",
+                 "RadiationSuit", "ComputerMap", "LightAmp", "Berserk"}
 
 
 def make_campaign_game(wad: Path, map_name: str, seed: int, visible: bool,
@@ -78,12 +80,15 @@ class CampaignNavigator:
         self.breadcrumbs: deque[tuple[float, float, int | None]] = deque(maxlen=256)
         self.backtrack_target: tuple[float, float, str] | None = None
         self.ignored_pickups: set[tuple[int, int, str]] = set()
+        self.loot_sweep_steps = 0
 
     def request_scan(self, reason: str) -> None:
         """Schedule one full survey before committing to the next route."""
         if not self.scan_steps:
             self.scan_steps = 18
             self.scan_reason = reason
+            if reason == "room_cleared":
+                self.loot_sweep_steps = 120
 
     def _remember_position(self, player) -> None:
         point = (float(player.position_x), float(player.position_y))
@@ -121,9 +126,21 @@ class CampaignNavigator:
             item = min(weapons, key=lambda value: math.hypot(
                 value.position_x - player.position_x, value.position_y - player.position_y
             ))
+            weapon_limit = 1000 if self.loot_sweep_steps else 500
             if math.hypot(item.position_x - player.position_x,
-                          item.position_y - player.position_y) < 500:
+                          item.position_y - player.position_y) < weapon_limit:
                 return float(item.position_x), float(item.position_y), item.name
+        if self.loot_sweep_steps:
+            powerups = [item for item in (state.objects or []) if item.name in POWERUP_NAMES
+                        and (round(item.position_x), round(item.position_y), item.name)
+                        not in self.ignored_pickups]
+            if powerups:
+                item = min(powerups, key=lambda value: math.hypot(
+                    value.position_x - player.position_x, value.position_y - player.position_y
+                ))
+                if math.hypot(item.position_x - player.position_x,
+                              item.position_y - player.position_y) < 1000:
+                    return float(item.position_x), float(item.position_y), item.name
         if health < 55:
             supplies = [item for item in (state.objects or []) if item.name in HEALTH_NAMES
                         and (round(item.position_x), round(item.position_y), item.name)
@@ -173,12 +190,14 @@ class CampaignNavigator:
     def decide(self, state, health: float, armor: float) -> tuple[set[str], dict]:
         player = next(item for item in state.objects if item.name == "DoomPlayer")
         self._remember_position(player)
+        if self.loot_sweep_steps:
+            self.loot_sweep_steps -= 1
         if self.scan_steps:
             self.scan_steps -= 1
             reason = self.scan_reason
             if not self.scan_steps:
                 self.scan_reason = None
-            return {"turn left", "use"}, {
+            return {"turn left"}, {
                 "mode": "survey_360", "scan_reason": reason,
                 "scan_steps_remaining": self.scan_steps,
                 "breadcrumbs": len(self.breadcrumbs),
@@ -253,13 +272,16 @@ class CampaignNavigator:
         if stuck:
             self.stuck_events += 1
             if self.stuck_events >= 2:
-                if current_objective[2] in WEAPON_NAMES | AMMO_NAMES | HEALTH_NAMES | ARMOR_NAMES:
+                if current_objective[2] in (WEAPON_NAMES | AMMO_NAMES | HEALTH_NAMES
+                                            | ARMOR_NAMES | POWERUP_NAMES):
                     self.ignored_pickups.add((round(current_objective[0]),
                                               round(current_objective[1]),
                                               current_objective[2]))
                 self._begin_backtrack(player)
             self.request_scan("navigation_stall")
-            actions = {"turn left", "use"}
+            actions = {"turn left", "move backward", "jump"}
+            if needs_use:
+                actions.add("use")
             self.last_positions.clear()
             self.distance_history.clear()
         if not actions:

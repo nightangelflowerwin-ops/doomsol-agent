@@ -30,6 +30,7 @@ ACTION_BUTTONS = {
     "strafe right": vzd.Button.MOVE_RIGHT,
     "attack": vzd.Button.ATTACK,
     "use": vzd.Button.USE,
+    "jump": vzd.Button.JUMP,
 }
 # Compatibility name used by the experiment scripts and released checkpoints.
 DEFEND_ACTIONS = DOOM_ACTIONS

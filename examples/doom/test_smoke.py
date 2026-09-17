@@ -10,6 +10,7 @@ from environment import (
     action_vector_for_names, make_game,
 )
 from train_imitation import expert_action
+from play_tactical_oracle import is_projectile_name
 from jevlike.vision import (
     CHESS_OPTION_IDS,
     TOTAL_OPTIONS,
@@ -32,6 +33,15 @@ def test_visual_scorer_preserves_each_option_axis() -> None:
     assert value.shape == (1,)
     assert trace["attention_map"].shape == (1, len(DOOM_ACTIONS), 80)
     assert torch.allclose(trace["probabilities"].sum(-1), torch.ones(1))
+
+
+def test_projectiles_do_not_include_weapon_or_ammo_pickups() -> None:
+    assert is_projectile_name("DoomImpBall")
+    assert is_projectile_name("RevenantTracer")
+    assert is_projectile_name("Rocket")
+    assert not is_projectile_name("RocketLauncher")
+    assert not is_projectile_name("RocketBox")
+    assert not is_projectile_name("PlasmaRifle")
 
 
 def test_one_table_selects_the_five_chess_keys() -> None:

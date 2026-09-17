@@ -31,6 +31,16 @@ def object_distance(a, b) -> float:
     return math.hypot(a.position_x - b.position_x, a.position_y - b.position_y)
 
 
+def is_projectile_name(name: str) -> bool:
+    """Identify active shots without confusing weapon/ammunition pickups."""
+    lowered = name.lower()
+    if any(token in lowered for token in
+           ("launcher", "rifle", "ammo", "box", "pack", "weapon")):
+        return False
+    return (lowered.endswith("ball") or lowered.endswith("missile")
+            or lowered.endswith("tracer") or lowered in {"rocket", "plasma", "fire"})
+
+
 def bearing(a, b) -> float:
     return math.degrees(math.atan2(b.position_y - a.position_y,
                                    b.position_x - a.position_x)) % 360.0
@@ -51,6 +61,7 @@ class TacticalOracle:
         objects = list(state.objects or [])
         player = next(item for item in objects if item.name == "DoomPlayer")
         enemies = [item for item in objects if item.name in ENEMY_NAMES]
+        all_visible_ids = {label.object_id for label in (state.labels or [])}
         visible_ids = {
             label.object_id for label in (state.labels or [])
             if label.object_name in ENEMY_NAMES
@@ -68,22 +79,35 @@ class TacticalOracle:
                 "enemy_count": 0, "visible_enemies": 0,
             }
 
-        # Visible threats are engaged first. Otherwise rotate toward the nearest
-        # known enemy coordinate until Doom's sight line becomes clear.
-        target = min(
-            enemies,
-            key=lambda item: (item.id not in visible_ids, object_distance(player, item)),
-        )
+        # Shoot an explosive barrel only when it is visible, the player is out
+        # of the blast radius, and at least one enemy is close enough to it.
+        barrels = [item for item in objects
+                   if item.name in {"ExplosiveBarrel", "Barrel"}
+                   and item.id in all_visible_ids and object_distance(player, item) > 192.0]
+        useful_barrels = [
+            (sum(object_distance(barrel, enemy) < 192.0 for enemy in enemies), barrel)
+            for barrel in barrels
+        ]
+        useful_barrels = [pair for pair in useful_barrels if pair[0] > 0]
+        if useful_barrels:
+            _, target = max(useful_barrels, key=lambda pair: pair[0])
+            target_kind = "explosive_barrel"
+        else:
+            # Visible threats are engaged first. Otherwise rotate toward the
+            # nearest known enemy coordinate until sight becomes clear.
+            target = min(
+                enemies,
+                key=lambda item: (item.id not in visible_ids, object_distance(player, item)),
+            )
+            target_kind = "enemy"
         distance = object_distance(player, target)
         target_bearing = bearing(player, target)
         error = angle_delta(target_bearing, float(player.angle))
-        line_of_sight = target.id in visible_ids
+        line_of_sight = target.id in all_visible_ids
         incoming_names = [
             item.name for item in objects
             if item.name not in ENEMY_NAMES and item.name not in {"DoomPlayer", "GreenArmor"}
-            and "ammo" not in item.name.lower()
-            and any(token in item.name.lower() for token in
-                    ("ball", "rocket", "plasma", "fire", "tracer", "missile"))
+            and is_projectile_name(item.name)
         ]
 
         actions: set[str] = set()
@@ -116,6 +140,7 @@ class TacticalOracle:
         return actions, {
             "mode": "engage" if line_of_sight else "search",
             "target_id": int(target.id), "target_name": target.name,
+            "target_kind": target_kind,
             "target_distance": round(distance, 3),
             "target_bearing": round(target_bearing, 3),
             "aim_error_degrees": round(error, 3),
