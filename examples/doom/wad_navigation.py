@@ -25,6 +25,8 @@ class Portal:
     x: float
     y: float
     special: int
+    floor_delta: int = 0
+    opening: int = 128
 
 
 class WadMap:
@@ -39,6 +41,10 @@ class WadMap:
         self.sides = [
             struct.unpack_from("<hh8s8s8sH", lumps["SIDEDEFS"], offset)[-1]
             for offset in range(0, len(lumps["SIDEDEFS"]), 30)
+        ]
+        self.sectors = [
+            struct.unpack_from("<hh8s8shhh", lumps["SECTORS"], offset)[:2]
+            for offset in range(0, len(lumps["SECTORS"]), 26)
         ]
         self.sector_lines: dict[int, list[tuple[float, float, float, float]]] = collections.defaultdict(list)
         self.graph: dict[int, list[Portal]] = collections.defaultdict(list)
@@ -74,8 +80,15 @@ class WadMap:
                 self.exit_points.append(((x1 + x2) / 2, (y1 + y2) / 2, special))
             if len(sectors) == 2 and sectors[0] != sectors[1] and not flags & 1:
                 midpoint = ((x1 + x2) / 2, (y1 + y2) / 2)
-                self.graph[sectors[0]].append(Portal(sectors[1], *midpoint, special))
-                self.graph[sectors[1]].append(Portal(sectors[0], *midpoint, special))
+                floor_a, ceiling_a = self.sectors[sectors[0]]
+                floor_b, ceiling_b = self.sectors[sectors[1]]
+                opening = min(ceiling_a, ceiling_b) - max(floor_a, floor_b)
+                self.graph[sectors[0]].append(Portal(
+                    sectors[1], *midpoint, special, floor_b - floor_a, opening
+                ))
+                self.graph[sectors[1]].append(Portal(
+                    sectors[0], *midpoint, special, floor_a - floor_b, opening
+                ))
 
     def _parse_keys(self, data: bytes) -> list[tuple[float, float, str]]:
         result = []

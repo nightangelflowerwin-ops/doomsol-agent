@@ -104,6 +104,7 @@ class CampaignNavigator:
         self.ignored_pickups: set[tuple[int, int, str]] = set()
         self.loot_sweep_steps = 0
         self.semantic_memory = semantic_memory or {}
+        self.sector_visits: Counter[int] = Counter()
         self.blocked_points = [
             (float(item["x"]), float(item["y"]))
             for item in self.semantic_memory.get("stall_hotspots", [])
@@ -121,6 +122,8 @@ class CampaignNavigator:
     def _remember_position(self, player) -> None:
         point = (float(player.position_x), float(player.position_y))
         sector = self.map.sector_at(*point)
+        if sector is not None:
+            self.sector_visits[sector] += 1
         if not self.breadcrumbs:
             self.breadcrumbs.append((*point, sector))
             return
@@ -293,11 +296,15 @@ class CampaignNavigator:
             # making no progress toward the portal. Measure the goal directly.
             stuck = stuck or self.distance_history[-1] >= self.distance_history[0] - 12.0
         needs_use = waypoint.special in DOOR_SPECIALS or self.objective[2] == "exit"
+        vertical_transition = ("rise" if waypoint.floor_delta > 16 else
+                               "drop" if waypoint.floor_delta < -24 else "level")
         # Doom USE is harmless outside activation range. Start holding it on
         # the approach so fast multi-tic movement cannot stop against a door
         # before the next controller observation.
         if needs_use and distance < 520.0:
             actions.add("use")
+        if vertical_transition == "rise" and distance < 180.0:
+            actions.update({"move forward", "jump", "use"})
         if stuck:
             self.stuck_events += 1
             if self.stuck_events >= 2:
@@ -324,6 +331,11 @@ class CampaignNavigator:
             "stuck_recovery": stuck, "breadcrumbs": len(self.breadcrumbs),
             "backtracking": self.backtrack_target is not None,
             "semantic_stall_hotspots": len(self.blocked_points),
+            "current_sector": self.map.sector_at(player.position_x, player.position_y),
+            "visited_sectors": len(self.sector_visits),
+            "vertical_transition": vertical_transition,
+            "floor_delta": waypoint.floor_delta,
+            "red_light_jump_trigger": vertical_transition == "rise",
         }
 
 

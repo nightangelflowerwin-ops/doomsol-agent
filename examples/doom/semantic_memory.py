@@ -23,7 +23,10 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
             edges.append({
                 "source_sector": source, "target_sector": portal.target_sector,
                 "x": portal.x, "y": portal.y, "special": portal.special,
-                "kind": "door" if portal.special in DOOR_SPECIALS else "passage",
+                "floor_delta": portal.floor_delta, "opening": portal.opening,
+                "kind": ("door" if portal.special in DOOR_SPECIALS else
+                         "lift_or_jump" if portal.floor_delta > 24 else
+                         "drop" if portal.floor_delta < -24 else "passage"),
             })
     stalls: Counter[tuple[float, float]] = Counter()
     samples = []
@@ -48,6 +51,8 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
                     "semantic_mode": row.get("mode"), "objective": row.get("objective"),
                     "waypoint": [x, y] if x is not None and y is not None else None,
                     "door_ahead": row.get("waypoint_special") in DOOR_SPECIALS,
+                    "vertical_transition": row.get("vertical_transition", "level"),
+                    "red_light_jump_trigger": bool(row.get("red_light_jump_trigger", False)),
                     "exit_goal": row.get("objective") == "exit",
                     "stalled": bool(row.get("stuck_recovery")
                                     or row.get("scan_reason") == "navigation_stall"),

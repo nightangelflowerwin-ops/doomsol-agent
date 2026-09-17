@@ -101,6 +101,8 @@ class TacticalOracle:
             )
             target_kind = "enemy"
         distance = object_distance(player, target)
+        vertical_delta = float(getattr(target, "position_z", 0.0)
+                               - getattr(player, "position_z", 0.0))
         target_bearing = bearing(player, target)
         error = angle_delta(target_bearing, float(player.angle))
         line_of_sight = target.id in all_visible_ids
@@ -134,6 +136,8 @@ class TacticalOracle:
             # Search/close only after facing the last authoritative bearing.
             if abs(error) <= 12.0:
                 actions.add("move forward")
+                if vertical_delta > 40.0:
+                    actions.update({"jump", "use"})
 
         if not actions:
             actions.add("turn left" if error >= 0 else "turn right")
@@ -142,6 +146,7 @@ class TacticalOracle:
             "target_id": int(target.id), "target_name": target.name,
             "target_kind": target_kind,
             "target_distance": round(distance, 3),
+            "target_vertical_delta": round(vertical_delta, 3),
             "target_bearing": round(target_bearing, 3),
             "aim_error_degrees": round(error, 3),
             "line_of_sight": line_of_sight,
