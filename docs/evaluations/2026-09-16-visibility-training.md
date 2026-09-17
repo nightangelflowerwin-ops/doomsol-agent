@@ -30,3 +30,23 @@ The original teacher produced an attack-heavy dataset. A controlled firing burst
 
 The balanced imitation checkpoint is the only candidate that improved both kills and reward over the released baseline. It still over-selects forward movement under greedy decoding and therefore remains an experimental candidate, not a generally capable Doom policy.
 
+## Ten-minute visible candidate run
+
+- Game time: 600 seconds
+- Episodes: 277
+- Decisions: 5,250
+- Mean reward: 234.3164
+- Mean reported kills: 1.1697
+- Maximum running reward: 858.6039
+- Mean inference latency: 6.8124 ms
+- Move-forward decisions: 4,765
+- Strafe-right decisions: 485
+- Attack decisions: 0
+- All other decisions: 0
+
+This candidate is **not promoted**. Its higher reported kills cannot demonstrate learned combat because it never selected attack. Enemy infighting or other scenario mechanics can raise outcome counters while the agent merely moves. Future combat admission must require actual attack decisions, hits attributable to the player, and enemy-conditioned changes under shuffled-frame controls—not kills or reward alone.
+
+Local artifacts:
+
+- `runs/visibility-agent-visible-10min.mp4`: 600 seconds, 441,998,747 bytes, SHA-256 `94C83B6235E124FB988BC03BD1E0082BCAD9088DC936CFEF646982EF2888CD06`
+- `runs/visibility-agent-visible-10min-trace.json`: 649,948,240 bytes, SHA-256 `6BF98F49E99F108295D35B8EB7F1B43099323B9EEBE56F4B6842D3D31B95DB47`
