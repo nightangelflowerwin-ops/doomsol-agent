@@ -2,3 +2,4 @@ runs/agent-visible-10min.mp4 filter=lfs diff=lfs merge=lfs -text
 runs/agent-visible-10min-trace.json filter=lfs diff=lfs merge=lfs -text
 runs/visibility-agent-visible-10min.mp4 filter=lfs diff=lfs merge=lfs -text
 runs/visibility-agent-visible-10min-trace.json filter=lfs diff=lfs merge=lfs -text
+runs/tactical-oracle-visible-10min.mp4 filter=lfs diff=lfs merge=lfs -text
