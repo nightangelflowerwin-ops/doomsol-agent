@@ -130,4 +130,3 @@ class WadMap:
         portals.reverse()
         portals.append(Portal(target, goal[0], goal[1], 0))
         return portals
-
