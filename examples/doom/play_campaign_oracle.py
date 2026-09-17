@@ -36,6 +36,28 @@ POWERUP_NAMES = {"Soulsphere", "Megasphere", "BlurSphere", "InvulnerabilitySpher
                  "RadiationSuit", "ComputerMap", "LightAmp", "Berserk"}
 
 
+def episode_maps(episode: str) -> list[str]:
+    """Return the mandatory ordered missions for one classic Doom episode."""
+    episode = episode.upper()
+    if episode not in {"E1", "E2", "E3", "E4"}:
+        raise ValueError(f"unsupported episode: {episode}")
+    return [f"{episode}M{mission}" for mission in range(1, 9)]
+
+
+def gate_summary(requested: list[str], results: list[dict], episode: str | None) -> dict:
+    completed = sum(bool(row["completed"]) for row in results)
+    blocked_at = next((row["map"] for row in results if not row["completed"]), None)
+    all_passed = len(results) == len(requested) and completed == len(requested)
+    return {
+        "gate_status": "complete" if all_passed else "blocked",
+        "blocked_at": blocked_at or (requested[len(results)] if len(results) < len(requested) else None),
+        "missions_attempted": [row["map"] for row in results],
+        "missions_completed": completed,
+        "episode": episode,
+        "episode_completed": bool(episode and all_passed),
+    }
+
+
 def make_campaign_game(wad: Path, map_name: str, seed: int, visible: bool,
                        timeout_seconds: float, skill: int) -> vzd.DoomGame:
     game = vzd.DoomGame()
@@ -384,7 +406,9 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--wad", type=Path, required=True)
-    parser.add_argument("--maps", nargs="+", default=["E1M1"])
+    parser.add_argument("--maps", nargs="+")
+    parser.add_argument("--episode", choices=("E1", "E2", "E3", "E4"),
+                        help="Strict M1-M8 gauntlet; a failed mission blocks every later mission.")
     parser.add_argument("--seconds-per-map", type=float, default=300.0)
     parser.add_argument("--retries", type=int, default=3)
     parser.add_argument("--seed", type=int, default=2501)
@@ -396,12 +420,17 @@ def main() -> None:
     parser.add_argument("--trace", type=Path)
     parser.add_argument("--summary", type=Path)
     args = parser.parse_args()
+    if args.episode and args.maps:
+        parser.error("choose either --episode or --maps, not both")
+    requested_maps = episode_maps(args.episode) if args.episode else [
+        name.upper() for name in (args.maps or ["E1M1"])
+    ]
     wad = args.wad.resolve()
     writer = imageio.get_writer(args.output, fps=30, codec="libx264", quality=8) if args.output else None
     trace_file = args.trace.open("w", encoding="utf-8") if args.trace else None
     results = []
     try:
-        for index, map_name in enumerate(args.maps):
+        for index, map_name in enumerate(requested_maps):
             result = run_map(wad, map_name.upper(), args.seed + index * 100,
                              args.visible, args.seconds_per_map, args.retries,
                              writer, trace_file, pace=not args.no_pace,
@@ -416,8 +445,9 @@ def main() -> None:
             trace_file.close()
     summary = {
         **provenance(),
-        "wad": str(wad), "maps_requested": [name.upper() for name in args.maps],
+        "wad": str(wad), "maps_requested": requested_maps,
         "maps_completed": sum(row["completed"] for row in results), "results": results,
+        **gate_summary(requested_maps, results, args.episode),
     }
     if args.summary:
         args.summary.parent.mkdir(parents=True, exist_ok=True)
