@@ -1,4 +1,4 @@
-"""Screen-dependent Jev-like scorer for ViZDoom."""
+"""Blackwing screen-dependent choice scorer for ViZDoom."""
 
 from __future__ import annotations
 

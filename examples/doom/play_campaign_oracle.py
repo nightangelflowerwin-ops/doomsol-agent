@@ -13,6 +13,7 @@ import imageio.v2 as imageio
 import numpy as np
 import vizdoom as vzd
 
+from jevlike.provenance import provenance
 from environment import TICS_PER_ACTION, TICS_PER_SECOND, action_vector_for_names
 from play_tactical_oracle import TacticalOracle, angle_delta, bearing
 from wad_navigation import DOOR_SPECIALS, Portal, WadMap
@@ -218,6 +219,7 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                     counts[action] += 1
                 reward = float(game.make_action(action_vector_for_names(actions, game), TICS_PER_ACTION))
                 row = {
+                    **provenance(),
                     "map": map_name, "attempt": attempt, "step": steps,
                     "tic": int(state.tic), "actions": sorted(actions), "reward": reward,
                     "health": float(game.get_game_variable(vzd.GameVariable.HEALTH)),
@@ -242,6 +244,7 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
             dead = game.is_player_dead()
             timed_out = game.get_episode_time() >= round(timeout_seconds * TICS_PER_SECOND)
             result = {
+                **provenance(),
                 "map": map_name, "attempt": attempt, "completed": not dead and not timed_out,
                 "dead": dead, "timed_out": timed_out, "steps": steps,
                 "kills": int(game.get_game_variable(vzd.GameVariable.KILLCOUNT)),
@@ -292,6 +295,7 @@ def main() -> None:
         if trace_file:
             trace_file.close()
     summary = {
+        **provenance(),
         "wad": str(wad), "maps_requested": [name.upper() for name in args.maps],
         "maps_completed": sum(row["completed"] for row in results), "results": results,
     }

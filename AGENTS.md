@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Jevlike is a small PyTorch package for one-pass choice models. The text model takes a context and a changing list of text options. The visual model takes a 160 by 120 screen with motion and a subset of one shared 12-entry controller table. Doom uses rows 0–6; chess uses rows 7–11.
+Blackwing Decision Method is a small PyTorch package for one-pass choice models. The internal `jevlike` module name remains for checkpoint and import compatibility. The text model takes a context and a changing list of text options. The visual model takes a 160 by 120 screen with motion and a subset of one shared 12-entry controller table. Doom uses rows 0–6; chess uses rows 7–11. Preserve the producer signature in `PROVENANCE.json` and generated evaluation artifacts.
 
 Keep the public package self-contained. Do not add machine-specific paths, private data, credentials, run logs or copyrighted audio. Keep downloaded datasets and generated runs out of git. Preserve the JSONL text format in the top-level README and the checkpoint fields used by the examples.
 

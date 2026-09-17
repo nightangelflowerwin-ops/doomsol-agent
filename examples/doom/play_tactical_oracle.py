@@ -17,6 +17,7 @@ import imageio.v2 as imageio
 import numpy as np
 import vizdoom as vzd
 
+from jevlike.provenance import provenance
 from diagnostics import ENEMY_NAMES
 from environment import TICS_PER_ACTION, TICS_PER_SECOND, action_vector_for_names, make_game
 
@@ -180,6 +181,7 @@ def main() -> None:
             ))
             episode_reward += reward
             row = {
+                **provenance(),
                 "step": total_steps, "tic": int(state.tic), "episode": episodes,
                 "actions": sorted(actions), "reward": reward,
                 "episode_reward": episode_reward,
@@ -210,6 +212,7 @@ def main() -> None:
             writer.close()
         game.close()
     print(json.dumps({
+        **provenance(),
         "seconds": args.seconds, "episodes": episodes, "steps": total_steps,
         "total_kills": total_kills, "kills_per_episode": total_kills / max(1, episodes),
         "action_counts": dict(actions_seen), "video": str(args.output) if args.output else None,

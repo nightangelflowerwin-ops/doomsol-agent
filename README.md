@@ -1,8 +1,12 @@
-# Jevlike
+# Blackwing Decision Method
+
+> **NIGHTANGEL FLOWERWIN // BLACKWING**
+>
+> Producer signature: `NAFW-BLACKWING-2026`
 
 Train a small model that chooses among a changing list of text options.
 
-A Jev-like model takes a piece of text and a list of `N` text options. It returns one probability for each option. It does this in one pass instead of writing an answer word by word. [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is TypeSafe's commercial model for this kind of task. TypeSafe has not published its design. This repository is an independent starter model with the same input and output shape.
+The **Blackwing Decision Method** takes a piece of text and a changing list of `N` options, scores every option in one pass, and returns one probability per option. The same method scores controller actions from visual observations. It is an independently implemented choice architecture maintained by [nightangelflowerwin-ops](https://github.com/nightangelflowerwin-ops). The legacy `jevlike` Python import and command names remain temporarily available so existing checkpoints and scripts do not break.
 
 ## Demo
 
