@@ -23,6 +23,7 @@ games = [
   "pillow>=11",
   "vizdoom>=1.2.4",
 ]
+fly = ["flybrain>=0.1.0"]
 
 [project.scripts]
 jevlike-data = "jevlike.data:main"

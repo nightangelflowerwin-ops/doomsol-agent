@@ -1,5 +1,28 @@
 # Doom example
 
+## Fly-controller experiments
+
+`fly_navigation.py` contains two deliberately unpromoted recurrent experiments:
+
+- `FlyInspiredNavigation` is a small trainable optic-flow/ring-attractor policy.
+- `FullConnectomeReservoir` runs the frozen MaleCNS v1.0 connectome through the
+  optional `flybrain` package and exposes a trainable action readout over its
+  descending neurons.
+
+Install and run the bounded offline comparison with:
+
+```sh
+uv pip install -e '.[games,fly]'
+PYTHONPATH=examples/doom python examples/doom/run_fly_experiments.py \
+  --video runs/movingman-e1m1-completion/attempt-01.mp4 \
+  --frames 24 --output runs/fly-experiments/smoke-v1.json
+```
+
+This command never sends game controls. Generated connectome data and reports
+stay outside Git. MaleCNS data provenance and licensing are documented by the
+[`flybrain` project](https://github.com/alextitonis/fly.ai); do not redistribute
+downloaded connectome files from this repository.
+
 This example uses `jevlike.vision.DoomScorerV2` to choose a controller button from a game screen. It is the same visual model used by the chess example. One table holds 12 option vectors: seven Doom buttons and five chess keys.
 
 The input is a 160 by 120 RGB frame plus one motion channel made from the previous frame. A small convolutional stem makes 80 image patches. Fixed two-dimensional positions are added to the attention keys. Each active controller option reads the patches once and receives one score. A softmax turns the seven Doom scores into probabilities.
