@@ -6,6 +6,7 @@ from types import SimpleNamespace
 
 from diagnostics import enemy_observation
 from environment import DOOM_ACTIONS, DOOM_ACTIONS_WITH_USE, action_vector_for_game, make_game
+from train_imitation import expert_action
 from jevlike.vision import (
     CHESS_OPTION_IDS,
     TOTAL_OPTIONS,
@@ -78,3 +79,29 @@ def test_enemy_teacher_uses_relative_position_and_visibility() -> None:
     assert observed["facing_agent"] is True
     assert observed["distance"] == 100.0
     assert abs(observed["x"] - -0.0625) < 1e-6
+
+
+def test_aligned_enemy_teacher_interleaves_fire_and_evasion() -> None:
+    enemy = SimpleNamespace(
+        object_name="DoomImp", x=70, width=20, height=40,
+        object_position_x=100.0, object_position_y=0.0, object_angle=180.0,
+    )
+    state = SimpleNamespace(
+        labels=[enemy], screen_buffer=np.zeros((120, 160, 3), dtype=np.uint8)
+    )
+
+    class FakeGame:
+        episode_time = 0
+
+        def get_game_variable(self, variable):
+            return 0.0
+
+        def get_episode_time(self):
+            return self.episode_time
+
+    game = FakeGame()
+    actions = []
+    for phase in range(3):
+        game.episode_time = phase * 4
+        actions.append(DOOM_ACTIONS[expert_action(state, game=game)])
+    assert actions == ["attack", "strafe left", "strafe right"]

@@ -22,12 +22,19 @@ from environment import DEFEND_ACTIONS, TICS_PER_ACTION, action_vector_for_game,
 
 
 def expert_action(state, attack_threshold: float = 0.12, game=None) -> int:
-    """Advance on a clear path; face and fire at the nearest visible enemy."""
+    """Advance, acquire a visible threat, then alternate firing and evasion."""
     enemy = enemy_observation(state, game)
     if enemy is None:
         return DEFEND_ACTIONS.index("move forward")
     if abs(enemy["x"]) <= attack_threshold:
-        return DEFEND_ACTIONS.index("attack")
+        if game is None:
+            return DEFEND_ACTIONS.index("attack")
+        # One four-tic firing burst followed by two lateral decisions prevents
+        # attack from dominating the imitation set and teaches combat movement.
+        phase = (game.get_episode_time() // TICS_PER_ACTION) % 3
+        if phase == 0:
+            return DEFEND_ACTIONS.index("attack")
+        return DEFEND_ACTIONS.index("strafe left" if phase == 1 else "strafe right")
     return DEFEND_ACTIONS.index("turn left" if enemy["x"] < 0 else "turn right")
 
 
