@@ -79,6 +79,7 @@ class TacticalOracle:
         incoming_names = [
             item.name for item in objects
             if item.name not in ENEMY_NAMES and item.name not in {"DoomPlayer", "GreenArmor"}
+            and "ammo" not in item.name.lower()
             and any(token in item.name.lower() for token in
                     ("ball", "rocket", "plasma", "fire", "tracer", "missile"))
         ]
