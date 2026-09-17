@@ -2,7 +2,9 @@
 
 import numpy as np
 import torch
+from types import SimpleNamespace
 
+from diagnostics import enemy_observation
 from environment import DOOM_ACTIONS, DOOM_ACTIONS_WITH_USE, action_vector_for_game, make_game
 from jevlike.vision import (
     CHESS_OPTION_IDS,
@@ -54,3 +56,25 @@ def test_use_action_is_available_without_changing_legacy_controller() -> None:
         game.make_action(use, 1)
     finally:
         game.close()
+
+
+def test_enemy_teacher_uses_relative_position_and_visibility() -> None:
+    enemy = SimpleNamespace(
+        object_name="DoomImp", x=65, width=20, height=40,
+        object_position_x=100.0, object_position_y=0.0, object_angle=180.0,
+    )
+    state = SimpleNamespace(
+        labels=[enemy], screen_buffer=np.zeros((120, 160, 3), dtype=np.uint8)
+    )
+
+    class FakeGame:
+        def get_game_variable(self, variable):
+            values = {"POSITION_X": 0.0, "POSITION_Y": 0.0}
+            return values[variable.name]
+
+    observed = enemy_observation(state, FakeGame())
+    assert observed is not None
+    assert observed["mutual_line_of_sight"] is True
+    assert observed["facing_agent"] is True
+    assert observed["distance"] == 100.0
+    assert abs(observed["x"] - -0.0625) < 1e-6

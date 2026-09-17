@@ -21,9 +21,9 @@ from jevlike.vision import DoomScorerV2, observation, observation_tensor
 from environment import DEFEND_ACTIONS, TICS_PER_ACTION, action_vector_for_game, make_game
 
 
-def expert_action(state, attack_threshold: float = 0.12) -> int:
+def expert_action(state, attack_threshold: float = 0.12, game=None) -> int:
     """Advance on a clear path; face and fire at the nearest visible enemy."""
-    enemy = enemy_observation(state)
+    enemy = enemy_observation(state, game)
     if enemy is None:
         return DEFEND_ACTIONS.index("move forward")
     if abs(enemy["x"]) <= attack_threshold:
@@ -125,7 +125,7 @@ def main() -> None:
                 if state is None:
                     continue
                 frame = np.ascontiguousarray(state.screen_buffer)
-                action = expert_action(state)
+                action = expert_action(state, game=game)
                 pending_items.append(observation(frame, previous[index]))
                 pending_labels.append(action)
                 game.make_action(action_vector_for_game(action, DEFEND_ACTIONS, game),

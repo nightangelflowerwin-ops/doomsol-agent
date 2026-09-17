@@ -109,7 +109,7 @@ def main() -> None:
                 states.append(state)
                 frames.append(frame)
                 items.append(observation(frame, previous[index]))
-                labels.append(expert_action(state, args.attack_threshold))
+                labels.append(expert_action(state, args.attack_threshold, game))
                 indices.append(index)
             if not items:
                 continue

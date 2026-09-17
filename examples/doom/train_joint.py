@@ -93,7 +93,7 @@ def main() -> None:
                 frame = np.ascontiguousarray(state.screen_buffer)
                 frames.append(frame)
                 items.append(observation(frame, previous[index]))
-                labels.append(expert_action(state, 0.20))
+                labels.append(expert_action(state, 0.20, game))
                 indices.append(index)
             model.eval()
             with torch.inference_mode():
