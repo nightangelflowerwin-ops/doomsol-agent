@@ -191,6 +191,26 @@ class CampaignNavigator:
                 self.route.clear()
                 return
 
+    def _switch_required_by_visible_key(self, state, switch) -> bool:
+        """Return whether a visible key sits in the switch's tagged sector."""
+        for item in (state.objects or []):
+            if item.name not in KEY_NAMES:
+                continue
+            containing = [
+                sector for sector, lines in self.map.sector_lines.items()
+                if self.map._contains(
+                    (float(item.position_x), float(item.position_y)), lines
+                )
+            ]
+            if not containing:
+                continue
+            key_sector = max(
+                containing, key=lambda sector: self.map.sectors[sector][0]
+            )
+            if self.map.sector_tags[key_sector] == switch[3]:
+                return True
+        return False
+
     def _choose_objective(self, state, player, health: float,
                           armor: float) -> tuple[float, float, str]:
         if self.backtrack_target is not None:
@@ -474,12 +494,22 @@ class CampaignNavigator:
                              round(switch[1]) == round(current_objective[1]) and
                              switch[2] == int(special_text) and
                              switch[3] == int(tag_text)), None)
-            if matching is not None:
+            if matching is not None and self._switch_required_by_visible_key(
+                    state, matching):
+                # Optional switches remain bounded, but a map-authored switch
+                # that controls a visible key's tagged sector is mandatory.
+                # Keep routing until floor movement confirms activation.
+                self.objective_steps = 240
+            elif matching is not None:
                 self.ignored_switches.add(matching)
-            current_objective = self._choose_objective(state, player, health, armor)
-            objective_changed = True
-            self.objective_steps = 0
-            self.route.clear()
+            if matching is None or not self._switch_required_by_visible_key(
+                    state, matching):
+                current_objective = self._choose_objective(
+                    state, player, health, armor
+                )
+                objective_changed = True
+                self.objective_steps = 0
+                self.route.clear()
         self.objective = current_objective
         if self.initial_sector_floors is None:
             self.initial_sector_floors = tuple(

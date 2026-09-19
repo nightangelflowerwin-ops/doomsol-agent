@@ -36,3 +36,9 @@ def test_tagged_key_prefers_its_matching_progression_switch():
         -992.0,
         "switch:23:3",
     )
+    assert navigator._switch_required_by_visible_key(
+        state, TaggedKeyMap.switch_points[0]
+    )
+    assert not navigator._switch_required_by_visible_key(
+        state, TaggedKeyMap.switch_points[1]
+    )
