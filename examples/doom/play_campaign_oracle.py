@@ -232,6 +232,38 @@ class CampaignNavigator:
             if math.hypot(item.position_x - player.position_x,
                           item.position_y - player.position_y) < weapon_limit:
                 return float(item.position_x), float(item.position_y), item.name
+        if keys and pending_switches:
+            key = min(keys, key=lambda item: math.hypot(
+                item.position_x - player.position_x, item.position_y - player.position_y
+            ))
+            containing_sectors = [
+                sector for sector, lines in self.map.sector_lines.items()
+                if self.map._contains(
+                    (float(key.position_x), float(key.position_y)), lines
+                )
+            ]
+            if containing_sectors:
+                key_sector = max(
+                    containing_sectors,
+                    key=lambda sector: self.map.sectors[sector][0],
+                )
+                key_tag = self.map.sector_tags[key_sector]
+                key_switches = [
+                    switch for switch in pending_switches if switch[3] == key_tag
+                ]
+                if key_tag and key_switches:
+                    # A nearby visible key can still sit on a tagged moving
+                    # floor. The matching map-authored switch is authoritative
+                    # progression and must be operated before chasing the key
+                    # sprite (E1M2's special-23/tag-3 BlueCard pedestal).
+                    switch = min(
+                        key_switches,
+                        key=lambda value: math.hypot(
+                            value[0] - player.position_x,
+                            value[1] - player.position_y,
+                        ),
+                    )
+                    return switch[0], switch[1], f"switch:{switch[2]}:{switch[3]}"
         if keys and health > 30:
             key = min(keys, key=lambda item: math.hypot(
                 item.position_x - player.position_x, item.position_y - player.position_y
