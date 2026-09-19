@@ -833,6 +833,20 @@ class CampaignNavigator:
                     self.detour_transaction_steps = 1200
                     self.detour_clearance_replan_used = False
                     self.portal_jump_used = False
+            elif staged_open_portal:
+                # A portal can share a large concave source sector with solid
+                # interior geometry.  Walking directly at its midpoint then
+                # wall-pushes forever even though a valid in-sector route
+                # exists (E1M2's blue-card platform is the first example).
+                # Use the same collision-aware local planner for every staged
+                # progression portal, without adding mission-specific points.
+                local_path = self.map.local_path(
+                    (float(player.position_x), float(player.position_y)),
+                    (float(aim_x), float(aim_y)), current_sector,
+                )
+                if len(local_path) > 2:
+                    self.detour_key = waypoint_key
+                    self.detour_points.extend(local_path[1:-1])
         if self.detour_key == waypoint_key:
             while self.detour_points and math.hypot(
                     self.detour_points[0][0] - player.position_x,
