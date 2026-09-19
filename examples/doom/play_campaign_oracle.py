@@ -1093,6 +1093,14 @@ class CampaignNavigator:
             actions.add("turn right")
         if abs(error) < 18.0:
             actions.add("move forward")
+        if (current_objective[2] in KEY_NAMES and distance <= 80.0 and
+                abs(error) < 22.0):
+            # E1M2 places its blue card behind a short collision lip.  A
+            # plain forward command settles 48-60 units from the pickup and
+            # can oscillate there forever.  A bounded forward jump is normal
+            # player movement and physically confirms collection by making
+            # the exact key object disappear on a later observation.
+            actions.add("jump")
 
         stuck = False
         skip_stall_scan = False
