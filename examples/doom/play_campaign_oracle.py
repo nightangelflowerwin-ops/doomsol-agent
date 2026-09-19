@@ -608,11 +608,27 @@ class CampaignNavigator:
             self.route.clear()
 
         if objective_changed or not self.route:
+            target_sector = None
+            if current_objective[2] in KEY_NAMES:
+                # Doom maps can stack sectors at the same 2D coordinate. A
+                # key on a pedestal then appears to sector_at() to belong to
+                # the lower room, producing a straight wall-push route. Keys
+                # are spawned on the uppermost containing floor, so route to
+                # that authored sector and retain the physical portal/jump.
+                containing = [
+                    sector for sector, lines in self.map.sector_lines.items()
+                    if self.map._contains(current_objective[:2], lines)
+                ]
+                if containing:
+                    target_sector = max(
+                        containing, key=lambda sector: self.map.sectors[sector][0]
+                    )
             self.route = deque(self.map.route(
                 (player.position_x, player.position_y), current_objective[:2],
                 blocked_points=self.blocked_points,
                 blocked_edges=self.blocked_edges,
                 unlocked_tags={switch[3] for switch in self.activated_switches},
+                target_sector=target_sector,
             ))
             if (not self.route and
                     current_objective[2].startswith("switch:")):

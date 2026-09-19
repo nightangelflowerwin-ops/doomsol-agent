@@ -262,9 +262,10 @@ class WadMap:
     def route(self, start: tuple[float, float], goal: tuple[float, float],
               blocked_points: list[tuple[float, float]] | None = None,
               blocked_edges: set[tuple[int, int, float, float]] | None = None,
-              unlocked_tags: set[int] | None = None) -> list[Portal]:
+              unlocked_tags: set[int] | None = None,
+              target_sector: int | None = None) -> list[Portal]:
         source = self.sector_at(*start)
-        target = self.sector_at(*goal)
+        target = target_sector if target_sector is not None else self.sector_at(*goal)
         if source is None or target is None:
             return []
         if source == target:
