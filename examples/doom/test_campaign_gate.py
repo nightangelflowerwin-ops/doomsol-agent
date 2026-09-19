@@ -1,4 +1,9 @@
-from play_campaign_oracle import episode_maps, gate_summary
+from play_campaign_oracle import (
+    episode_maps,
+    gate_combat_is_urgent,
+    gate_summary,
+    has_valid_combat_threat,
+)
 
 
 def test_episode_has_eight_mandatory_ordered_missions():
@@ -25,3 +30,28 @@ def test_episode_completes_only_after_all_eight_missions():
     assert summary["gate_status"] == "complete"
     assert summary["blocked_at"] is None
     assert summary["episode_completed"]
+
+
+def test_hidden_damage_does_not_lock_combat_state():
+    assert not has_valid_combat_threat({
+        "line_of_sight": False,
+        "visible_enemies": 0,
+        "under_fire": True,
+    })
+    assert has_valid_combat_threat({
+        "line_of_sight": True,
+        "visible_enemies": 1,
+        "under_fire": False,
+    })
+
+
+def test_gate_combat_requires_damage_or_close_visible_enemy():
+    assert not gate_combat_is_urgent({
+        "damaged": False, "line_of_sight": True, "target_distance": 300,
+    })
+    assert gate_combat_is_urgent({
+        "damaged": False, "line_of_sight": True, "target_distance": 256,
+    })
+    assert gate_combat_is_urgent({
+        "damaged": True, "line_of_sight": False, "target_distance": 900,
+    })
