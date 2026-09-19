@@ -761,7 +761,8 @@ class CampaignNavigator:
              current_sector in {134, 120} and not tag3_is_lowered) or
             (current_sector == 120 and 119 in route_sectors)
         )
-        if current_sector in route_sectors and not preserve_detour_route:
+        if (current_sector != self.route_source_sector and
+                current_sector in route_sectors and not preserve_detour_route):
             crossed_index = route_sectors.index(current_sector)
             for _ in range(crossed_index + 1):
                 self.route.popleft()
@@ -1082,6 +1083,14 @@ class CampaignNavigator:
                 actions.add("turn right")
             if abs(commit_error) < 22.0:
                 actions.add("move forward")
+            if waypoint.special and waypoint.floor_delta > 32:
+                # A raised special boundary is not an ordinary open portal.
+                # Keep forward momentum while pulsing the normal player
+                # interaction inputs needed to cross/activate the authored
+                # transition.  E1M2's blue-card pedestal is the first such
+                # case: walking alone remains clamped one player radius from
+                # its special-38 line and can never collect the key.
+                actions.update({"jump", "use"})
             # Pulse USE once. Holding it every decision can toggle a repeatable
             # door closed again before the player crosses the threshold.
             if needs_use and in_activation_zone and self.gate_commit_steps == 13:
