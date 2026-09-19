@@ -359,13 +359,22 @@ class CampaignNavigator:
                 round(item.position_y) == round(self.objective[1])
                 for item in (state.objects or []))
         )
+        key_latched = bool(
+            self.objective is not None and self.objective[2] in KEY_NAMES and
+            any(item.name == self.objective[2] and
+                round(item.position_x) == round(self.objective[0]) and
+                round(item.position_y) == round(self.objective[1])
+                for item in (state.objects or []))
+        )
         if health <= 30.0:
             current_objective = self._choose_objective(state, player, health, armor)
-        elif pickup_latched:
+        elif pickup_latched or key_latched:
             # A visible crate/dropped weapon is a bounded transaction. Keep
             # its exact object identity until collection or the existing
             # three-cycle recovery marks it unreachable; do not alternate
-            # between another weapon and the mission switch every frame.
+            # between another weapon and the mission switch every frame. Keys
+            # are mandatory progression transactions and remain latched until
+            # the exact object disappears at the pickup coordinate.
             current_objective = self.objective
         elif (self.objective is not None and self.objective[2] == "exit" and
                 health > 30.0):
