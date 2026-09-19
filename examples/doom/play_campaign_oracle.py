@@ -150,6 +150,7 @@ class CampaignNavigator:
         self.breadcrumbs: deque[tuple[float, float, int | None]] = deque(maxlen=256)
         self.backtrack_target: tuple[float, float, str] | None = None
         self.ignored_pickups: set[tuple[int, int, str]] = set()
+        self.ignored_switches: set[tuple[float, float, int, int, float, float]] = set()
         self.loot_sweep_steps = 0
         self.semantic_memory = semantic_memory or {}
         self.sector_visits: Counter[int] = Counter()
@@ -199,7 +200,8 @@ class CampaignNavigator:
             self.backtrack_target = None
             self.stuck_events = 0
         pending_switches = [switch for switch in self.map.switch_points
-                            if switch not in self.activated_switches]
+                            if switch not in self.activated_switches and
+                            switch not in self.ignored_switches]
         keys = [item for item in (state.objects or []) if item.name in KEY_NAMES]
         if health <= 30:
             emergency_supplies = [
@@ -229,6 +231,17 @@ class CampaignNavigator:
             if math.hypot(item.position_x - player.position_x,
                           item.position_y - player.position_y) < weapon_limit:
                 return float(item.position_x), float(item.position_y), item.name
+        if keys and health > 30:
+            key = min(keys, key=lambda item: math.hypot(
+                item.position_x - player.position_x, item.position_y - player.position_y
+            ))
+            # A nearby key is direct, visible progression evidence. It must
+            # outrank speculative traversal to every remaining map switch.
+            # The route planner will still resolve any genuinely required
+            # blocker encountered on the way.
+            if math.hypot(key.position_x - player.position_x,
+                          key.position_y - player.position_y) <= 480.0:
+                return float(key.position_x), float(key.position_y), key.name
         # Mission progression outranks optional loot after the bounded
         # room-clear sweep.  During that sweep, the nearby weapon branch above
         # deliberately runs first so drops/crate upgrades are not abandoned.
@@ -380,6 +393,20 @@ class CampaignNavigator:
             self.ignored_pickups.add((round(current_objective[0]),
                                       round(current_objective[1]),
                                       current_objective[2]))
+            current_objective = self._choose_objective(state, player, health, armor)
+            objective_changed = True
+            self.objective_steps = 0
+            self.route.clear()
+        if (current_objective[2].startswith("switch:") and
+                self.objective_steps >= 240):
+            _, special_text, tag_text = current_objective[2].split(":")
+            matching = next((switch for switch in self.map.switch_points
+                             if round(switch[0]) == round(current_objective[0]) and
+                             round(switch[1]) == round(current_objective[1]) and
+                             switch[2] == int(special_text) and
+                             switch[3] == int(tag_text)), None)
+            if matching is not None:
+                self.ignored_switches.add(matching)
             current_objective = self._choose_objective(state, player, health, armor)
             objective_changed = True
             self.objective_steps = 0
