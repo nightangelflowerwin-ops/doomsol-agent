@@ -326,6 +326,19 @@ class CampaignNavigator:
     def decide(self, state, health: float, armor: float) -> tuple[set[str], dict]:
         player = next(item for item in state.objects if item.name == "DoomPlayer")
         self._remember_position(player)
+        mandatory_key_latched = bool(
+            self.objective is not None and self.objective[2] in KEY_NAMES and
+            any(item.name == self.objective[2] and
+                round(item.position_x) == round(self.objective[0]) and
+                round(item.position_y) == round(self.objective[1])
+                for item in (state.objects or []))
+        )
+        if mandatory_key_latched:
+            # A visible key is an explicit progression transaction.  Optional
+            # room-clear/navigation surveys must never turn the player away
+            # from it once the exact pickup has been selected.
+            self.scan_steps = 0
+            self.scan_reason = None
         if health <= 30.0:
             # A survey is never worth dying for. Abort spins and stale gate
             # transactions so emergency health can be selected immediately.
@@ -632,6 +645,8 @@ class CampaignNavigator:
         lift_portal = next((
             portal for portal in nearby_route
             if portal.special in LIFT_SPECIALS and portal.floor_delta > 32 and
+            math.hypot(portal.x - player.position_x,
+                       portal.y - player.position_y) <= 96.0 and
             (float(portal.x), float(portal.y), portal.special) not in self.activated_lifts
         ), None)
         if lift_portal is not None:
@@ -1362,7 +1377,8 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                     if gate_priority:
                         navigation.scan_steps = 0
                         navigation.scan_reason = None
-                    elif combat_active:
+                    elif (combat_active and gate_objective not in KEY_NAMES and
+                          gate_objective != "exit"):
                         navigation.request_scan("room_cleared")
                     # Damage without a visible source means disengage and
                     # continue toward reachable health/key/exit objectives.
