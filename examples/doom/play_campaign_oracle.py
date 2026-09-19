@@ -124,6 +124,7 @@ class CampaignNavigator:
         self.gate_commit_heading: float | None = None
         self.gate_target_seen_frames = 0
         self.gate_source_sector: int | None = None
+        self.gate_settle_steps = 0
         self.transition_guard: tuple[int, int, float, float] | None = None
         self.blocked_edges: set[tuple[int, int, float, float]] = set()
         self.portal_stage_key: tuple[int, float, float] | None = None
@@ -326,6 +327,19 @@ class CampaignNavigator:
     def decide(self, state, health: float, armor: float) -> tuple[set[str], dict]:
         player = next(item for item in state.objects if item.name == "DoomPlayer")
         self._remember_position(player)
+
+        def gate_brake_actions() -> tuple[set[str], float]:
+            """Counter residual velocity without starting another crossing."""
+            angle = math.radians(float(player.angle))
+            forward_speed = (
+                float(getattr(player, "velocity_x", 0.0)) * math.cos(angle) +
+                float(getattr(player, "velocity_y", 0.0)) * math.sin(angle)
+            )
+            if forward_speed > 0.75:
+                return {"move backward"}, forward_speed
+            if forward_speed < -0.75:
+                return {"move forward"}, forward_speed
+            return set(), forward_speed
         mandatory_key_latched = bool(
             self.objective is not None and self.objective[2] in KEY_NAMES and
             any(item.name == self.objective[2] and
@@ -346,6 +360,7 @@ class CampaignNavigator:
             self.scan_reason = None
             self.gate_commit_key = None
             self.gate_commit_steps = 0
+            self.gate_settle_steps = 0
             self.detour_transaction_target = None
         if self.loot_sweep_steps:
             self.loot_sweep_steps -= 1
@@ -506,6 +521,34 @@ class CampaignNavigator:
             else:
                 self.lift_transaction_steps -= 1
 
+        if self.gate_settle_steps > 0 and self.gate_commit_key is not None:
+            self.gate_settle_steps -= 1
+            actions, forward_speed = gate_brake_actions()
+            committed_target = self.gate_commit_key[0]
+            if self.gate_settle_steps == 0:
+                if self.gate_source_sector is not None:
+                    self.transition_guard = (
+                        self.gate_source_sector,
+                        committed_target,
+                        float(self.gate_commit_key[1]),
+                        float(self.gate_commit_key[2]),
+                    )
+                self.gate_commit_key = None
+                self.gate_commit_steps = 0
+                self.gate_commit_heading = None
+                self.gate_target_seen_frames = 0
+                self.gate_source_sector = None
+            return actions, {
+                "mode": "gate_confirm_settle", "objective": self.objective[2],
+                "gate_target_sector": committed_target,
+                "current_sector": current_sector,
+                "gate_settle_steps": self.gate_settle_steps,
+                "forward_speed": round(forward_speed, 3),
+                "player_x": round(float(player.position_x), 2),
+                "player_y": round(float(player.position_y), 2),
+                "stuck_recovery": False,
+            }
+
         if self.transition_guard is not None:
             source_sector, target_sector, portal_x, portal_y = self.transition_guard
             if current_sector == source_sector:
@@ -542,12 +585,16 @@ class CampaignNavigator:
             )
             if reached_commit:
                 self.gate_target_seen_frames += 1
-                if self.gate_target_seen_frames < 2:
-                    return set(), {
-                        "mode": "gate_confirm", "objective": self.objective[2],
+                if self.gate_target_seen_frames == 1:
+                    self.gate_settle_steps = 4
+                    actions, forward_speed = gate_brake_actions()
+                    return actions, {
+                        "mode": "gate_confirm_settle", "objective": self.objective[2],
                         "gate_target_sector": committed_target,
                         "current_sector": current_sector,
                         "gate_target_seen_frames": self.gate_target_seen_frames,
+                        "gate_settle_steps": self.gate_settle_steps,
+                        "forward_speed": round(forward_speed, 3),
                         "player_x": round(float(player.position_x), 2),
                         "player_y": round(float(player.position_y), 2),
                         "stuck_recovery": False,
