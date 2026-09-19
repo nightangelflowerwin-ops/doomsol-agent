@@ -1263,6 +1263,7 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
         combat.reset(float(game.get_game_variable(vzd.GameVariable.HEALTH)))
         steps = 0
         combat_active = False
+        previous_pickups: dict[tuple[str, int, int], tuple[float, float]] = {}
         try:
             while not game.is_episode_finished():
                 state = game.get_state()
@@ -1355,15 +1356,54 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                 telemetry_player = next(
                     item for item in state.objects if item.name == "DoomPlayer"
                 )
+                current_pickups = {
+                    (item.name, round(item.position_x), round(item.position_y)):
+                    (float(item.position_x), float(item.position_y))
+                    for item in (state.objects or [])
+                    if item.name in (WEAPON_NAMES | KEY_NAMES | HEALTH_NAMES)
+                }
+                row["pickups_confirmed"] = sorted({
+                    name for (name, x, y), (px, py) in previous_pickups.items()
+                    if (name, x, y) not in current_pickups and
+                    math.hypot(telemetry_player.position_x - px,
+                               telemetry_player.position_y - py) <= 72.0
+                })
+                previous_pickups = current_pickups
                 row["weapon_pickups_visible"] = [
                     {
                         "name": item.name,
+                        "x": float(item.position_x),
+                        "y": float(item.position_y),
                         "distance": round(math.hypot(
                             item.position_x - telemetry_player.position_x,
                             item.position_y - telemetry_player.position_y,
                         ), 2),
                     }
                     for item in (state.objects or []) if item.name in WEAPON_NAMES
+                ]
+                row["key_pickups_visible"] = [
+                    {
+                        "name": item.name,
+                        "x": float(item.position_x),
+                        "y": float(item.position_y),
+                        "distance": round(math.hypot(
+                            item.position_x - telemetry_player.position_x,
+                            item.position_y - telemetry_player.position_y,
+                        ), 2),
+                    }
+                    for item in (state.objects or []) if item.name in KEY_NAMES
+                ]
+                row["health_pickups_visible"] = [
+                    {
+                        "name": item.name,
+                        "x": float(item.position_x),
+                        "y": float(item.position_y),
+                        "distance": round(math.hypot(
+                            item.position_x - telemetry_player.position_x,
+                            item.position_y - telemetry_player.position_y,
+                        ), 2),
+                    }
+                    for item in (state.objects or []) if item.name in HEALTH_NAMES
                 ]
                 if trace_file:
                     trace_file.write(json.dumps(row) + "\n")

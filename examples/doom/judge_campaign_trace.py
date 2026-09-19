@@ -9,6 +9,7 @@ from pathlib import Path
 
 WEAPONS = {"Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher",
            "PlasmaRifle", "BFG9000", "Chainsaw"}
+KEYS = {"BlueCard", "YellowCard", "RedCard", "BlueSkull", "YellowSkull", "RedSkull"}
 
 
 def load_rows(path: Path) -> list[dict]:
@@ -52,16 +53,18 @@ def judge(trace: Path, summary: Path) -> dict:
                   <= clear.get("step", -1) + 44]
         transitioned = any(row.get("current_sector") is not None and
                            row.get("current_sector") != source for row in window)
-        looted_weapon = any(row.get("objective") in WEAPONS for row in window)
+        looted_weapon = any(
+            set(row.get("pickups_confirmed", [])) & WEAPONS for row in window
+        )
         combat_resumed = any(row.get("mode") == "engage" for row in window)
         room_exit_results.append({
             "step": clear.get("step"), "source_sector": source,
             "transitioned_within_5s": transitioned,
-            "weapon_sweep_observed": looted_weapon,
+            "weapon_pickup_confirmed": looted_weapon,
             "combat_resumed": combat_resumed,
             # Seeing another enemy is not an exit. A cleared room passes only
             # when the agent changes sector or deliberately begins its nearby
-            # weapon sweep within the bounded five-second window.
+            # confirmed weapon pickup within the bounded five-second window.
             "passed": transitioned or looted_weapon,
         })
 
@@ -70,6 +73,7 @@ def judge(trace: Path, summary: Path) -> dict:
                            for door in row.get("map_locked_doors_known", [])]
     weapon_objectives = [row for row in rows if row.get("objective") in WEAPONS]
     visible_weapon_rows = [row for row in rows if row.get("weapon_pickups_visible")]
+    visible_key_rows = [row for row in rows if row.get("key_pickups_visible")]
     # Objective selection alone is not collection. Require the agent to get
     # close to the selected weapon and then observe it disappear from the
     # object list while remaining near the pickup coordinate.
@@ -86,6 +90,27 @@ def judge(trace: Path, summary: Path) -> dict:
         if any(name not in {item.get("name") for item in next_row.get(
                 "weapon_pickups_visible", [])} for next_row in later):
             collected_weapons.append({"name": name, "step": row.get("step")})
+
+    # A visible key is an immediate progression cue. It must become the
+    # objective within two seconds, unless the agent is actively engaging an
+    # immediate threat. Map knowledge alone is not a response to that cue.
+    ignored_key_opportunities = []
+    seen_key_events = set()
+    for index, row in enumerate(rows):
+        for item in row.get("key_pickups_visible", []):
+            event = (item.get("name"), round(float(item.get("x", 0))),
+                     round(float(item.get("y", 0))))
+            if event in seen_key_events or float(item.get("distance", 1e9)) > 900:
+                continue
+            seen_key_events.add(event)
+            window = rows[index:index + 19]
+            responded = any(next_row.get("objective") == item.get("name") or
+                            next_row.get("mode") == "engage" for next_row in window)
+            if not responded:
+                ignored_key_opportunities.append({
+                    "name": item.get("name"), "step": row.get("step"),
+                    "distance": item.get("distance"),
+                })
 
     # A controller that spends more than roughly three seconds on the same
     # objective in the same sector without moving is failed immediately. This
@@ -123,6 +148,8 @@ def judge(trace: Path, summary: Path) -> dict:
         failures.append("A dropped/crate weapon was visible but never selected as a pickup objective.")
     if weapon_objectives and not collected_weapons:
         failures.append("A weapon was selected but no pickup was confirmed.")
+    if ignored_key_opportunities:
+        failures.append("A visible key cue was ignored for more than two seconds without active combat.")
     if no_progress_stalls:
         failures.append("Hard no-progress stall: same sector/objective with under 12 units movement.")
 
@@ -138,6 +165,8 @@ def judge(trace: Path, summary: Path) -> dict:
         "weapon_pickup_objective_steps": sorted({row.get("step") for row in weapon_objectives}),
         "confirmed_weapon_pickups": collected_weapons,
         "visible_weapon_opportunity_steps": sorted({row.get("step") for row in visible_weapon_rows}),
+        "visible_key_opportunity_steps": sorted({row.get("step") for row in visible_key_rows}),
+        "ignored_key_opportunities": ignored_key_opportunities,
         "no_progress_stalls": no_progress_stalls,
         "sectors_observed": sorted(sectors),
         "failures": failures,
