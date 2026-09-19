@@ -110,6 +110,7 @@ class CampaignNavigator:
     def __init__(self, map_truth: WadMap, semantic_memory: dict | None = None) -> None:
         self.map = map_truth
         self.objective: tuple[float, float, str] | None = None
+        self.objective_steps = 0
         self.route: deque[Portal] = deque()
         self.route_source_sector: int | None = None
         self.last_positions: deque[tuple[float, float]] = deque(maxlen=24)
@@ -366,6 +367,23 @@ class CampaignNavigator:
         else:
             current_objective = self._choose_objective(state, player, health, armor)
         objective_changed = self.objective != current_objective
+        if objective_changed:
+            self.objective_steps = 0
+        else:
+            self.objective_steps += 1
+        if (current_objective[2] in WEAPON_NAMES and
+                self.objective_steps >= 120):
+            # An optional pickup is never allowed to consume the mission. If
+            # it remains present after a bounded transaction, the route or
+            # crate is currently unreachable. Ignore that exact instance and
+            # immediately return to progression.
+            self.ignored_pickups.add((round(current_objective[0]),
+                                      round(current_objective[1]),
+                                      current_objective[2]))
+            current_objective = self._choose_objective(state, player, health, armor)
+            objective_changed = True
+            self.objective_steps = 0
+            self.route.clear()
         self.objective = current_objective
         if self.initial_sector_floors is None:
             self.initial_sector_floors = tuple(
@@ -1218,6 +1236,7 @@ class CampaignNavigator:
             actions.add("move forward")
         return actions, {
             "mode": "navigate", "objective": current_objective[2],
+            "objective_steps": self.objective_steps,
             "objective_x": current_objective[0], "objective_y": current_objective[1],
             "player_x": round(float(player.position_x), 2),
             "player_y": round(float(player.position_y), 2),
