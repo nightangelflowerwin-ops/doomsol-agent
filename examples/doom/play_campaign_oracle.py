@@ -761,8 +761,18 @@ class CampaignNavigator:
              current_sector in {134, 120} and not tag3_is_lowered) or
             (current_sector == 120 and 119 in route_sectors)
         )
-        if (current_sector != self.route_source_sector and
-                current_sector in route_sectors and not preserve_detour_route):
+        # A failed terminal raised-key commit may produce a route that revisits
+        # its source sector. Preserve only that authored special transaction;
+        # globally suppressing catch-up when source == current regresses normal
+        # 49/56/57 portal advancement into an endless backward loop.
+        route_head = self.route[0] if self.route else None
+        preserve_raised_key_route = bool(
+            current_objective[2] in KEY_NAMES and route_head is not None and
+            route_head.special and route_head.floor_delta > 32 and
+            current_sector == self.route_source_sector
+        )
+        if (current_sector in route_sectors and not preserve_detour_route and
+                not preserve_raised_key_route):
             crossed_index = route_sectors.index(current_sector)
             for _ in range(crossed_index + 1):
                 self.route.popleft()
