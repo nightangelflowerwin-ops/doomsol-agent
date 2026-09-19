@@ -4,4 +4,4 @@ runs/visibility-agent-visible-10min.mp4 filter=lfs diff=lfs merge=lfs -text
 runs/visibility-agent-visible-10min-trace.json filter=lfs diff=lfs merge=lfs -text
 runs/tactical-oracle-visible-10min.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
-runs/movingman-episode1-full/episode1-e1m2-attempt-13.jsonl filter=lfs diff=lfs merge=lfs -text
+runs/movingman-episode1-full/*.jsonl filter=lfs diff=lfs merge=lfs -text
