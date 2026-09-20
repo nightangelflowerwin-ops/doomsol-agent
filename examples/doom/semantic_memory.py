@@ -29,10 +29,14 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
                          "drop" if portal.floor_delta < -24 else "passage"),
             })
     stalls: Counter[tuple[float, float]] = Counter()
+    portal_failures: Counter[tuple[int, int, float, float]] = Counter()
+    portal_regressions: Counter[tuple[int, int, float, float]] = Counter()
+    sector_attempt_visits: Counter[int] = Counter()
     samples = []
     for trace in traces:
         if not trace.exists():
             continue
+        sectors_in_attempt: set[int] = set()
         with trace.open(encoding="utf-8", errors="ignore") as handle:
             for line in handle:
                 try:
@@ -41,11 +45,29 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
                     continue
                 if row.get("map", map_name).upper() != map_name.upper():
                     continue
+                current_sector = row.get("current_sector")
+                if current_sector is not None:
+                    sectors_in_attempt.add(int(current_sector))
                 x, y = row.get("waypoint_x"), row.get("waypoint_y")
                 if x is not None and y is not None and (
                     row.get("stuck_recovery") or row.get("scan_reason") == "navigation_stall"
                 ):
                     stalls[(round(float(x), 1), round(float(y), 1))] += 1
+                if row.get("mode") == "transition_regression":
+                    key = (
+                        int(row["blocked_edge_source"]),
+                        int(row["blocked_edge_target"]),
+                        float(row["blocked_edge_x"]),
+                        float(row["blocked_edge_y"]),
+                    )
+                    portal_regressions[key] += 1
+                elif row.get("mode") == "gate_failed" and current_sector is not None:
+                    key = (
+                        int(current_sector), int(row["gate_target_sector"]),
+                        float(row["failed_portal_x"]),
+                        float(row["failed_portal_y"]),
+                    )
+                    portal_failures[key] += 1
                 samples.append({
                     "map": map_name.upper(), "tic": row.get("tic"),
                     "semantic_mode": row.get("mode"), "objective": row.get("objective"),
@@ -58,8 +80,10 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
                                     or row.get("scan_reason") == "navigation_stall"),
                     "actions": row.get("actions", []),
                 })
+        sector_attempt_visits.update(sectors_in_attempt)
+    outcome_keys = set(portal_failures) | set(portal_regressions)
     memory = {
-        **provenance(), "schema_version": 1, "map": map_name.upper(),
+        **provenance(), "schema_version": 2, "map": map_name.upper(),
         "sectors": sorted(truth.sector_lines), "connections": edges,
         "doors": [edge for edge in edges if edge["kind"] == "door"],
         "keys": [{"x": x, "y": y, "kind": kind} for x, y, kind in truth.key_points],
@@ -69,7 +93,26 @@ def distill(wad: Path, map_name: str, traces: list[Path]) -> tuple[dict, list[di
             {"x": x, "y": y, "observations": count}
             for (x, y), count in stalls.most_common()
         ],
-        "source_traces": [str(path.resolve()) for path in traces],
+        "portal_outcomes": [
+            {
+                "source_sector": source, "target_sector": target,
+                "x": x, "y": y,
+                "failed_attempts": portal_failures[key],
+                "regression_attempts": portal_regressions[key],
+                "route_penalty": min(
+                    8.0,
+                    2.0 * portal_failures[key] + 3.0 * portal_regressions[key],
+                ),
+            }
+            for key in sorted(outcome_keys)
+            for source, target, x, y in [key]
+        ],
+        "sector_attempt_visits": [
+            {"sector": sector, "attempts": count}
+            for sector, count in sorted(sector_attempt_visits.items())
+        ],
+        "attempt_count": sum(1 for trace in traces if trace.exists()),
+        "source_traces": [path.name for path in traces],
         "training_samples": len(samples),
     }
     return memory, samples

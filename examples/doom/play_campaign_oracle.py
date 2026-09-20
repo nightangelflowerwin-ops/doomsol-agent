@@ -154,6 +154,13 @@ class CampaignNavigator:
         self.ignored_switches: set[tuple[float, float, int, int, float, float]] = set()
         self.loot_sweep_steps = 0
         self.semantic_memory = semantic_memory or {}
+        self.semantic_edge_penalties = {
+            (
+                int(item["source_sector"]), int(item["target_sector"]),
+                float(item["x"]), float(item["y"]),
+            ): float(item.get("route_penalty", 0.0))
+            for item in self.semantic_memory.get("portal_outcomes", [])
+        }
         self.sector_visits: Counter[int] = Counter()
         self.blocked_points = [
             (float(item["x"]), float(item["y"]))
@@ -180,6 +187,25 @@ class CampaignNavigator:
         previous = self.breadcrumbs[-1]
         if sector != previous[2] or math.hypot(point[0] - previous[0], point[1] - previous[1]) >= 96:
             self.breadcrumbs.append((*point, sector))
+
+    def _catch_up_route(self, current_sector: int | None,
+                        after_target: int | None = None) -> bool:
+        """Accept an observed later route sector and discard crossed portals."""
+        planned_targets = [
+            portal.target_sector for portal in list(self.route)[:-1]
+        ]
+        if current_sector not in planned_targets:
+            return False
+        current_index = planned_targets.index(current_sector)
+        if after_target is not None:
+            if after_target not in planned_targets:
+                return False
+            if current_index <= planned_targets.index(after_target):
+                return False
+        for _ in range(current_index + 1):
+            self.route.popleft()
+        self.route_source_sector = current_sector
+        return True
 
     def _begin_backtrack(self, player) -> None:
         """Return to the latest meaningfully different room/door approach."""
@@ -587,8 +613,29 @@ class CampaignNavigator:
             self.gate_settle_steps -= 1
             actions, forward_speed = gate_brake_actions()
             committed_target = self.gate_commit_key[0]
-            if self.gate_settle_steps == 0:
+            caught_up = self._catch_up_route(
+                current_sector, after_target=committed_target
+            )
+            if caught_up:
+                # A thin sector can be crossed between controller samples.
+                # Treat a later planned sector as authoritative forward
+                # progress even during braking, otherwise settling rewinds the
+                # route through the portal that was just crossed.
                 if self.gate_source_sector is not None:
+                    self.transition_guard = (
+                        self.gate_source_sector,
+                        committed_target,
+                        float(self.gate_commit_key[1]),
+                        float(self.gate_commit_key[2]),
+                    )
+                self.gate_commit_key = None
+                self.gate_commit_steps = 0
+                self.gate_commit_heading = None
+                self.gate_target_seen_frames = 0
+                self.gate_source_sector = None
+                self.gate_settle_steps = 0
+            if self.gate_settle_steps == 0:
+                if self.gate_commit_key is not None and self.gate_source_sector is not None:
                     self.transition_guard = (
                         self.gate_source_sector,
                         committed_target,
@@ -606,6 +653,7 @@ class CampaignNavigator:
                 "current_sector": current_sector,
                 "gate_settle_steps": self.gate_settle_steps,
                 "forward_speed": round(forward_speed, 3),
+                "route_catchup": caught_up,
                 "player_x": round(float(player.position_x), 2),
                 "player_y": round(float(player.position_y), 2),
                 "stuck_recovery": False,
@@ -738,6 +786,7 @@ class CampaignNavigator:
                 blocked_edges=self.blocked_edges,
                 unlocked_tags={switch[3] for switch in self.activated_switches},
                 target_sector=target_sector,
+                edge_penalties=self.semantic_edge_penalties,
             ))
             if (not self.route and
                     current_objective[2].startswith("switch:")):
@@ -751,6 +800,7 @@ class CampaignNavigator:
                 self.route = deque(self.map.route(
                     (player.position_x, player.position_y), current_objective[:2],
                     unlocked_tags={switch[3] for switch in self.activated_switches},
+                    edge_penalties=self.semantic_edge_penalties,
                 ))
             self.route_source_sector = current_sector
 

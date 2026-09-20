@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import collections
+import heapq
 import math
 import struct
 from dataclasses import dataclass
@@ -263,7 +264,9 @@ class WadMap:
               blocked_points: list[tuple[float, float]] | None = None,
               blocked_edges: set[tuple[int, int, float, float]] | None = None,
               unlocked_tags: set[int] | None = None,
-              target_sector: int | None = None) -> list[Portal]:
+              target_sector: int | None = None,
+              edge_penalties: dict[tuple[int, int, float, float], float] | None = None
+              ) -> list[Portal]:
         source = self.sector_at(*start)
         target = target_sector if target_sector is not None else self.sector_at(*goal)
         if source is None or target is None:
@@ -273,10 +276,17 @@ class WadMap:
             # the containing sector makes the controller run gate-confirmation
             # logic at pickups and overshoot them.
             return [Portal(-1, goal[0], goal[1], 0)]
-        queue = collections.deque([source])
+        # Dijkstra reduces to the old shortest-hop route when no persistent
+        # penalties are supplied.  Learned penalties are deliberately soft:
+        # a repeatedly failed portal is avoided when an alternative exists,
+        # but remains usable when it is the only authored route.
+        queue: list[tuple[float, int]] = [(0.0, source)]
+        costs = {source: 0.0}
         previous: dict[int, tuple[int, Portal] | None] = {source: None}
         while queue:
-            current = queue.popleft()
+            current_cost, current = heapq.heappop(queue)
+            if current_cost != costs.get(current):
+                continue
             if current == target:
                 break
             for portal in self.graph[current]:
@@ -301,9 +311,17 @@ class WadMap:
                     current, portal.target_sector, float(portal.x), float(portal.y)
                 ) in blocked_edges:
                     continue
-                if portal.target_sector not in previous:
+                edge_key = (
+                    current, portal.target_sector,
+                    float(portal.x), float(portal.y),
+                )
+                next_cost = current_cost + 1.0 + max(
+                    0.0, float((edge_penalties or {}).get(edge_key, 0.0))
+                )
+                if next_cost < costs.get(portal.target_sector, float("inf")):
+                    costs[portal.target_sector] = next_cost
                     previous[portal.target_sector] = (current, portal)
-                    queue.append(portal.target_sector)
+                    heapq.heappush(queue, (next_cost, portal.target_sector))
         if target not in previous:
             return []
         portals = []

@@ -23,7 +23,52 @@ def load_rows(path: Path) -> list[dict]:
     return rows
 
 
-def judge(trace: Path, summary: Path) -> dict:
+def route_evidence(rows: list[dict]) -> dict:
+    sectors = [int(row["current_sector"]) for row in rows
+               if row.get("current_sector") is not None]
+    transitions = []
+    for source, target in zip(sectors, sectors[1:]):
+        edge = (source, target)
+        if source != target and (not transitions or transitions[-1] != edge):
+            transitions.append(edge)
+    return {
+        "sectors": set(sectors),
+        "edges": set(transitions),
+        "fingerprint": [f"{source}>{target}" for source, target in transitions],
+    }
+
+
+def cross_attempt_evidence(rows: list[dict], history: list[Path]) -> dict:
+    current = route_evidence(rows)
+    prior = []
+    prior_sectors: set[int] = set()
+    prior_edges: set[tuple[int, int]] = set()
+    for path in history:
+        evidence = route_evidence(load_rows(path))
+        union = current["edges"] | evidence["edges"]
+        similarity = (len(current["edges"] & evidence["edges"]) / len(union)
+                      if union else 1.0)
+        prior.append({
+            "trace": path.name,
+            "directed_edge_jaccard": round(similarity, 4),
+        })
+        prior_sectors |= evidence["sectors"]
+        prior_edges |= evidence["edges"]
+    closest = max(prior, key=lambda item: item["directed_edge_jaccard"],
+                  default=None)
+    return {
+        "route_fingerprint": current["fingerprint"],
+        "closest_prior_attempt": closest,
+        "new_meaningful_sectors": sorted(current["sectors"] - prior_sectors),
+        "new_directed_portals": [
+            f"{source}>{target}" for source, target in
+            sorted(current["edges"] - prior_edges)
+        ],
+    }
+
+
+def judge(trace: Path, summary: Path,
+          history: list[Path] | None = None) -> dict:
     rows = load_rows(trace)
     report = json.loads(summary.read_text(encoding="utf-8"))
     attempts = [attempt for result in report.get("results", [])
@@ -137,6 +182,13 @@ def judge(trace: Path, summary: Path) -> dict:
             break
     sectors = {row.get("current_sector") for row in rows
                if row.get("current_sector") is not None}
+    history_evidence = cross_attempt_evidence(rows, history or [])
+    closest = history_evidence["closest_prior_attempt"]
+    repeated_route = bool(
+        closest and closest["directed_edge_jaccard"] >= 0.85 and
+        not history_evidence["new_meaningful_sectors"] and
+        not history_evidence["new_directed_portals"]
+    )
     failures = []
     if not genuine_completion:
         failures.append("No genuine sequential E1M1-E1M8 completion.")
@@ -152,9 +204,14 @@ def judge(trace: Path, summary: Path) -> dict:
         failures.append("A visible key cue was ignored for more than two seconds without active combat.")
     if no_progress_stalls:
         failures.append("Hard no-progress stall: same sector/objective with under 12 units movement.")
+    if repeated_route:
+        failures.append(
+            "cross_attempt_repetition: failed route repeated with at least "
+            "0.85 directed-edge similarity and no new map frontier."
+        )
 
     return {
-        "judge": "movingman_gauntlet_hard_gate_v1",
+        "judge": "movingman_route_memory_judge_v2",
         "trace": str(trace.resolve()),
         "completion_reward": 1 if genuine_completion else 0,
         "genuine_completion": genuine_completion,
@@ -169,6 +226,8 @@ def judge(trace: Path, summary: Path) -> dict:
         "ignored_key_opportunities": ignored_key_opportunities,
         "no_progress_stalls": no_progress_stalls,
         "sectors_observed": sorted(sectors),
+        "cross_attempt": history_evidence,
+        "cross_attempt_repetition": repeated_route,
         "failures": failures,
     }
 
@@ -178,8 +237,11 @@ def main() -> None:
     parser.add_argument("--trace", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--history", type=Path, action="append", default=[])
     args = parser.parse_args()
-    result = judge(args.trace, args.summary)
+    current = args.trace.resolve()
+    history = [path for path in args.history if path.resolve() != current]
+    result = judge(args.trace, args.summary, history=history)
     rendered = json.dumps(result, indent=2)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
