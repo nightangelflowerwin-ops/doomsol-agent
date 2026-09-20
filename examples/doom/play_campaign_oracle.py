@@ -81,6 +81,19 @@ def gate_combat_is_urgent(combat_meta: dict) -> bool:
                 float(combat_meta.get("target_distance", float("inf"))) <= 256.0)
 
 
+def critical_survival_combat_required(combat_meta: dict) -> bool:
+    """Do not walk past an attacker while critically wounded.
+
+    Health pickup routing remains preferred when the source is hidden.  A
+    visible enemy that is currently landing damage, however, must be answered;
+    otherwise the navigation policy repeatedly dies on the way to the pickup.
+    """
+    return bool(
+        combat_meta.get("line_of_sight") and
+        (combat_meta.get("damaged") or combat_meta.get("under_fire"))
+    )
+
+
 def make_campaign_game(wad: Path, map_name: str, seed: int, visible: bool,
                        timeout_seconds: float, skill: int) -> vzd.DoomGame:
     game = vzd.DoomGame()
@@ -1617,13 +1630,9 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                     item.name in HEALTH_NAMES for item in (state.objects or [])
                 )
                 critical_survival = health <= 30.0 and reachable_health_visible
-                point_blank_threat = bool(
-                    combat_meta.get("line_of_sight") and
-                    float(combat_meta.get("target_distance", float("inf"))) <= 96.0 and
-                    combat_meta.get("damaged")
-                )
+                survival_attacker = critical_survival_combat_required(combat_meta)
                 if (sees_threat and (not gate_priority or urgent_gate_combat) and
-                        (not critical_survival or point_blank_threat)):
+                        (not critical_survival or survival_attacker)):
                     actions, telemetry = combat_actions, combat_meta
                 else:
                     # A key/exit gate is a transaction: once USE has been

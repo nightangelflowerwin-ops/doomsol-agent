@@ -1,4 +1,5 @@
 from play_campaign_oracle import (
+    critical_survival_combat_required,
     episode_maps,
     gate_combat_is_urgent,
     gate_summary,
@@ -54,4 +55,19 @@ def test_gate_combat_requires_damage_or_close_visible_enemy():
     })
     assert gate_combat_is_urgent({
         "damaged": True, "line_of_sight": False, "target_distance": 900,
+    })
+
+
+def test_critical_survival_answers_only_visible_active_attackers():
+    assert critical_survival_combat_required({
+        "line_of_sight": True, "under_fire": True, "damaged": False,
+    })
+    assert critical_survival_combat_required({
+        "line_of_sight": True, "under_fire": False, "damaged": True,
+    })
+    assert not critical_survival_combat_required({
+        "line_of_sight": False, "under_fire": True, "damaged": True,
+    })
+    assert not critical_survival_combat_required({
+        "line_of_sight": True, "under_fire": False, "damaged": False,
     })

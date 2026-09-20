@@ -10491,6 +10491,11 @@
       "x": 912.0,
       "y": -576.0,
       "observations": 1
+    },
+    {
+      "x": 1088.0,
+      "y": -524.0,
+      "observations": 1
     }
   ],
   "portal_outcomes": [
@@ -10693,6 +10698,24 @@
       "route_penalty": 8.0
     },
     {
+      "source_sector": 44,
+      "target_sector": 197,
+      "x": 1472.0,
+      "y": -1408.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 45,
+      "target_sector": 51,
+      "x": 1472.0,
+      "y": -960.0,
+      "failed_attempts": 1,
+      "regression_attempts": 0,
+      "route_penalty": 2.0
+    },
+    {
       "source_sector": 49,
       "target_sector": 50,
       "x": 1024.0,
@@ -10849,59 +10872,59 @@
   "sector_attempt_visits": [
     {
       "sector": 0,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 3,
-      "attempts": 20
+      "attempts": 21
     },
     {
       "sector": 9,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 10,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 11,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 12,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 13,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 14,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 15,
-      "attempts": 17
-    },
-    {
-      "sector": 17,
       "attempts": 18
     },
     {
+      "sector": 17,
+      "attempts": 19
+    },
+    {
       "sector": 18,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 19,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 20,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 21,
-      "attempts": 20
+      "attempts": 21
     },
     {
       "sector": 22,
@@ -10913,11 +10936,11 @@
     },
     {
       "sector": 34,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 35,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 36,
@@ -10925,7 +10948,7 @@
     },
     {
       "sector": 37,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 38,
@@ -10933,7 +10956,7 @@
     },
     {
       "sector": 39,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 40,
@@ -10941,27 +10964,31 @@
     },
     {
       "sector": 41,
-      "attempts": 5
+      "attempts": 6
     },
     {
       "sector": 42,
-      "attempts": 5
+      "attempts": 6
     },
     {
       "sector": 43,
-      "attempts": 9
+      "attempts": 10
     },
     {
       "sector": 44,
-      "attempts": 11
+      "attempts": 12
+    },
+    {
+      "sector": 45,
+      "attempts": 1
     },
     {
       "sector": 46,
-      "attempts": 7
+      "attempts": 8
     },
     {
       "sector": 48,
-      "attempts": 2
+      "attempts": 3
     },
     {
       "sector": 49,
@@ -10973,15 +11000,15 @@
     },
     {
       "sector": 51,
-      "attempts": 11
+      "attempts": 12
     },
     {
       "sector": 56,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 57,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 67,
@@ -11001,15 +11028,15 @@
     },
     {
       "sector": 167,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 176,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 177,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 184,
@@ -11033,7 +11060,7 @@
     },
     {
       "sector": 197,
-      "attempts": 11
+      "attempts": 12
     },
     {
       "sector": 198,
@@ -11045,7 +11072,7 @@
     },
     {
       "sector": 209,
-      "attempts": 4
+      "attempts": 5
     },
     {
       "sector": 310,
@@ -11056,7 +11083,7 @@
       "attempts": 6
     }
   ],
-  "attempt_count": 20,
+  "attempt_count": 21,
   "source_traces": [
     "episode1-e1m2-attempt-01.jsonl",
     "episode1-e1m2-attempt-02.jsonl",
@@ -11077,7 +11104,8 @@
     "episode1-e1m2-attempt-17.jsonl",
     "episode1-e1m2-attempt-18.jsonl",
     "episode1-e1m2-attempt-19.jsonl",
-    "episode1-e1m2-attempt-20.jsonl"
+    "episode1-e1m2-attempt-20.jsonl",
+    "episode1-e1m2-attempt-21.jsonl"
   ],
-  "training_samples": 42180
+  "training_samples": 43205
 }
