@@ -6,7 +6,10 @@ import sys
 DOOM_EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "doom"
 sys.path.insert(0, str(DOOM_EXAMPLES))
 
-from play_campaign_oracle import CampaignNavigator  # noqa: E402
+from play_campaign_oracle import (  # noqa: E402
+    CampaignNavigator,
+    PORTAL_STAGE_SPEED_TOLERANCE,
+)
 from wad_navigation import Portal  # noqa: E402
 
 
@@ -72,3 +75,7 @@ def test_portal_stage_brakes_forward_and_lateral_momentum():
     assert actions == {"move backward", "strafe left"}
     assert forward_speed == 5.0
     assert lateral_speed == 3.0
+
+
+def test_portal_stage_tolerance_accepts_observed_engine_brake_quantum():
+    assert 1.468 < PORTAL_STAGE_SPEED_TOLERANCE < 2.0

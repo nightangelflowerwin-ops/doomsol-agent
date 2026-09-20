@@ -36,6 +36,9 @@ AMMO_NAMES = {"Clip", "ClipBox", "Shell", "ShellBox", "RocketAmmo",
               "RocketBox", "Cell", "CellPack", "Backpack"}
 POWERUP_NAMES = {"Soulsphere", "Megasphere", "BlurSphere", "InvulnerabilitySphere",
                  "RadiationSuit", "ComputerMap", "LightAmp", "Berserk"}
+# Four-tic forward/back braking settles at roughly 1.468 world units in this
+# engine build. Requiring <1.0 causes a permanent sign-flipping brake loop.
+PORTAL_STAGE_SPEED_TOLERANCE = 1.6
 
 
 def episode_maps(episode: str) -> list[str]:
@@ -1204,7 +1207,8 @@ class CampaignNavigator:
             # degrees. An 8-degree dead-zone is the smallest reachable stable
             # band; a 6-degree gate oscillates forever around zero.
             in_stage_zone = distance <= 52.0
-            if abs(stage_error) <= 8.0 and speed <= 1.0 and in_stage_zone:
+            if (abs(stage_error) <= 8.0 and
+                    speed <= PORTAL_STAGE_SPEED_TOLERANCE and in_stage_zone):
                 self.gate_commit_key = waypoint_key
                 self.gate_commit_steps = 14
                 self.gate_commit_heading = normal_heading

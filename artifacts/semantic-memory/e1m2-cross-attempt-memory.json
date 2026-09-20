@@ -10451,6 +10451,21 @@
       "x": 1316.0,
       "y": -956.0,
       "observations": 1
+    },
+    {
+      "x": 784.0,
+      "y": -608.0,
+      "observations": 1
+    },
+    {
+      "x": 896.0,
+      "y": -1032.0,
+      "observations": 1
+    },
+    {
+      "x": 992.0,
+      "y": -960.0,
+      "observations": 1
     }
   ],
   "portal_outcomes": [
@@ -10522,6 +10537,15 @@
       "target_sector": 177,
       "x": 1120.0,
       "y": -524.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 21,
+      "target_sector": 3,
+      "x": 672.0,
+      "y": -400.0,
       "failed_attempts": 0,
       "regression_attempts": 1,
       "route_penalty": 3.0
@@ -10746,11 +10770,11 @@
   "sector_attempt_visits": [
     {
       "sector": 0,
-      "attempts": 12
+      "attempts": 13
     },
     {
       "sector": 3,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 9,
@@ -10758,23 +10782,23 @@
     },
     {
       "sector": 10,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 11,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 12,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 13,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 14,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 15,
@@ -10782,7 +10806,7 @@
     },
     {
       "sector": 17,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 18,
@@ -10798,7 +10822,7 @@
     },
     {
       "sector": 21,
-      "attempts": 18
+      "attempts": 19
     },
     {
       "sector": 22,
@@ -10810,7 +10834,7 @@
     },
     {
       "sector": 34,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 35,
@@ -10894,11 +10918,11 @@
     },
     {
       "sector": 166,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 167,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 176,
@@ -10949,7 +10973,7 @@
       "attempts": 6
     }
   ],
-  "attempt_count": 18,
+  "attempt_count": 19,
   "source_traces": [
     "episode1-e1m2-attempt-01.jsonl",
     "episode1-e1m2-attempt-02.jsonl",
@@ -10968,7 +10992,8 @@
     "episode1-e1m2-attempt-15.jsonl",
     "episode1-e1m2-attempt-16.jsonl",
     "episode1-e1m2-attempt-17.jsonl",
-    "episode1-e1m2-attempt-18.jsonl"
+    "episode1-e1m2-attempt-18.jsonl",
+    "episode1-e1m2-attempt-19.jsonl"
   ],
-  "training_samples": 36930
+  "training_samples": 39555
 }
