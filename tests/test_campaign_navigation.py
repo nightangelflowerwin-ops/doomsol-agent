@@ -79,3 +79,15 @@ def test_portal_stage_brakes_forward_and_lateral_momentum():
 
 def test_portal_stage_tolerance_accepts_observed_engine_brake_quantum():
     assert 1.468 < PORTAL_STAGE_SPEED_TOLERANCE < 2.0
+
+
+def test_transition_regression_requires_three_source_frames():
+    navigator = CampaignNavigator(TaggedKeyMap())
+    navigator.transition_guard = (42, 43, 1296.0, -896.0)
+
+    navigator.transition_guard_source_frames += 1
+    assert navigator.transition_guard_source_frames < 3
+    navigator.transition_guard_source_frames += 1
+    assert navigator.transition_guard_source_frames < 3
+    navigator.transition_guard_source_frames += 1
+    assert navigator.transition_guard_source_frames == 3

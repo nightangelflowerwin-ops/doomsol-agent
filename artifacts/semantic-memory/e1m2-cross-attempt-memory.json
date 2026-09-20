@@ -10320,7 +10320,7 @@
     {
       "x": 664.0,
       "y": -704.0,
-      "observations": 24
+      "observations": 26
     },
     {
       "x": 1504.0,
@@ -10388,6 +10388,11 @@
       "observations": 4
     },
     {
+      "x": 1216.0,
+      "y": -960.0,
+      "observations": 4
+    },
+    {
       "x": 560.0,
       "y": -352.0,
       "observations": 3
@@ -10395,11 +10400,6 @@
     {
       "x": 868.0,
       "y": -720.0,
-      "observations": 3
-    },
-    {
-      "x": 1216.0,
-      "y": -960.0,
       "observations": 3
     },
     {
@@ -10415,6 +10415,11 @@
     {
       "x": 1376.0,
       "y": -616.0,
+      "observations": 2
+    },
+    {
+      "x": 1316.0,
+      "y": -956.0,
       "observations": 2
     },
     {
@@ -10448,11 +10453,6 @@
       "observations": 1
     },
     {
-      "x": 1316.0,
-      "y": -956.0,
-      "observations": 1
-    },
-    {
       "x": 784.0,
       "y": -608.0,
       "observations": 1
@@ -10465,6 +10465,31 @@
     {
       "x": 992.0,
       "y": -960.0,
+      "observations": 1
+    },
+    {
+      "x": 1328.0,
+      "y": -832.0,
+      "observations": 1
+    },
+    {
+      "x": 1280.0,
+      "y": -524.0,
+      "observations": 1
+    },
+    {
+      "x": 528.0,
+      "y": -816.0,
+      "observations": 1
+    },
+    {
+      "x": 800.0,
+      "y": -1032.0,
+      "observations": 1
+    },
+    {
+      "x": 912.0,
+      "y": -576.0,
       "observations": 1
     }
   ],
@@ -10509,6 +10534,15 @@
       "source_sector": 3,
       "target_sector": 21,
       "x": 784.0,
+      "y": -608.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 3,
+      "target_sector": 21,
+      "x": 784.0,
       "y": -352.0,
       "failed_attempts": 0,
       "regression_attempts": 7,
@@ -10524,19 +10558,46 @@
       "route_penalty": 8.0
     },
     {
+      "source_sector": 13,
+      "target_sector": 12,
+      "x": 736.0,
+      "y": -1024.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
       "source_sector": 14,
       "target_sector": 67,
       "x": 528.0,
       "y": -816.0,
       "failed_attempts": 0,
-      "regression_attempts": 2,
-      "route_penalty": 6.0
+      "regression_attempts": 3,
+      "route_penalty": 8.0
     },
     {
       "source_sector": 15,
       "target_sector": 177,
       "x": 1120.0,
       "y": -524.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 17,
+      "target_sector": 10,
+      "x": 896.0,
+      "y": -1032.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 19,
+      "target_sector": 184,
+      "x": 992.0,
+      "y": -752.0,
       "failed_attempts": 0,
       "regression_attempts": 1,
       "route_penalty": 3.0
@@ -10569,6 +10630,15 @@
       "route_penalty": 6.0
     },
     {
+      "source_sector": 36,
+      "target_sector": 38,
+      "x": 1376.0,
+      "y": -648.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
       "source_sector": 37,
       "target_sector": 39,
       "x": 1280.0,
@@ -10592,8 +10662,8 @@
       "x": 1296.0,
       "y": -896.0,
       "failed_attempts": 0,
-      "regression_attempts": 1,
-      "route_penalty": 3.0
+      "regression_attempts": 3,
+      "route_penalty": 8.0
     },
     {
       "source_sector": 43,
@@ -10717,7 +10787,7 @@
       "target_sector": 222,
       "x": 320.0,
       "y": -984.0,
-      "failed_attempts": 39,
+      "failed_attempts": 42,
       "regression_attempts": 0,
       "route_penalty": 8.0
     },
@@ -10735,6 +10805,15 @@
       "target_sector": 167,
       "x": 844.0,
       "y": -720.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 167,
+      "target_sector": 14,
+      "x": 664.0,
+      "y": -736.0,
       "failed_attempts": 0,
       "regression_attempts": 1,
       "route_penalty": 3.0
@@ -10770,59 +10849,59 @@
   "sector_attempt_visits": [
     {
       "sector": 0,
-      "attempts": 13
+      "attempts": 14
     },
     {
       "sector": 3,
-      "attempts": 19
+      "attempts": 20
     },
     {
       "sector": 9,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 10,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 11,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 12,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 13,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 14,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 15,
-      "attempts": 16
-    },
-    {
-      "sector": 17,
       "attempts": 17
     },
     {
+      "sector": 17,
+      "attempts": 18
+    },
+    {
       "sector": 18,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 19,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 20,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 21,
-      "attempts": 19
+      "attempts": 20
     },
     {
       "sector": 22,
@@ -10830,47 +10909,47 @@
     },
     {
       "sector": 32,
-      "attempts": 2
+      "attempts": 3
     },
     {
       "sector": 34,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 35,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 36,
-      "attempts": 1
+      "attempts": 2
     },
     {
       "sector": 37,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 38,
-      "attempts": 1
+      "attempts": 2
     },
     {
       "sector": 39,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 40,
-      "attempts": 1
+      "attempts": 2
     },
     {
       "sector": 41,
-      "attempts": 4
+      "attempts": 5
     },
     {
       "sector": 42,
-      "attempts": 4
+      "attempts": 5
     },
     {
       "sector": 43,
-      "attempts": 8
+      "attempts": 9
     },
     {
       "sector": 44,
@@ -10898,15 +10977,15 @@
     },
     {
       "sector": 56,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 57,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 67,
-      "attempts": 13
+      "attempts": 14
     },
     {
       "sector": 144,
@@ -10918,27 +10997,31 @@
     },
     {
       "sector": 166,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 167,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 176,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 177,
-      "attempts": 16
+      "attempts": 17
     },
     {
       "sector": 184,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 185,
-      "attempts": 2
+      "attempts": 3
+    },
+    {
+      "sector": 190,
+      "attempts": 1
     },
     {
       "sector": 192,
@@ -10966,14 +11049,14 @@
     },
     {
       "sector": 310,
-      "attempts": 7
+      "attempts": 8
     },
     {
       "sector": 313,
       "attempts": 6
     }
   ],
-  "attempt_count": 19,
+  "attempt_count": 20,
   "source_traces": [
     "episode1-e1m2-attempt-01.jsonl",
     "episode1-e1m2-attempt-02.jsonl",
@@ -10993,7 +11076,8 @@
     "episode1-e1m2-attempt-16.jsonl",
     "episode1-e1m2-attempt-17.jsonl",
     "episode1-e1m2-attempt-18.jsonl",
-    "episode1-e1m2-attempt-19.jsonl"
+    "episode1-e1m2-attempt-19.jsonl",
+    "episode1-e1m2-attempt-20.jsonl"
   ],
-  "training_samples": 39555
+  "training_samples": 42180
 }

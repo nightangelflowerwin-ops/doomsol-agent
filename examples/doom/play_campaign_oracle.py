@@ -129,6 +129,7 @@ class CampaignNavigator:
         self.gate_source_sector: int | None = None
         self.gate_settle_steps = 0
         self.transition_guard: tuple[int, int, float, float] | None = None
+        self.transition_guard_source_frames = 0
         self.blocked_edges: set[tuple[int, int, float, float]] = set()
         self.portal_stage_key: tuple[int, float, float] | None = None
         self.portal_stage_steps = 0
@@ -642,6 +643,7 @@ class CampaignNavigator:
                         float(self.gate_commit_key[1]),
                         float(self.gate_commit_key[2]),
                     )
+                    self.transition_guard_source_frames = 0
                 self.gate_commit_key = None
                 self.gate_commit_steps = 0
                 self.gate_commit_heading = None
@@ -656,6 +658,7 @@ class CampaignNavigator:
                         float(self.gate_commit_key[1]),
                         float(self.gate_commit_key[2]),
                     )
+                    self.transition_guard_source_frames = 0
                 self.gate_commit_key = None
                 self.gate_commit_steps = 0
                 self.gate_commit_heading = None
@@ -676,8 +679,20 @@ class CampaignNavigator:
         if self.transition_guard is not None:
             source_sector, target_sector, portal_x, portal_y = self.transition_guard
             if current_sector == source_sector:
+                self.transition_guard_source_frames += 1
+                if self.transition_guard_source_frames < 3:
+                    return set(), {
+                        "mode": "transition_regression_pending",
+                        "objective": self.objective[2],
+                        "current_sector": current_sector,
+                        "blocked_edge_source": source_sector,
+                        "blocked_edge_target": target_sector,
+                        "regression_source_frames": self.transition_guard_source_frames,
+                        "stuck_recovery": False,
+                    }
                 self.blocked_edges.add(self.transition_guard)
                 self.transition_guard = None
+                self.transition_guard_source_frames = 0
                 self.route.clear()
                 self.route_source_sector = current_sector
                 self.last_positions.clear()
@@ -692,8 +707,11 @@ class CampaignNavigator:
                     "blocked_edge_y": portal_y,
                     "stuck_recovery": False,
                 }
+            if current_sector == target_sector:
+                self.transition_guard_source_frames = 0
             if current_sector not in {source_sector, target_sector}:
                 self.transition_guard = None
+                self.transition_guard_source_frames = 0
 
         if self.gate_commit_key is not None:
             committed_target = self.gate_commit_key[0]
@@ -730,6 +748,7 @@ class CampaignNavigator:
                         float(self.gate_commit_key[1]),
                         float(self.gate_commit_key[2]),
                     )
+                    self.transition_guard_source_frames = 0
                 self.gate_commit_key = None
                 self.gate_commit_steps = 0
                 self.gate_commit_heading = None
