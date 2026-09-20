@@ -189,6 +189,86 @@ def judge(trace: Path, summary: Path,
         not history_evidence["new_meaningful_sectors"] and
         not history_evidence["new_directed_portals"]
     )
+    telemetry_complete = bool(rows) and all(
+        all(field in row for field in (
+            "equipped_weapon_slot", "equipped_weapon_ammo", "weapon_inventory",
+            "player_angle", "weapon_pickups_visible",
+        )) for row in rows
+    )
+
+    # Pickup regret: a truly camera-visible nearby gun must either be collected
+    # promptly or be deferred because an immediate threat owns the decision.
+    pickup_regrets = []
+    seen_weapon_events = set()
+    for index, row in enumerate(rows):
+        for item in row.get("weapon_pickups_visible", []):
+            event = (item.get("name"), round(float(item.get("x", 0))),
+                     round(float(item.get("y", 0))))
+            if event in seen_weapon_events or float(item.get("distance", 1e9)) > 160:
+                continue
+            seen_weapon_events.add(event)
+            window = rows[index:index + 27]
+            collected = any(item.get("name") in next_row.get("pickups_confirmed", [])
+                            for next_row in window)
+            immediate_threat = any(
+                next_row.get("line_of_sight") and
+                float(next_row.get("target_distance", 1e9)) <= 160
+                for next_row in window[:5]
+            )
+            if not collected and not immediate_threat:
+                pickup_regrets.append({
+                    "name": item.get("name"), "step": row.get("step"),
+                    "distance": item.get("distance"),
+                })
+
+    unsuitable_melee = [
+        {"step": row.get("step"), "target": row.get("target_name"),
+         "distance": row.get("target_distance")}
+        for row in rows
+        if row.get("equipped_weapon_slot") == 1 and "attack" in row.get("actions", []) and
+        row.get("line_of_sight") and
+        (float(row.get("target_distance", 0)) > 96 or row.get("incoming_projectiles")) and
+        any(bool(row.get("weapon_inventory", {}).get(str(slot)))
+            for slot in range(2, 8))
+    ]
+    damage_response_failures = []
+    for index, row in enumerate(rows):
+        if not (row.get("damaged") or row.get("incoming_projectiles")):
+            continue
+        window = rows[index:index + 3]
+        responded = any(
+            set(next_row.get("actions", [])) & {
+                "strafe left", "strafe right", "move backward", "weapon 2",
+                "weapon 3", "weapon 4", "weapon 5", "weapon 6", "weapon 7",
+            } or ("attack" in next_row.get("actions", []) and
+                  next_row.get("line_of_sight"))
+            for next_row in window
+        )
+        if not responded:
+            damage_response_failures.append({"step": row.get("step")})
+
+    wall_attack_streaks = []
+    streak = []
+    for row in rows:
+        if "attack" in row.get("actions", []) and not row.get("line_of_sight"):
+            streak.append(row.get("step"))
+        else:
+            if len(streak) >= 3:
+                wall_attack_streaks.append({"start_step": streak[0], "end_step": streak[-1]})
+            streak = []
+    if len(streak) >= 3:
+        wall_attack_streaks.append({"start_step": streak[0], "end_step": streak[-1]})
+
+    scan_failures = []
+    for clear in room_clears:
+        window = [row for row in rows if clear.get("step", -1) <= row.get("step", -1)
+                  <= clear.get("step", -1) + 18]
+        if any(row.get("mode") == "engage" for row in window):
+            continue
+        bins = {int(float(row["player_angle"]) % 360 // 30) for row in window
+                if row.get("player_angle") is not None}
+        if len(bins) < 10:
+            scan_failures.append({"step": clear.get("step"), "yaw_bins": len(bins)})
     failures = []
     if not genuine_completion:
         failures.append("No genuine sequential E1M1-E1M8 completion.")
@@ -209,9 +289,21 @@ def judge(trace: Path, summary: Path,
             "cross_attempt_repetition: failed route repeated with at least "
             "0.85 directed-edge similarity and no new map frontier."
         )
+    if not telemetry_complete:
+        failures.append("Judge integrity failure: required combat/pickup telemetry is missing.")
+    if pickup_regrets:
+        failures.append("Nearby visible weapon opportunity was abandoned without an immediate threat.")
+    if unsuitable_melee:
+        failures.append("Chainsaw/melee attack used against a ranged threat while a firearm was owned.")
+    if damage_response_failures:
+        failures.append("Incoming damage/projectile received without a response within two control steps.")
+    if wall_attack_streaks:
+        failures.append("Attack repeated without target line of sight for at least three control steps.")
+    if scan_failures:
+        failures.append("Room scan covered fewer than 300 degrees within two seconds.")
 
     return {
-        "judge": "movingman_route_memory_judge_v2",
+        "judge": "movingman_causal_survival_judge_v3",
         "trace": str(trace.resolve()),
         "completion_reward": 1 if genuine_completion else 0,
         "genuine_completion": genuine_completion,
@@ -228,6 +320,12 @@ def judge(trace: Path, summary: Path,
         "sectors_observed": sorted(sectors),
         "cross_attempt": history_evidence,
         "cross_attempt_repetition": repeated_route,
+        "telemetry_complete": telemetry_complete,
+        "pickup_regrets": pickup_regrets,
+        "unsuitable_melee_events": unsuitable_melee,
+        "damage_response_failures": damage_response_failures,
+        "wall_attack_streaks": wall_attack_streaks,
+        "scan_failures": scan_failures,
         "failures": failures,
     }
 

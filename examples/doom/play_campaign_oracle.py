@@ -25,6 +25,10 @@ BUTTONS = (
     vzd.Button.MOVE_BACKWARD, vzd.Button.MOVE_LEFT, vzd.Button.MOVE_RIGHT,
     vzd.Button.ATTACK, vzd.Button.USE, vzd.Button.JUMP,
     vzd.Button.MOVE_LEFT_RIGHT_DELTA,
+    vzd.Button.SELECT_WEAPON1, vzd.Button.SELECT_WEAPON2,
+    vzd.Button.SELECT_WEAPON3, vzd.Button.SELECT_WEAPON4,
+    vzd.Button.SELECT_WEAPON5, vzd.Button.SELECT_WEAPON6,
+    vzd.Button.SELECT_WEAPON7,
 )
 KEY_NAMES = {"BlueCard", "YellowCard", "RedCard", "BlueSkull", "YellowSkull", "RedSkull"}
 LIFT_SPECIALS = {62}
@@ -111,6 +115,12 @@ def make_campaign_game(wad: Path, map_name: str, seed: int, visible: bool,
         vzd.GameVariable.HEALTH, vzd.GameVariable.ARMOR, vzd.GameVariable.KILLCOUNT,
         vzd.GameVariable.ITEMCOUNT, vzd.GameVariable.SECRETCOUNT,
         vzd.GameVariable.POSITION_X, vzd.GameVariable.POSITION_Y, vzd.GameVariable.ANGLE,
+        vzd.GameVariable.SELECTED_WEAPON, vzd.GameVariable.SELECTED_WEAPON_AMMO,
+        vzd.GameVariable.WEAPON1, vzd.GameVariable.WEAPON2, vzd.GameVariable.WEAPON3,
+        vzd.GameVariable.WEAPON4, vzd.GameVariable.WEAPON5, vzd.GameVariable.WEAPON6,
+        vzd.GameVariable.WEAPON7,
+        vzd.GameVariable.AMMO0, vzd.GameVariable.AMMO1,
+        vzd.GameVariable.AMMO2, vzd.GameVariable.AMMO3,
     ):
         game.add_available_game_variable(variable)
     game.set_labels_buffer_enabled(True)
@@ -1692,6 +1702,9 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                 telemetry_player = next(
                     item for item in state.objects if item.name == "DoomPlayer"
                 )
+                row.setdefault("player_x", float(telemetry_player.position_x))
+                row.setdefault("player_y", float(telemetry_player.position_y))
+                row.setdefault("player_angle", float(telemetry_player.angle))
                 current_pickups = {
                     (item.name, round(item.position_x), round(item.position_y)):
                     (float(item.position_x), float(item.position_y))
@@ -1705,7 +1718,10 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                                telemetry_player.position_y - py) <= 72.0
                 })
                 previous_pickups = current_pickups
-                row["weapon_pickups_visible"] = [
+                visible_object_ids = {
+                    label.object_id for label in (state.labels or [])
+                }
+                row["weapon_pickups_known"] = [
                     {
                         "name": item.name,
                         "x": float(item.position_x),
@@ -1716,6 +1732,14 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                         ), 2),
                     }
                     for item in (state.objects or []) if item.name in WEAPON_NAMES
+                ]
+                row["weapon_pickups_visible"] = [
+                    item for item in row["weapon_pickups_known"]
+                    if any(obj.name == item["name"] and
+                           round(obj.position_x, 3) == round(item["x"], 3) and
+                           round(obj.position_y, 3) == round(item["y"], 3) and
+                           obj.id in visible_object_ids
+                           for obj in (state.objects or []))
                 ]
                 row["key_pickups_visible"] = [
                     {
@@ -1741,6 +1765,15 @@ def run_map(wad: Path, map_name: str, seed: int, visible: bool,
                     }
                     for item in (state.objects or []) if item.name in HEALTH_NAMES
                 ]
+                row["equipped_weapon_slot"] = int(game.get_game_variable(
+                    vzd.GameVariable.SELECTED_WEAPON))
+                row["equipped_weapon_ammo"] = int(game.get_game_variable(
+                    vzd.GameVariable.SELECTED_WEAPON_AMMO))
+                row["weapon_inventory"] = {
+                    str(slot): bool(game.get_game_variable(getattr(
+                        vzd.GameVariable, f"WEAPON{slot}")))
+                    for slot in range(1, 8)
+                }
                 if trace_file:
                     trace_file.write(json.dumps(row) + "\n")
                 if time.perf_counter() - last_log >= 10:

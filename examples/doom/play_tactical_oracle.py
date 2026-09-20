@@ -46,6 +46,15 @@ def bearing(a, b) -> float:
                                    b.position_x - a.position_x)) % 360.0
 
 
+WEAPON_AMMO_INDEX = {2: 0, 3: 1, 4: 0, 5: 2, 6: 3, 7: 3}
+
+
+def weapon_has_ammo(game, slot: int) -> bool:
+    ammo_index = WEAPON_AMMO_INDEX.get(slot)
+    return ammo_index is not None and float(game.get_game_variable(
+        getattr(vzd.GameVariable, f"AMMO{ammo_index}"))) > 0
+
+
 class TacticalOracle:
     def __init__(self) -> None:
         self.previous_health = 100.0
@@ -120,7 +129,29 @@ class TacticalOracle:
 
         aligned = abs(error) <= 8.0
         under_fire = state.tic - self.last_damage_tic <= 18 or bool(incoming_names)
-        if line_of_sight:
+        selected_weapon = int(game.get_game_variable(vzd.GameVariable.SELECTED_WEAPON))
+        weapon_inventory = {
+            slot: bool(game.get_game_variable(getattr(vzd.GameVariable, f"WEAPON{slot}")))
+            for slot in range(1, 8)
+        }
+        # A chainsaw is a contact weapon, not an answer to a gunner or an
+        # incoming fireball. Prefer the strongest owned firearm with ammo and
+        # perform the switch before resuming the attack.
+        desired_weapon = selected_weapon
+        if target_kind == "enemy" and (distance > 96.0 or incoming_names):
+            for slot in (7, 6, 5, 4, 3, 2):
+                if weapon_inventory.get(slot) and weapon_has_ammo(game, slot):
+                    desired_weapon = slot
+                    break
+            if selected_weapon == 1 and desired_weapon == 1:
+                # Pistol shares bullets with the chaingun but AMMO2 is the
+                # reliable selected-weapon fallback in classic Doom layouts.
+                desired_weapon = 2 if weapon_inventory.get(2) else 1
+        if desired_weapon != selected_weapon:
+            actions.add(f"weapon {desired_weapon}")
+            if under_fire:
+                actions.add("strafe left" if self.strafe_sign < 0 else "strafe right")
+        elif line_of_sight:
             # Maintain lateral motion under fire and never wait in the open.
             phase = (state.tic // 12) % 2
             if under_fire or distance < 420.0:
@@ -152,6 +183,9 @@ class TacticalOracle:
             "line_of_sight": line_of_sight,
             "enemy_can_see_agent": line_of_sight,
             "incoming_projectiles": incoming_names,
+            "equipped_weapon_slot": selected_weapon,
+            "desired_weapon_slot": desired_weapon,
+            "weapon_switch_required": desired_weapon != selected_weapon,
             "under_fire": under_fire, "health": health, "damaged": damaged,
             "enemy_count": len(enemies), "visible_enemies": len(visible_ids),
         }

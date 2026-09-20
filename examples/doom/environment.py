@@ -31,6 +31,13 @@ ACTION_BUTTONS = {
     "attack": vzd.Button.ATTACK,
     "use": vzd.Button.USE,
     "jump": vzd.Button.JUMP,
+    "weapon 1": vzd.Button.SELECT_WEAPON1,
+    "weapon 2": vzd.Button.SELECT_WEAPON2,
+    "weapon 3": vzd.Button.SELECT_WEAPON3,
+    "weapon 4": vzd.Button.SELECT_WEAPON4,
+    "weapon 5": vzd.Button.SELECT_WEAPON5,
+    "weapon 6": vzd.Button.SELECT_WEAPON6,
+    "weapon 7": vzd.Button.SELECT_WEAPON7,
 }
 # Compatibility name used by the experiment scripts and released checkpoints.
 DEFEND_ACTIONS = DOOM_ACTIONS
