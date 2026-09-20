@@ -1,0 +1,56 @@
+{
+  "method": "Blackwing Decision Method",
+  "producer": "MOVINGMAN",
+  "producer_tag": "MOVINGMAN \ud83e\udeb7",
+  "emblem": "Night Angel Lotus",
+  "signature": "MOVINGMAN-LOTUS-BLACKWING-2026",
+  "wad": "C:\\Users\\Administrator\\Documents\\Codex\\2026-08-15\\referenced-chatgpt-conversation-this-is-an\\outputs\\dwasm-sim\\wasm\\fs\\freedoom1.wad",
+  "maps_requested": [
+    "E1M2"
+  ],
+  "maps_completed": 0,
+  "results": [
+    {
+      "map": "E1M2",
+      "completed": false,
+      "attempts": [
+        {
+          "method": "Blackwing Decision Method",
+          "producer": "MOVINGMAN",
+          "producer_tag": "MOVINGMAN \ud83e\udeb7",
+          "emblem": "Night Angel Lotus",
+          "signature": "MOVINGMAN-LOTUS-BLACKWING-2026",
+          "map": "E1M2",
+          "attempt": 1,
+          "completed": false,
+          "dead": false,
+          "timed_out": true,
+          "steps": 2625,
+          "kills": 8,
+          "items": 2,
+          "secrets": 0,
+          "actions": {
+            "attack": 93,
+            "move forward": 1022,
+            "strafe right": 118,
+            "strafe left": 107,
+            "turn right": 667,
+            "turn left": 809,
+            "move backward": 420,
+            "use": 23,
+            "jump": 29
+          },
+          "wall_seconds": 508.6932067000307
+        }
+      ]
+    }
+  ],
+  "gate_status": "blocked",
+  "blocked_at": "E1M2",
+  "missions_attempted": [
+    "E1M2"
+  ],
+  "missions_completed": 0,
+  "episode": null,
+  "episode_completed": false
+}
