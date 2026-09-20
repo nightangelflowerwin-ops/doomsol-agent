@@ -10315,12 +10315,12 @@
     {
       "x": 1152.0,
       "y": -1296.0,
-      "observations": 26
+      "observations": 30
     },
     {
       "x": 664.0,
       "y": -704.0,
-      "observations": 21
+      "observations": 24
     },
     {
       "x": 1504.0,
@@ -10335,7 +10335,12 @@
     {
       "x": 1152.0,
       "y": -992.0,
-      "observations": 10
+      "observations": 11
+    },
+    {
+      "x": 1232.0,
+      "y": -1472.0,
+      "observations": 9
     },
     {
       "x": 1456.0,
@@ -10343,8 +10348,23 @@
       "observations": 8
     },
     {
+      "x": 1344.0,
+      "y": -1408.0,
+      "observations": 8
+    },
+    {
+      "x": 1280.0,
+      "y": -1216.0,
+      "observations": 8
+    },
+    {
       "x": 784.0,
       "y": -352.0,
+      "observations": 7
+    },
+    {
+      "x": 1296.0,
+      "y": -960.0,
       "observations": 7
     },
     {
@@ -10358,33 +10378,13 @@
       "observations": 6
     },
     {
-      "x": 1296.0,
-      "y": -960.0,
-      "observations": 6
-    },
-    {
-      "x": 1344.0,
-      "y": -1408.0,
-      "observations": 6
-    },
-    {
       "x": 1536.0,
       "y": -1456.0,
       "observations": 5
     },
     {
-      "x": 1232.0,
-      "y": -1472.0,
-      "observations": 5
-    },
-    {
       "x": 1520.0,
       "y": -1408.0,
-      "observations": 4
-    },
-    {
-      "x": 1280.0,
-      "y": -1216.0,
       "observations": 4
     },
     {
@@ -10398,6 +10398,16 @@
       "observations": 3
     },
     {
+      "x": 1216.0,
+      "y": -960.0,
+      "observations": 3
+    },
+    {
+      "x": 1232.0,
+      "y": -952.0,
+      "observations": 3
+    },
+    {
       "x": 1120.0,
       "y": -1312.0,
       "observations": 2
@@ -10408,8 +10418,8 @@
       "observations": 2
     },
     {
-      "x": 1216.0,
-      "y": -960.0,
+      "x": 1051.0,
+      "y": -566.8,
       "observations": 2
     },
     {
@@ -10457,6 +10467,15 @@
       "source_sector": 3,
       "target_sector": 21,
       "x": 672.0,
+      "y": -560.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
+      "source_sector": 3,
+      "target_sector": 21,
+      "x": 672.0,
       "y": -400.0,
       "failed_attempts": 0,
       "regression_attempts": 4,
@@ -10485,9 +10504,9 @@
       "target_sector": 166,
       "x": 664.0,
       "y": -704.0,
-      "failed_attempts": 0,
+      "failed_attempts": 1,
       "regression_attempts": 2,
-      "route_penalty": 6.0
+      "route_penalty": 8.0
     },
     {
       "source_sector": 14,
@@ -10497,6 +10516,15 @@
       "failed_attempts": 0,
       "regression_attempts": 2,
       "route_penalty": 6.0
+    },
+    {
+      "source_sector": 15,
+      "target_sector": 177,
+      "x": 1120.0,
+      "y": -524.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
     },
     {
       "source_sector": 21,
@@ -10535,13 +10563,22 @@
       "route_penalty": 3.0
     },
     {
+      "source_sector": 42,
+      "target_sector": 43,
+      "x": 1296.0,
+      "y": -896.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
+    },
+    {
       "source_sector": 43,
       "target_sector": 310,
       "x": 1232.0,
       "y": -952.0,
-      "failed_attempts": 0,
+      "failed_attempts": 1,
       "regression_attempts": 2,
-      "route_penalty": 6.0
+      "route_penalty": 8.0
     },
     {
       "source_sector": 43,
@@ -10629,9 +10666,18 @@
       "target_sector": 56,
       "x": 1152.0,
       "y": -992.0,
-      "failed_attempts": 12,
+      "failed_attempts": 14,
       "regression_attempts": 0,
       "route_penalty": 8.0
+    },
+    {
+      "source_sector": 57,
+      "target_sector": 56,
+      "x": 1232.0,
+      "y": -1472.0,
+      "failed_attempts": 0,
+      "regression_attempts": 1,
+      "route_penalty": 3.0
     },
     {
       "source_sector": 57,
@@ -10700,63 +10746,63 @@
   "sector_attempt_visits": [
     {
       "sector": 0,
-      "attempts": 11
+      "attempts": 12
     },
     {
       "sector": 3,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 9,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 10,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 11,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 12,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 13,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 14,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 15,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 17,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 18,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 19,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 20,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 21,
-      "attempts": 17
+      "attempts": 18
     },
     {
       "sector": 22,
-      "attempts": 6
+      "attempts": 7
     },
     {
       "sector": 32,
@@ -10764,31 +10810,43 @@
     },
     {
       "sector": 34,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 35,
-      "attempts": 15
+      "attempts": 16
+    },
+    {
+      "sector": 36,
+      "attempts": 1
     },
     {
       "sector": 37,
-      "attempts": 15
+      "attempts": 16
+    },
+    {
+      "sector": 38,
+      "attempts": 1
     },
     {
       "sector": 39,
-      "attempts": 15
+      "attempts": 16
+    },
+    {
+      "sector": 40,
+      "attempts": 1
     },
     {
       "sector": 41,
-      "attempts": 3
+      "attempts": 4
     },
     {
       "sector": 42,
-      "attempts": 3
+      "attempts": 4
     },
     {
       "sector": 43,
-      "attempts": 7
+      "attempts": 8
     },
     {
       "sector": 44,
@@ -10816,11 +10874,11 @@
     },
     {
       "sector": 56,
-      "attempts": 13
+      "attempts": 14
     },
     {
       "sector": 57,
-      "attempts": 13
+      "attempts": 14
     },
     {
       "sector": 67,
@@ -10836,23 +10894,23 @@
     },
     {
       "sector": 166,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 167,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 176,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 177,
-      "attempts": 15
+      "attempts": 16
     },
     {
       "sector": 184,
-      "attempts": 14
+      "attempts": 15
     },
     {
       "sector": 185,
@@ -10884,14 +10942,14 @@
     },
     {
       "sector": 310,
-      "attempts": 6
+      "attempts": 7
     },
     {
       "sector": 313,
       "attempts": 6
     }
   ],
-  "attempt_count": 17,
+  "attempt_count": 18,
   "source_traces": [
     "episode1-e1m2-attempt-01.jsonl",
     "episode1-e1m2-attempt-02.jsonl",
@@ -10909,7 +10967,8 @@
     "episode1-e1m2-attempt-14.jsonl",
     "episode1-e1m2-attempt-15.jsonl",
     "episode1-e1m2-attempt-16.jsonl",
-    "episode1-e1m2-attempt-17.jsonl"
+    "episode1-e1m2-attempt-17.jsonl",
+    "episode1-e1m2-attempt-18.jsonl"
   ],
-  "training_samples": 34305
+  "training_samples": 36930
 }

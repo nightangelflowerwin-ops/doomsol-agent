@@ -58,3 +58,17 @@ def test_gate_settle_catchup_preserves_later_sector_progress():
     assert navigator._catch_up_route(56, after_target=310)
     assert navigator.route_source_sector == 56
     assert [portal.target_sector for portal in navigator.route] == [57, -1]
+
+
+def test_portal_stage_brakes_forward_and_lateral_momentum():
+    player = SimpleNamespace(
+        angle=0.0, velocity_x=5.0, velocity_y=3.0,
+    )
+
+    actions, forward_speed, lateral_speed = CampaignNavigator._motion_brake_actions(
+        player
+    )
+
+    assert actions == {"move backward", "strafe left"}
+    assert forward_speed == 5.0
+    assert lateral_speed == 3.0

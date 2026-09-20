@@ -207,6 +207,25 @@ class CampaignNavigator:
         self.route_source_sector = current_sector
         return True
 
+    @staticmethod
+    def _motion_brake_actions(player) -> tuple[set[str], float, float]:
+        """Counter world velocity in the player's forward/right frame."""
+        angle = math.radians(float(player.angle))
+        velocity_x = float(getattr(player, "velocity_x", 0.0))
+        velocity_y = float(getattr(player, "velocity_y", 0.0))
+        forward_speed = velocity_x * math.cos(angle) + velocity_y * math.sin(angle)
+        lateral_speed = -velocity_x * math.sin(angle) + velocity_y * math.cos(angle)
+        actions: set[str] = set()
+        if forward_speed > 0.75:
+            actions.add("move backward")
+        elif forward_speed < -0.75:
+            actions.add("move forward")
+        if lateral_speed > 0.75:
+            actions.add("strafe left")
+        elif lateral_speed < -0.75:
+            actions.add("strafe right")
+        return actions, forward_speed, lateral_speed
+
     def _begin_backtrack(self, player) -> None:
         """Return to the latest meaningfully different room/door approach."""
         while self.breadcrumbs:
@@ -408,16 +427,8 @@ class CampaignNavigator:
 
         def gate_brake_actions() -> tuple[set[str], float]:
             """Counter residual velocity without starting another crossing."""
-            angle = math.radians(float(player.angle))
-            forward_speed = (
-                float(getattr(player, "velocity_x", 0.0)) * math.cos(angle) +
-                float(getattr(player, "velocity_y", 0.0)) * math.sin(angle)
-            )
-            if forward_speed > 0.75:
-                return {"move backward"}, forward_speed
-            if forward_speed < -0.75:
-                return {"move forward"}, forward_speed
-            return set(), forward_speed
+            actions, forward_speed, _ = self._motion_brake_actions(player)
+            return actions, forward_speed
         mandatory_key_latched = bool(
             self.objective is not None and self.objective[2] in KEY_NAMES and
             any(item.name == self.objective[2] and
@@ -1192,7 +1203,8 @@ class CampaignNavigator:
             # One turn action advances several tics and rotates roughly 14
             # degrees. An 8-degree dead-zone is the smallest reachable stable
             # band; a 6-degree gate oscillates forever around zero.
-            if abs(stage_error) <= 8.0 and speed <= 1.0:
+            in_stage_zone = distance <= 52.0
+            if abs(stage_error) <= 8.0 and speed <= 1.0 and in_stage_zone:
                 self.gate_commit_key = waypoint_key
                 self.gate_commit_steps = 14
                 self.gate_commit_heading = normal_heading
@@ -1202,9 +1214,11 @@ class CampaignNavigator:
                 self.portal_stage_steps = 0
             else:
                 self.portal_stage_steps -= 1
-                if self.portal_stage_steps <= 0:
+                if self.portal_stage_steps <= 0 or distance > 80.0:
                     self.portal_stage_key = None
-                stage_actions: set[str] = set()
+                stage_actions, forward_speed, lateral_speed = (
+                    self._motion_brake_actions(player)
+                )
                 if stage_error > 8.0:
                     stage_actions.add("turn left")
                 elif stage_error < -8.0:
@@ -1221,6 +1235,9 @@ class CampaignNavigator:
                     "portal_normal_y": round(float(waypoint.normal_y), 4),
                     "stage_error_degrees": round(stage_error, 2),
                     "player_speed": round(speed, 3),
+                    "forward_speed": round(forward_speed, 3),
+                    "lateral_speed": round(lateral_speed, 3),
+                    "in_stage_zone": in_stage_zone,
                     "portal_stage_steps": self.portal_stage_steps,
                     "stuck_recovery": False,
                 }
