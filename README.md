@@ -30,6 +30,49 @@ examples/film/make-film.sh runs/doom-trace.json runs/doom-film.mp4 10
 
 The release includes the [Doom example](examples/doom/README.md), the [chess example](examples/chess/README.md), the single-game checkpoints and the shared 12-option checkpoint. Both games import the visual scorer from `jevlike.vision`; there is no second model copy in either example.
 
+## Current Doom campaign stage
+
+The Doom work has moved beyond the original `deadly_corridor` demonstration.
+The current experimental controller combines:
+
+- ViZDoom/FreeDoom engine state for local teacher and evaluation runs;
+- WAD-derived sectors, portals, doors, keys, switches and exit objectives;
+- persistent semantic route memory across failed attempts;
+- tactical enemy targeting, projectile response and weapon matching;
+- visible MP4 recordings plus per-decision JSONL telemetry; and
+- a causal survival judge that checks completion, route repetition, missed
+  pickups, unsuitable melee use, damage response, wall attacks and room scans.
+
+The verified result is deliberately narrower than the ambition: one recorded
+E1M1 attempt reached the engine-confirmed exit. E1M2 and the complete Episode 1
+gauntlet have **not** been completed. The latest work improves instrumentation
+and failure diagnosis; it is not evidence of a solved campaign or a deployed
+DoomSol website agent.
+
+### Evidence standard
+
+A mission counts only when the engine reports the real level exit. Kills,
+survival time, route novelty and judge scores are diagnostic metrics, not
+substitutes for completion. Local authoritative engine truth is used to create
+teachers and labels; a browser-deployed visual policy must still prove itself
+without privileged state.
+
+## Power BI gameplay analytics
+
+The replay traces can be converted into relational CSV tables for Power BI:
+
+```powershell
+python examples/doom/export_power_bi.py `
+  --runs runs/movingman-episode1-full `
+  --output power-bi-export
+```
+
+This produces attempt, decision-step, pickup, route-transition and judge-finding
+tables. The complete beginner workflow, relationships, DAX measures and suggested
+dashboard pages are in [the Power BI dashboard guide](docs/power-bi-dashboard.md).
+Generated dashboards should preserve the distinction between local ViZDoom
+evaluation and live DoomSol browser performance.
+
 ## Architecture
 
 Each option becomes a query vector, which is a short list of numbers representing its text. The query assigns attention weights to the context tokens. Those weights make one context vector for that option. A shared dot product turns each option and context pair into one score. A softmax, which converts scores into probabilities that sum to one, runs across the options.

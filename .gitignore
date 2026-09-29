@@ -5,6 +5,7 @@ __pycache__/
 *.py[cod]
 data/
 runs/
+power-bi-export/
 build/
 dist/
 .DS_Store
